@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body %}
+    {% for user in users %}
+    <div class="user-container">
+        <img class="user-pic" src="{{user.avatar}}" alt="Profile picture" />
+        <p class="user-msg">
+              Hello, {{user.name}}
+        </p>
+      </div>
+      <!-- {% endfor %}
+      {% for policy in policies %}
+    <div class="user-container">
+        <img class="user-pic" src="{{policy.image}}" alt="Profile picture" />
+        <p class="user-msg">
+             {{policy.description}}
+        </p>
+      </div>
+      {% endfor %} -->
+{% endblock body %}

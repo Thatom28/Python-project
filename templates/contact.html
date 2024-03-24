@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+    .container{
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .input-block{
+        width: 40%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 0;
+        border-bottom: 1px solid hsl(0, 0%, 60%);
+        background-color: hsl(0, 0%, 90%);
+        color: black;
+        margin-bottom: 25px;
+        margin-top: 10px;
+    }
+    .input-name{
+        text-align: left;
+        font-weight:bold;
+    }
+   
+    button:hover{
+        box-shadow:0 4px 8px rgba(0, 0, 0, 2); 
+    }
+</style>
+
+<div class="container">
+    <h2>Contact Us</h2>
+    <p>Call : <span style="font-weight: bold;">012 345 6783</span></p>
+    <p>Our Address: <span style="font-weight: bold;">3rd floor, 12 Old paarl, BellVille, Cape Town.</span></p>
+    <p>Please fill the form below to contact us via email.</p>
+
+    <div>
+        <label class ='input-name' for="FullName"> Full Name: </label>
+        <div >
+            <input class="input-block" type="text"  placeholder="Enter your name" >
+        </div>
+    </div>
+
+    <div >
+        <label class ='input-name' for="CellNumber"> Cell number: </label>
+        <div>
+            <input class ="input-block" type="text"  placeholder="Enter your cell number" >
+        </div>
+    </div>
+
+    <div>
+        <label class ='input-name' for="Email"> Email: </label>
+        <div>
+            <input class ='input-block' type="text"  placeholder="Enter your email" >
+        </div>
+    </div>
+
+    <div>
+        <label class ='input-name' for="Feedback"> Feedback: </label>
+        <div>
+            <textarea class ='input-block' type="text"  placeholder="Add feedback"></textarea>
+        </div>
+    </div>
+
+    <div>
+        <a href="" class="button">Submit</a>
+    </div>
+</div>
+{% endblock body %}
+

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+    body{
+        background: radial-gradient(circle, rgba(4,41,73,1) 0%, rgba(31,107,138,1) 100%);
+    }
+    .container{
+        color: white;
+        margin: 30px;
+        /* max-width: 1200px; */
+    }
+    .get-started-button{
+        border-radius: 30px;
+        font-size: 17px;
+        background-color: #042949;
+        padding: 15px;
+        margin-bottom: 30px;
+    }
+    .poster{
+        border-radius: 25px;
+        max-width: 407px;
+        padding-right: 25px;
+        /* mix-blend-mode: luminosity; */
+    }
+    @media (min-width:945px){
+        .container{
+            display: flex;
+            justify-content: space-around;
+      }
+    }
+</style>
+<div class="container">
+    <div>
+        <img class="poster" src="https://media.istockphoto.com/id/491991929/photo/outdoor-portrait-of-multi-ethnic-crowd.jpg?s=612x612&w=0&k=20&c=N3aie0FOB_4JhQIcBmCAa9xGHYOnQ0rrRt29-kcrXG0=" />
+    </div>
+    <div>
+        <h1>Be At Peace Finacially And Live With Confidence.</h1>
+        <p>your protection and peace of mind are our top priorities.we understand the importance of safeguarding what matters most to you and your family, your assets, and your future. 
+            we're here to guide you through life's uncertainties and ensure that you're prepared for whatever comes your way. 
+        </p>
+        <div>
+            <a class="get-started-button" href="/policies">Get started       <li class=" fa-solid fa-arrow-right"></li></a>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

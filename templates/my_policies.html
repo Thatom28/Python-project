@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>{{ username }}'s Policies</h1>
+<ul>
+    {% for policy in policies %}
+    <li>
+        <h2>{{ policy.name }}</h2>
+        <p><strong>Premium:</strong> ${{ policy.premium }}</p>
+        <p><strong>Description:</strong> {{ policy.description }}</p>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock body %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+    .container{
+        text-align: center;
+        margin: 20px;
+        padding: 0;
+        max-width: 50;
+    }
+    .input-block{
+        width: 40%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 0;
+        border-bottom: 1px solid hsl(0, 0%, 60%);
+        background-color: hsl(0, 0%, 90%);
+        color: black;
+        margin-bottom: 25px;
+        margin-top: 10px;
+    }
+    .input-name{
+        text-align: left;
+        font-weight:bold;
+    }
+    .password-link{
+        text-align: center;
+        width:40% ;
+        /* background-color: #19747E; */
+    }
+    .submit-button:hover{
+        box-shadow:0 4px 8px rgba(0, 0, 0, 2); 
+    }
+    .heading{
+        font-weight: lighter;
+        margin-bottom: 40px;
+    }
+</style>
+
+<div class="container"> 
+    <img class ='logo' src="https://www.svgheart.com/wp-content/uploads/2021/11/cute-owl-silhouette-free-svg-file-SvgHeart.Com.png" />
+    <h3 class="heading">Register</h2>
+    <div>
+        <label class ='input-name' for="FullName"> SA ID Number: </label>
+        <div>
+            <input class="input-block" type="text"  placeholder="ID number" >
+        </div>
+    </div>
+    <div>
+        <label class ='input-name' for="FullName"> Username: </label>
+        <div>
+            <input class="input-block" type="text"  placeholder="Username" >
+        </div>
+    </div>
+
+    <div>
+        <label class ='input-name' for="CellNumber"> Password: </label>
+        <div>
+            <input class ="input-block" type="text"  placeholder="Password" >
+        </div>
+    </div>
+    <div>
+        <label class ='input-name' for="ConfirmPassword">Confirm Password</label>
+        <div>
+            <input class ="input-block" type="text"  placeholder="Confirm Password" >
+        </div>
+    </div>
+
+    <div class="buttons">
+        <a href="/" class="button button"> Register </a>
+        <a href="/" class="button button"> Cancel</a>
+    </div>
+    <a href="{{url_for('login')}}" style="color: green;">Already have an account? Sign In</a>
+</div>
+{% endblock body %}
+
