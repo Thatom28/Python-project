@@ -38,9 +38,6 @@
         width:40% ;
         /* background-color: #19747E; */
     }
-    .submit-button:hover{
-        box-shadow:0 4px 8px rgba(0, 0, 0, 2); 
-    }
     .dis-flex{
         display: flex;
         color: #A9D6E5;
@@ -52,35 +49,31 @@
         font-weight: lighter;
     }
 </style>
-
 <div class="container"> 
     <img class ='logo' src="https://www.svgheart.com/wp-content/uploads/2021/11/cute-owl-silhouette-free-svg-file-SvgHeart.Com.png" />
-    <h3>Log in</h2>
-    <div>
-        <label class ='input-name' for="FullName"> Username: </label>
+    <h3>Log in</h3>
+    <form action="{{url_for('user_logged_in')}}" method="POST">
+        <label class ='input-name' for="username"> Username: </label>
         <div>
-            <input class="input-block" type="text"  placeholder="Username" >
+            <input class="input-block"  name="username" type="text"  placeholder="Username" />
         </div>
         <div class="password-link">
             <a class="dis-flex">Forgot username?</a>
         </div>
-    </div>
 
-    <div>
-        <label class ='input-name' for="CellNumber"> Password: </label>
+        <label class ='input-name' for="password"> Password: </label>
         <div>
-            <input class ="input-block" type="text"  placeholder="Password" >
+            <input class ="input-block" name="password" type="text"  placeholder="Password" />
         </div>
         <div class="password-link">
             <a class="dis-flex">Forgot password?</a>
         </div>
-    </div>
-
-    <div class="buttons">
-        <a href="/" class="button button"> Log In </a>
-        <a href="/" class="button button"> Cancel</a>
-    </div>
-    <a href="{{url_for('register')}}" style="color: green;">Dont have an account? Sign Up</a>
+    
+        <div class="buttons">
+            <button type="submit" class="button">Login</button>
+            <a href="/" class="button">Cancel</a>
+        </div>
+    </form>
+    <a href="{{url_for('register')}}" style="color: gray;">Don't have an account? Sign Up</a>
 </div>
 {% endblock body %}
-

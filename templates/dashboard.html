@@ -3,8 +3,12 @@
 <style>
 .container{
     padding : 20px;
+    margin-left: 20px;
 }
-.sidebar {
+.doc_icon{
+  color:#1f6b8a;
+}
+/* .sidebar {
   height: 100%;
   width: 0;
   position: fixed;
@@ -52,15 +56,15 @@
 #main {
   transition: margin-left .5s;
   padding: 16px;
-}
+} */
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
+/* @media screen and (max-height: 450px) {
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}
-}
+} */
 </style>
-<div class = "container">
+<!-- <div class = "container">
     <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <a href="/profile">My profile</a>
@@ -84,19 +88,28 @@
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";
     }
-    </script>
-    <div class="user-info">
+    </script> --> 
+    <!-- <div class="user-info">
         <p>Thato Matlala</p>
         <p>mobile number: 0123456789</p>
         <p>Email: thato@gmail.com</p>
         <p>Adress: 14 sefako road, Klersdorp, South Africa</p>
-    </div>
-    {{graph | safe}}
+    </div> -->
+  <div class="container">
+    <h2>Welcome, {{username}}</h2>
+    <p>Policies</p>
+    <a href="my_policies" class="doc_icon"><i class="fa-solid fa-file"></i></a>
+    <p>number of Active Policies</p>
+    <form action="{{url_for('quote')}}" method="get">
+      <button type="submit" class="button">Add Policy</button>
+    </form> 
+  </div>
     <div class="policy-info">
         <ul>
             <li>policy name + the date the policy was taken the policy Id, description p fthe policy amd edit button</li>
         </ul>
     </div>
+   
 </div>
 {% endblock body %}
 

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block body %}
+<ul>
+    {% for policy in my_policies %}
+    <li>
+        <li>
+            <strong>{{ policy['type']}}</strong> - R{{ policy['amount']}}
+            <!-- <a href="/remove_item/{{ item_id }}">Remove</a> -->
+        </li>
+    </li>      
+    {% endfor %}
+</ul>
+{% endblock body%}

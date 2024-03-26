@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+    <form action="{{url_for('quote')}}" method="POST">
+        <label for="type">Insurance Type : </label>
+        <select name="type" required>
+            <option value="Life Insurance">Life insurance</option>
+            <option value="Car Insurance">Car insurance</option>
+            <option value="Home Insurance">Home insurance</option>
+            <option value="Business Insurance">Business insurance</option>
+            <option value="Retirement Annuity Insurance">Retirement Annuity</option>
+            <option value="Short-Term Insurance">Short-term insurance</option>
+            <option value="Agriculture Insurance">Agriculture insurance</option>
+            <option value="Income Insurance">Income Protection</option>
+        </select>
+    </div>
+    <div>
+        <label for="location" >Location</label>
+        <input for="location" name="location" placeholder="Location" required />
+    </div>
+    <div>
+        <label for="age" >Location</label>
+        <input for="age" name="age" placeholder="Age" required />
+    </div>
+    <div>
+        <label for="vehicle_model">vehicle model</label>
+        <input for="vehicle_model" name="age" placeholder="vehicle_model" required/>
+    </div>
+    <button type="submit">View Quote</button>
+    </form>
+{% endblock body %}

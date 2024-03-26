@@ -2,11 +2,10 @@
 {% block body %}
 <h1>{{ username }}'s Policies</h1>
 <ul>
-    {% for policy in policies %}
+    {% for my_policy in my_policies %}
     <li>
-        <h2>{{ policy.name }}</h2>
-        <p><strong>Premium:</strong> ${{ policy.premium }}</p>
-        <p><strong>Description:</strong> {{ policy.description }}</p>
+        <h2>{{my_policy.Insurance-type}}</h2>
+        <p>{{my_policy.createdAt}}</p>
     </li>
     {% endfor %}
 </ul>

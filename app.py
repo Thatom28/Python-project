@@ -3,26 +3,19 @@ from flask import (
     jsonify,
     request,
     render_template,
-    flash,
-    redirect,
-    url_for,
     render_template,
     session,
 )
-from flask_login import UserMixin, login_user, login_required
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
-from werkzeug.security import generate_password_hash, check_password_hash
-import json
+
+# from flask_login import UserMixin, login_user, login_required
+# from flask_wtf import FlaskForm
+# from wtforms import StringField, PasswordField, SubmitField
+# from wtforms.validators import DataRequired
+# from werkzeug.security import generate_password_hash, check_password_hash
+# import json
 import matplotlib.pyplot as plt
 import pandas as pd
-
-
-# class LoginForm(FlaskForm):
-#     username = StringField("Username", validators=[DataRequired()])
-#     password = PasswordField("Password", validators=[DataRequired()])
-#     submit = SubmitField("Login")
+from datetime import date
 
 
 app = Flask(__name__)
@@ -46,14 +39,6 @@ def contact():
     return render_template("contact.html")
 
 
-def login_user():
-    session["logged_in"] == True
-
-
-def logout_user():
-    session.pop("logged_in", None)
-
-
 # LogIn page
 @app.route("/login")
 def login():
@@ -61,35 +46,63 @@ def login():
     return render_template("login.html")
 
 
+# method when the user submits a form
+@app.route("/user/dashboard", methods=["POST"])
+def user_logged_in():
+    username = request.form.get("username")
+    password = request.form.get("password")
+    # verifying the  user
+    # user = [user["name"] for user in users if user["name"] == username]
+    # if user:
+    #     return render_template("dashboard.html", username=username)
+    # return render_template("register.html")
+    return render_template("dashboard.html", username=username)
+
+
 # profile page
-@app.route("/profile")
-def profile():
-    tesla_df = pd.read_csv("tesla_stock_market_trends.csv")
-    graph = plt.scatter(tesla_df["high"], tesla_df["date"])
-
-    return render_template("profile.html", graph=graph)
-
-
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         user = user.query.filter_by(username=form.username.data).first()
-#         if user and user.check_password(form.password.data):
-#             login_user(user)
-#             return redirect(url_for("/home"))
-#         else:
-#             flash("Invalid username or password", "error")
-#     return render_template("login.html", form=form)
+# @app.route("/dashboard")
+# def dashboard():
+#     # tesla_df = pd.read_csv("tesla_stock_market_trends.csv")
+#     # graph = plt.scatter(tesla_df["high"], tesla_df["date"])
+#     return render_template("dashboard.html", my_policies=my_policies)
 
 
-# Policies page
+# @app.route("/add_new_policy", methods=["POST"])
+# def add_new_policy():
+#     policy_type = request.form["policy_type"]
+#     policy_amount = request.form["policy_amount"]
+#     if policy_type and policy_amount:
+#         my_policies.append({"type": policy_type, "amount": policy_amount})
+#     return redirect(
+#         url_for("dashboard")
+#     )  # Redirect to the dashboard route instead of rendering the template directly
+
+
+# @app.post("/add_new_policy/<new_policy>")
+# def add_new_policy(new_policy):
+#     my_policies.append(new_policy)
+#     return render_template("/add_policy.html")
+
+
+# # takes us to the add_policy page
+# @app.route("/add_policy", methods=["GET"])
+# def add_policy():
+#     return render_template("add_policy.html", policies=policies)
+
+
+# show us a list of policies taken
+# @app.route("/active_policies", methods=["POST"])
+# def active_policies():
+#     return render_template("active_policies.html", my_policies=my_policies)
+
+
+# Policies page for the about page
 @app.route("/policies")
 def policies():
     return render_template("policies.html", policies=policies)
 
 
-# Policies page
+# Register page
 @app.route("/register")
 def register():
     return render_template("register.html")
@@ -98,32 +111,40 @@ def register():
 # Adding the user to the users list
 @app.post("/register")
 def add_user():
-    new_user = request.json  # get data from json
+    username = request.form.get(
+        "username"
+    )  # retriving the data from the from with the same name
+    password = request.form.get("password")
     ids = [int(user["id"]) for user in users]
     largest_id = max(ids)
-    new_user["id"] = str(largest_id + 1)  # add one to the max Id
+    new_user = {
+        "CreatedAt": date.today(),
+        "name": username,
+        "password": password,
+        "id": str(largest_id + 1),
+    }
     users.append(new_user)
     return jsonify(new_user), 201
 
 
-@app.route("/my_policies", methods=["GET", "POST", "PUT", "DELETE"])
-def my_policies():
-    username = session.get("username")
-    if username():  # theu user found
-        user_data = users.get(username)
-        if user_data:
-            policies = user_data.get("policies")
-            return render_template(
-                "my_policies.html", username=username, policies=policies
-            )
+# @app.route("/my_policies", methods=["GET", "POST", "PUT", "DELETE"])
+# def my_policies():
+#     username = session.get("username")
+#     if username():  # theu user found
+#         user_data = users.get(username)
+#         if user_data:
+#             policies = user_data.get("policies")
+#             return render_template(
+#                 "my_policies.html", username=username, policies=policies
+#             )
 
 
+# calculator in te nav
 @app.route("/calculator", methods=["GET", "POST"])
 def calculator():
     if request.method == "POST":
         monthly_payments = int(request.form.get("monthly_payments"))
         no_of_years = int(request.form.get("no_of_years"))
-
         premium_payment = monthly_payments * (no_of_years * 3)
         return render_template(
             "quotation.html",
@@ -131,7 +152,62 @@ def calculator():
             no_of_years=no_of_years,
             premium_payment=premium_payment,
         )
-    return render_template("calculation.html")
+    else:
+        return render_template("calculation.html")
+
+
+# calculations in  the add policy page| to display the qote on screen
+@app.route("/quote", methods=["GET", "POST"])
+def quote():
+    if request.method == "POST":
+        base_price = 50
+        type_of_insurance = request.form.get("type")
+        location = request.form.get("location")
+        age = request.form.get("age")
+        vehicle_model = request.form.get("vehicle_model")
+        if location in high_risk_areas:
+            amount = base_price * 3
+            location += "  (high risk area)"
+        elif type_of_insurance == "car" and int(age) < 21:
+            amount = base_price * 2
+        else:
+            amount = base_price
+        return render_template(
+            "quote.html",
+            type_of_insurance=type_of_insurance,
+            location=location,
+            age=age,
+            vehicle_model=vehicle_model,
+            amount=amount,
+        )
+    else:
+        return render_template("add_policy.html")
+
+
+my_policies = [
+    {
+        "Insurance-type": "Home-Insurance",
+        "createdAt": "2024-03-24T05:56:26.481Z",
+    },
+]
+current_date = date.today()  # a fuction cannot be appended
+
+
+# To add qoute/policy to the my_policy list and display my policy page
+@app.route("/my_policies", methods=["POST", "Get"])
+def my_policies():
+    if request.method == "POST":
+        type_of_insurance = request.form.get("type")
+        location = request.form.get("location")
+        age = request.form.get("age")
+        vehicle_model = request.form.get("vehicle_model")
+        new_policy = {
+            "Insurance-type": type_of_insurance,
+            "createdAt": date.today(),
+        }
+        my_policies.append(new_policy)
+        return render_template("my_policies.html", my_policies=my_policies)
+    return render_template("my_policies.html", my_policies=my_policies)
 
 
 users = [
@@ -283,7 +359,27 @@ policies = [
     },
 ]
 
-
+high_risk_areas = [
+    "cape town cbd",
+    "joburg cbd",
+    "durban cbd",
+    "mitchells plain",
+    "phoenic",
+    "roodepoort",
+    "mfuleni",
+    "honey dew",
+    "midrand",
+    "hillbrow",
+    "tembisa",
+    "delf",
+    "mamelodi",
+    "hamanskraal",
+    "braamfontein",
+    "pretoria cbd",
+    "rusternburg",
+    "nyanga",
+    "honeydew",
+]
 # # getting all users
 # @app.get("/users")
 # def get_users():
@@ -335,56 +431,56 @@ policies = [
 
 
 # methods to add, remove, update and delete insurances from the user profile
-@app.get("/policies")
-def get_policies():
-    return jsonify(policies)
+# @app.get("/policies")
+# def get_policies():
+#     return jsonify(policies)
 
 
-# # getting the policy by id
-@app.get("/policies/<id>")
-def get_policy_by_id(id):
-    policy = next((policy for policy in policies if policy["id"] == id), None)
-    if policy:
-        return jsonify(policy)
-    result = {"message": "User not found"}
-    return jsonify(result), 404
+# # # getting the policy by id
+# @app.get("/policies/<id>")
+# def get_policy_by_id(id):
+#     policy = next((policy for policy in policies if policy["id"] == id), None)
+#     if policy:
+#         return jsonify(policy)
+#     result = {"message": "User not found"}
+#     return jsonify(result), 404
 
 
-@app.post("/policies")
-def Add_policy():
-    new_policy = request.json  # get data from json
-    ids = [int(policy["id"]) for policy in policies]
-    largest_id = max(ids)
-    new_policy["id"] = str(largest_id + 1)  # add one to the max Id
-    policies.append(new_policy)
-    return jsonify({"data": new_policy, "message": "policy added succsefully"}), 201
+# @app.post("/policies")
+# def add_policy():
+#     new_policy = request.json  # get data from json
+#     ids = [int(policy["id"]) for policy in policies]
+#     largest_id = max(ids)
+#     new_policy["id"] = str(largest_id + 1)  # add one to the max Id
+#     policies.append(new_policy)
+#     return jsonify({"data": new_policy, "message": "policy added succsefully"}), 201
 
 
-@app.delete("/policies/<id>")  # <> converts to a variable
-def delete_policy(id):
-    policy = next(
-        (policy for policy in policies if policy["id"] == id), None
-    )  # the ers policy list
-    if policy:
-        policies.remove(policy)
-        return jsonify({"data": policy, "message": "policy deleted sucessfully"})
-    else:
-        result = {"message": "policy not found"}
-        return jsonify(result), 404
+# @app.delete("/policies/<id>")  # <> converts to a variable
+# def delete_policy(id):
+#     policy = next(
+#         (policy for policy in policies if policy["id"] == id), None
+#     )  # the ers policy list
+#     if policy:
+#         policies.remove(policy)
+#         return jsonify({"data": policy, "message": "policy deleted sucessfully"})
+#     else:
+#         result = {"message": "policy not found"}
+#         return jsonify(result), 404
 
 
-@app.put("/policies/<id>")  # <> converts to a variable
-def update_policy(id):
-    updates = request.json  # get the data from json
-    policy = next(
-        (policy for policy in policies if policy["id"] == id), None
-    )  # find the movie id
-    if policy:
-        policy.update(updates)
-        return jsonify({"data": policy, "message": "policy updated sucessfully"})
-    else:
-        result = {"message": "policy not found"}
-        return jsonify(result), 404
+# @app.put("/policies/<id>")  # <> converts to a variable
+# def update_policy(id):
+#     updates = request.json  # get the data from json
+#     policy = next(
+#         (policy for policy in policies if policy["id"] == id), None
+#     )  # find the movie id
+#     if policy:
+#         policy.update(updates)
+#         return jsonify({"data": policy, "message": "policy updated sucessfully"})
+#     else:
+#         result = {"message": "policy not found"}
+#         return jsonify(result), 404
 
 
 # with open("policies.json", "w") as file:
@@ -392,14 +488,3 @@ def update_policy(id):
 
 if __name__ == "__main__":
     app.run(debug=True)  # to catch errors immediately
-
-
-# A user mdel that represent the users in the system
-# class User(UserMixin, users):  # replace users with the database
-#     for user in users:
-#         id = user.id
-#         username = user.name
-#         password_hash = user.password
-
-#     def check_password(self, password):
-#         return check_password_hash(self.password_hash, password)

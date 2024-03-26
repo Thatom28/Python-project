@@ -19,11 +19,17 @@
 </style>
 <div class="outer-container">
     <div class=" container">
-        <h2>Insurance Quotation</h2>
-        <p>Monthly payments: {{monthly_paynemts}}</p>
-        <p>no_of_years: {{no_of_years}}</p>
-        <p>Premium payout at the end of {{no_of_years}} years is {{premium_payment}}</p>
+        <h2>{{type_of_insurance}} Quotation</h2>
+        <p>Location: {{location}}</p>
+        <p>Age: {{age}}</p>
+        <p>Vehicle type: {{vehicle_model}}</p>
+        <h4>Monthly payment: R{{amount}}</h4>
     </div>
+</div>
+<div class="outer-container">
+    <form action="{{url_for('my_policies')}}" method="post">
+        <button type="submit" class="button">Add_policy</button>
+    </form>
 </div>
 
     
