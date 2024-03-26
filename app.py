@@ -186,7 +186,7 @@ def quote():
 
 my_policies = [
     {
-        "Insurance-type": "Home-Insurance",
+        "insurance_name": "Home-Insurance",
         "createdAt": "2024-03-24T05:56:26.481Z",
     },
 ]
@@ -195,16 +195,13 @@ current_date = date.today()  # a fuction cannot be appended
 
 # To add qoute/policy to the my_policy list and display my policy page
 @app.route("/my_policies", methods=["POST", "Get"])
-def my_policies():
+def policy_taken():
     if request.method == "POST":
         type_of_insurance = request.form.get("type")
         location = request.form.get("location")
         age = request.form.get("age")
         vehicle_model = request.form.get("vehicle_model")
-        new_policy = {
-            "Insurance-type": type_of_insurance,
-            "createdAt": date.today(),
-        }
+        new_policy = {"insurance_name": type_of_insurance, "createdAt": date.today()}
         my_policies.append(new_policy)
         return render_template("my_policies.html", my_policies=my_policies)
     return render_template("my_policies.html", my_policies=my_policies)
