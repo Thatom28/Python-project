@@ -52,28 +52,24 @@
 <div class="container"> 
     <img class ='logo' src="https://www.svgheart.com/wp-content/uploads/2021/11/cute-owl-silhouette-free-svg-file-SvgHeart.Com.png" />
     <h3>Log in</h3>
-    <form action="{{url_for('user_logged_in')}}" method="POST">
-        <label class ='input-name' for="username"> Username: </label>
-        <div>
-            <input class="input-block"  name="username" type="text"  placeholder="Username" />
+    <form action="" method="post">
+        {{form.hidden_tag()}} {% if form.username.errors %}
+         {% for error in form.username.errors %}
+        <div style="color: red">{{error}}</div>
+        {% endfor %} {% endif %} {% if form.password.errors %} {% for error in
+        form.password.errors %}
+        <div style="color: red">{{error}}</div>
+        {% endfor %} {% endif %}
+        <div class="form-group">
+          {{form.username.label}}: {{form.username(placeholder="Rashay",
+          class="form-control is-invalid")}}
         </div>
-        <div class="password-link">
-            <a class="dis-flex">Forgot username?</a>
+        <div class="form-group">
+          {{form.password.label}}: {{form.password(placeholder="Password",
+          class="form-control")}}
         </div>
-
-        <label class ='input-name' for="password"> Password: </label>
-        <div>
-            <input class ="input-block" name="password" type="text"  placeholder="Password" />
-        </div>
-        <div class="password-link">
-            <a class="dis-flex">Forgot password?</a>
-        </div>
-    
-        <div class="buttons">
-            <button type="submit" class="button">Login</button>
-            <a href="/" class="button">Cancel</a>
-        </div>
-    </form>
-    <a href="{{url_for('register')}}" style="color: gray;">Don't have an account? Sign Up</a>
+        {{form.submit()}}
+      </form>
+    <a href="{{url_for('user_bp.register')}}" style="color: gray;">Don't have an account? Sign Up</a>
 </div>
 {% endblock body %}

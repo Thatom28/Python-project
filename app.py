@@ -6,21 +6,75 @@ from flask import (
     render_template,
     session,
 )
-
-# from flask_login import UserMixin, login_user, login_required
-# from flask_wtf import FlaskForm
-# from wtforms import StringField, PasswordField, SubmitField
-# from wtforms.validators import DataRequired
-# from werkzeug.security import generate_password_hash, check_password_hash
-# import json
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import InputRequired, Length, ValidationError
 import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import date
+from flask_sqlalchemy import SQLAlchemy
+import os
+import uuid
 
 
 app = Flask(__name__)
+connection_string = os.environ.get("AZURE_DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = connection_string
+db = SQLAlchemy()
+app.config["SECRET_KEY"] = os.environ.get("FORM_SECRET_KEY")
+db.init_app(app)
 
 
+# table schema
+class User(db.Model):
+    # the table name to point to
+    __tablename__ = "users"
+    # add its columns                  #it will create random string for id| no need to add
+    id = db.Column(db.String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(50))
+
+
+class LoginForm(FlaskForm):
+    username = StringField("Username", validators=[InputRequired()])
+    password = PasswordField("Password", validators=[InputRequired()])
+    submit = SubmitField("Log in")
+
+    def validate_username(self, field):
+        existing_username = User.query.filter_by(username=field.data).first()
+        if not existing_username:
+            raise ValidationError("Username or password incorrect")
+
+    def validate_password(self, field):
+        user = User.query.filter_by(username=self.username.data).first()
+        if user:
+            if user.password != field.data:
+                raise ValidationError("Username or password incorrect")
+
+
+# --------------------------------------------------------------------------------------------------------------------------------
+# Register
+class RegistrationForm(FlaskForm):
+    # the fields (How they look on the template, the validators to the form)
+    username = StringField("Username", validators=[InputRequired(), Length(min=6)])
+    password = PasswordField(
+        "Password", validators=[InputRequired(), Length(min=8, max=12)]
+    )
+
+    submit = SubmitField("sign up")
+
+    # to display something to the user if error occurs
+    # Called automatically when the submit happens
+    # field gets the data the user is submitting
+    def validate_username(self, field):
+        print("validate was called🤩🤩🤩🤩", field.data)
+        # check if they exist by the column name and teh data given on te for
+        existing_username = User.query.filter_by(username=field.data).first()
+        if existing_username:
+            raise ValidationError("User name already exists")
+
+
+# --------------------------------------------------------------------------------------
 # Home page
 @app.route("/")
 def home():
@@ -39,24 +93,7 @@ def contact():
     return render_template("contact.html")
 
 
-# LogIn page
-@app.route("/login")
-def login():
-    # login_user()
-    return render_template("login.html")
-
-
 # method when the user submits a form
-@app.route("/user/dashboard", methods=["POST"])
-def user_logged_in():
-    username = request.form.get("username")
-    password = request.form.get("password")
-    # verifying the  user
-    # user = [user["name"] for user in users if user["name"] == username]
-    # if user:
-    #     return render_template("dashboard.html", username=username)
-    # return render_template("register.html")
-    return render_template("dashboard.html", username=username)
 
 
 # profile page
@@ -100,31 +137,6 @@ def user_logged_in():
 @app.route("/policies")
 def policies():
     return render_template("policies.html", policies=policies)
-
-
-# Register page
-@app.route("/register")
-def register():
-    return render_template("register.html")
-
-
-# Adding the user to the users list
-@app.post("/register")
-def add_user():
-    username = request.form.get(
-        "username"
-    )  # retriving the data from the from with the same name
-    password = request.form.get("password")
-    ids = [int(user["id"]) for user in users]
-    largest_id = max(ids)
-    new_user = {
-        "CreatedAt": date.today(),
-        "name": username,
-        "password": password,
-        "id": str(largest_id + 1),
-    }
-    users.append(new_user)
-    return jsonify(new_user), 201
 
 
 # @app.route("/my_policies", methods=["GET", "POST", "PUT", "DELETE"])
@@ -212,71 +224,71 @@ def submitted():
     return render_template("submitted.html")
 
 
-users = [
-    {
-        "createdAt": "2024-03-24T04:10:52.579Z",
-        "name": "Ruby Hane",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1076.jpg",
-        "password": "Buckinghamshire",
-        "id": "1",
-    },
-    {
-        "createdAt": "2024-03-24T07:04:31.288Z",
-        "name": "Dr. Peggy Shields",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/656.jpg",
-        "password": "Coordinator",
-        "id": "2",
-    },
-    {
-        "createdAt": "2024-03-23T20:27:51.901Z",
-        "name": "Joel McDermott",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1083.jpg",
-        "password": "Gasoline",
-        "id": "3",
-    },
-    {
-        "createdAt": "2024-03-24T05:56:26.481Z",
-        "name": "Darla Klein",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/61.jpg",
-        "password": "withdrawal",
-        "id": "4",
-    },
-    {
-        "createdAt": "2024-03-23T13:37:53.281Z",
-        "name": "Connie Daniel",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/330.jpg",
-        "password": "firewall",
-        "id": "5",
-    },
-    {
-        "createdAt": "2024-03-24T03:00:13.021Z",
-        "name": "Dr. Maureen Altenwerth",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/26.jpg",
-        "password": "Hybrid",
-        "id": "6",
-    },
-    {
-        "createdAt": "2024-03-23T14:03:03.780Z",
-        "name": "Lucia Ondricka",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/171.jpg",
-        "password": "Southeast",
-        "id": "7",
-    },
-    {
-        "createdAt": "2024-03-23T23:39:56.821Z",
-        "name": "Mildred Schroeder PhD",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/849.jpg",
-        "password": "Buckinghamshire",
-        "id": "8",
-    },
-    {
-        "createdAt": "2024-03-24T07:51:15.092Z",
-        "name": "Ms. Cristina Beer",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/833.jpg",
-        "password": "Northwest",
-        "id": "9",
-    },
-]
+# users = [
+#     {
+#         "createdAt": "2024-03-24T04:10:52.579Z",
+#         "name": "Ruby Hane",
+#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1076.jpg",
+#         "password": "Buckinghamshire",
+#         "id": "1",
+#     },
+#     {
+#         "createdAt": "2024-03-24T07:04:31.288Z",
+#         "name": "Dr. Peggy Shields",
+#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/656.jpg",
+#         "password": "Coordinator",
+#         "id": "2",
+#     },
+#     {
+#         "createdAt": "2024-03-23T20:27:51.901Z",
+#         "name": "Joel McDermott",
+#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1083.jpg",
+#         "password": "Gasoline",
+#         "id": "3",
+#     },
+#     {
+#         "createdAt": "2024-03-24T05:56:26.481Z",
+#         "name": "Darla Klein",
+#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/61.jpg",
+#         "password": "withdrawal",
+#         "id": "4",
+#     },
+#     {
+#         "createdAt": "2024-03-23T13:37:53.281Z",
+#         "name": "Connie Daniel",
+#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/330.jpg",
+#         "password": "firewall",
+#         "id": "5",
+#     },
+#     {
+#         "createdAt": "2024-03-24T03:00:13.021Z",
+#         "name": "Dr. Maureen Altenwerth",
+#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/26.jpg",
+#         "password": "Hybrid",
+#         "id": "6",
+#     },
+#     {
+#         "createdAt": "2024-03-23T14:03:03.780Z",
+#         "name": "Lucia Ondricka",
+#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/171.jpg",
+#         "password": "Southeast",
+#         "id": "7",
+#     },
+#     {
+#         "createdAt": "2024-03-23T23:39:56.821Z",
+#         "name": "Mildred Schroeder PhD",
+#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/849.jpg",
+#         "password": "Buckinghamshire",
+#         "id": "8",
+#     },
+#     {
+#         "createdAt": "2024-03-24T07:51:15.092Z",
+#         "name": "Ms. Cristina Beer",
+#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/833.jpg",
+#         "password": "Northwest",
+#         "id": "9",
+#     },
+# ]
 
 policies = [
     {
@@ -487,6 +499,12 @@ high_risk_areas = [
 
 # with open("policies.json", "w") as file:
 #     json_data = json.dump(policies, file, indent=4)
+
+
+from user_bp import user_bp
+
+app.register_blueprint(user_bp)
+
 
 if __name__ == "__main__":
     app.run(debug=True)  # to catch errors immediately

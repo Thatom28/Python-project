@@ -38,32 +38,32 @@
 <div class="container"> 
     <img class ='logo' src="https://www.svgheart.com/wp-content/uploads/2021/11/cute-owl-silhouette-free-svg-file-SvgHeart.Com.png" />
     <h3 class="heading">Register</h3>
-        <form action="{{url_for('user_logged_in')}}" method="POST">
-            <div>
-                <label class ='input-name' name="idnumber" for="FullName"> SA ID Number: </label>
-                <div>
-                    <input class="input-block" type="text"  placeholder="ID number" >
+    <h1>Register:</h1>
+    <!-- tou do not need to specify the action meand you are refering
+    to the same url but the post of it-->
+    <form action="" method="post">
+        <!-- hidden field with token -->
+        {{form.hidden_tag()}}
+
+        <!-- to display the error message -->
+        {% if form.username.errors %}
+            {% for error in form.username.errors  %}
+                <div style="color:red">
+                    {{error}}
                 </div>
-                <label class ='input-name' for="username"> Username: </label>
-                <div>
-                    <input class="input-block"  name="username" type="text"  placeholder="Username" >
-                </div>
-                <label class ='input-name' for="password"> Password: </label>
-                <div>
-                    <input class ="input-block"  name="password" type="text"  placeholder="Password" >
-                </div>
-                <label class ='input-name' for="password">Confirm Password</label>
-                <div>
-                    <input class ="input-block" type="text" name="password" placeholder="Confirm Password" >
-                </div>
-        
-            <div class="buttons">
-                <button type="submit" class="button">Register</button>
-                <a href="/" class="button button"> Cancel</a>
-            </div>
-        </form>
+
+            {% endfor %}
+        {% endif %}
+
+        {{form.username.label}}: {{form.username(placeholder="username")}}
+        </br>
+        {{form.password.label}}
+        {{form.password(placeholder="password")}}
+        </br>
+        {{form.submit()}}
+    </form>
     
-    <a href="{{url_for('login')}}" style="color: gray;">Already have an account? Sign In</a>
+    <a href="{{url_for('user_bp.login')}}" style="color: gray;">Already have an account? Sign In</a>
 </div>
 {% endblock body %}
 
