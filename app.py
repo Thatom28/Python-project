@@ -207,6 +207,11 @@ def policy_taken():
     return render_template("my_policies.html", my_policies=my_policies)
 
 
+@app.route("/submitted")
+def submitted():
+    return render_template("submitted.html")
+
+
 users = [
     {
         "createdAt": "2024-03-24T04:10:52.579Z",
