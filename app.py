@@ -35,6 +35,25 @@ class User(db.Model):
     password = db.Column(db.String(50))
 
 
+# -----------------------------------------------------------------------------------------------
+# car insurance covers
+class Car_insurance(db.Model):
+    # the table name to point to
+    __tablename__ = "Car_insurance"
+    # add its columns                  #it will create random string for id| no need to add
+    id = db.Column(db.String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
+    cover_name = db.Column(db.String(), nullable=False, unique=True)
+    Cover_decription = db.Column(db.String())
+    base_price = db.column(db.Float())
+
+
+@app.route("/car_insurance")
+def car_insurance():
+    car_insurances = Car_insurance.query.all()
+    return render_template("car_insurance.html", car_insurances=car_insurances)
+
+
+# --------------------------------------------------------------------------------------------------
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[InputRequired()])
     password = PasswordField("Password", validators=[InputRequired()])
@@ -84,7 +103,7 @@ def home():
 # About page
 @app.route("/about")
 def about():
-    return render_template("about.html", users=users)
+    return render_template("about.html")
 
 
 # Contact page

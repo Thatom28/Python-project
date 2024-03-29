@@ -6,64 +6,46 @@
         margin: 20px;
         padding: 0;
     }
-    .input-block{
-        width: 40%;
-        padding: 5px;
-        border-radius: 5px;
-        border: 0;
-        border-bottom: 1px solid hsl(0, 0%, 60%);
-        background-color: hsl(0, 0%, 90%);
-        color: black;
-        margin-bottom: 25px;
-        margin-top: 10px;
-    }
-    .input-name{
-        text-align: left;
-        font-weight:bold;
+    .submit-button:hover{
+        box-shadow:0 4px 8px #17a2b8; 
     }
     .password-link{
         text-align: center;
         width:40% ;
         /* background-color: #19747E; */
     }
-    .submit-button:hover{
-        box-shadow:0 4px 8px rgba(0, 0, 0, 2); 
+    .dis-flex{
+        display: flex;
+        color: #A9D6E5;
+        font-size: 12px;
+        /* text-align: center; */
+        font-weight:lighter;
     }
-    .heading{
+    h3{
         font-weight: lighter;
-        margin-bottom: 40px;
     }
 </style>
-
 <div class="container"> 
     <img class ='logo' src="https://www.svgheart.com/wp-content/uploads/2021/11/cute-owl-silhouette-free-svg-file-SvgHeart.Com.png" />
-    <h3 class="heading">Register</h3>
-    <h1>Register:</h1>
-    <!-- tou do not need to specify the action meand you are refering
-    to the same url but the post of it-->
+    <h3>Register</h3>
     <form action="" method="post">
-        <!-- hidden field with token -->
-        {{form.hidden_tag()}}
-
-        <!-- to display the error message -->
-        {% if form.username.errors %}
-            {% for error in form.username.errors  %}
-                <div style="color:red">
-                    {{error}}
-                </div>
-
-            {% endfor %}
-        {% endif %}
-
-        {{form.username.label}}: {{form.username(placeholder="username")}}
-        </br>
-        {{form.password.label}}
-        {{form.password(placeholder="password")}}
-        </br>
-        {{form.submit()}}
-    </form>
-    
-    <a href="{{url_for('user_bp.login')}}" style="color: gray;">Already have an account? Sign In</a>
+        {{form.hidden_tag()}} {% if form.username.errors %}
+         {% for error in form.username.errors %}
+        <div style="color: red">{{error}}</div>
+        {% endfor %} {% endif %} {% if form.password.errors %} {% for error in
+        form.password.errors %}
+        <div style="color: red">{{error}}</div>
+        {% endfor %} {% endif %}
+        <div class="form-group">
+          {{form.username.label}}: {{form.username(placeholder="Rashay",
+          class="form-control is-invalid")}}
+        </div>
+        <div class="form-group">
+          {{form.password.label}}: {{form.password(placeholder="Password",
+          class="form-control")}}
+        </div>
+        {{form.submit(class="btn btn-info submit-button")}}
+      </form>
+    <a href="{{url_for('user_bp.login')}}" style="color: gray;">Don't have an account? Sign in</a>
 </div>
 {% endblock body %}
-
