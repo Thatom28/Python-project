@@ -1,10 +1,8 @@
 from flask import (
     Flask,
-    jsonify,
     request,
     render_template,
     render_template,
-    session,
 )
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
@@ -15,6 +13,9 @@ from datetime import date
 from flask_sqlalchemy import SQLAlchemy
 import os
 import uuid
+import matplotlib.pyplot as plt
+import io
+import base64
 
 
 app = Flask(__name__)
@@ -41,8 +42,8 @@ class Car_insurance(db.Model):
     # the table name to point to
     __tablename__ = "Car_insurance"
     # add its columns                  #it will create random string for id| no need to add
-    id = db.Column(db.String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
-    cover_name = db.Column(db.String(), nullable=False, unique=True)
+    id = db.Column(db.String(50), primary_key=True, nullable=False)
+    cover_name = db.Column(db.String())
     Cover_decription = db.Column(db.String())
     base_price = db.column(db.Float())
 
@@ -177,11 +178,25 @@ def calculator():
         monthly_payments = int(request.form.get("monthly_payments"))
         no_of_years = int(request.form.get("no_of_years"))
         premium_payment = monthly_payments * (no_of_years * 3)
+
+        plt.figure(figsize=(6, 4))
+        plt.bar("Premium Payment", no_of_years, color="crimson", alpha=0.5)
+        plt.title("Premium Payment Visualization")
+        plt.xlabel("Payment Type")
+        plt.ylabel("Amount")
+
+        # Save the plot to a BytesIO object
+        img = io.BytesIO()
+        plt.savefig(img, format="png")
+        img.seek(0)
+        plot_url = base64.b64encode(img.getvalue()).decode()
+
         return render_template(
             "quotation.html",
-            monthly_paynemts=monthly_payments,
+            monthly_payments=monthly_payments,
             no_of_years=no_of_years,
             premium_payment=premium_payment,
+            plot_url=plot_url,  # Pass the graph to the template
         )
     else:
         return render_template("calculation.html")

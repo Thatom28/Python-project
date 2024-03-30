@@ -9,6 +9,7 @@
     }
     .container{
         text-align: center;
+        justify-content: center;
         border: 1px solid black;
         max-width: 500px;
         padding: 12px;
@@ -25,6 +26,7 @@
         <p>Premium payout at the end of {{no_of_years}} years is {{premium_payment}}</p>
     </div>
 </div>
-
+<img src="data:image/png;base64,{{ plot_url }}" alt="Premium Payment Visualization">
+<div  class="outer-container"><a href="/visualize" class="btn btn-info submit-button">Visualize</a></div>
     
 {% endblock body %}
