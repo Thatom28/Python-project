@@ -171,6 +171,31 @@ def policies():
 #             )
 
 
+@app.route("/visalize", methods=["POST"])
+def visualization():
+    if request.method == "POST":
+        monthly_payments = int(request.form.get("monthly_payments"))
+        no_of_years = int(request.form.get("no_of_years"))
+        premium_payment = monthly_payments * (no_of_years * 3)
+
+        plt.figure(figsize=(6, 4))
+        plt.bar("Premium Payment", no_of_years, color="crimson", alpha=0.5)
+        plt.title("Premium Payment Visualization")
+        plt.xlabel("Payment Type")
+        plt.ylabel("Amount")
+
+        # Save the plot to a BytesIO object
+        img = io.BytesIO()
+        plt.savefig(img, format="png")
+        img.seek(0)
+        plot_url = base64.b64encode(img.getvalue()).decode()
+
+        return render_template(
+            "visualize.html",
+            plot_url=plot_url,  # Pass the graph to the template
+        )
+
+
 # calculator in te nav
 @app.route("/calculator", methods=["GET", "POST"])
 def calculator():
