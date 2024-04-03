@@ -8,12 +8,15 @@
 .doc_icon{
   color:#1f6b8a;
 }
+a{
+  color:#1f6b8a;
+}
 </style>
-<!-- <div class = "container">
+<div class = "container">
     <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
     <a href="/profile">My profile</a>
-    <a href="/my_policies" >Policies</a>
+    <a href="/user_covers" >Policies</a>
     <a href="/claims" >Claims</a>
     <a href="/rewards" >Rewards</a>
     <a href="/market">Market</a>
@@ -33,17 +36,17 @@
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";
     }
-    </script> --> 
-    <!-- <div class="user-info">
-        <p>Thato Matlala</p>
-        <p>mobile number: 0123456789</p>
-        <p>Email: thato@gmail.com</p>
-        <p>Adress: 14 sefako road, Klersdorp, South Africa</p>
-    </div> -->
+    </script> 
   <div class="container">
     <h2>Welcome, {{username}}</h2>
+    <div class="user-info">
+      <p>Thato Matlala</p>
+      <p>mobile number: 0123456789</p>
+      <p>Email: thato@gmail.com</p>
+      <p>Adress: 14 sefako road, Klersdorp, South Africa</p>
+  </div>
     <p>Policies</p>
-    <a href="my_policies" class="doc_icon"><i class="fa-solid fa-file"></i></a>
+    <a href="user_covers" class="doc_icon"><i class="fa-solid fa-file"></i></a>
     <p>number of Active Policies</p>
     <form action="{{url_for('quote')}}" method="get">
       <button type="submit" class="button">Add Policy</button>

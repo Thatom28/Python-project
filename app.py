@@ -3,6 +3,7 @@ from flask import (
     request,
     render_template,
     render_template,
+    jsonify,
 )
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
@@ -39,19 +40,79 @@ class User(db.Model):
 # -----------------------------------------------------------------------------------------------
 # car insurance covers
 class Car_insurance(db.Model):
-    # the table name to point to
     __tablename__ = "Car_insurance"
-    # add its columns                  #it will create random string for id| no need to add
-    id = db.Column(db.String(50), primary_key=True, nullable=False)
-    cover_name = db.Column(db.String())
-    Cover_decription = db.Column(db.String())
-    base_price = db.column(db.Float())
+
+    id = db.Column(
+        db.String(50),
+        primary_key=True,
+        nullable=False,
+        default=lambda: str(uuid.uuid4()),
+    )
+    cover_name = db.Column(db.String(255))
+    cover_description = db.Column(db.String(255))
+    base_price = db.Column(db.Float)
+    image_url = db.Column(db.String(255))
+
+    def to_dict(self):
+        # the name the front end wants the key to be
+        return {
+            "id": self.id,
+            "cover_name": self.cover_name,
+            "cover_description": self.cover_description,
+            "base_price": self.base_price,
+            "image_url": self.image_url,
+        }
 
 
 @app.route("/car_insurance")
 def car_insurance():
     car_insurances = Car_insurance.query.all()
-    return render_template("car_insurance.html", car_insurances=car_insurances)
+    data = [car_insurance.to_dict() for car_insurance in car_insurances]
+    return render_template("car_insurance.html", car_insurances=data)
+
+
+@app.route("/calculate", methods=["POST"])
+def calculate_total():
+    selected_covers = request.form.getlist(
+        "cover"
+    )  # Get the selected covers from the form
+    # total_price = calculate_price(selected_covers)   # Calculate the total price
+    # return render_template('result.html', total_price=total_price)
+    print(selected_covers)
+
+
+@app.route("/upload", methods=["POST"])
+def upload_file():
+    uploaded_file = request.files["file"]
+    if uploaded_file.filename != "":
+        uploaded_file.save(uploaded_file.filename)
+        return "File uploaded successfully!"
+    else:
+        return "No file selected!"
+
+
+# --------------------------------------------------------------------------------------------------
+class User_Cover(db.Model):
+    __tablename__ = "User_cover"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    cover_id = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f"<User_Cover(user_id={self.user_id}, cover_id={self.cover_id})>"
+
+
+# To add qoute/policy to the my_policy list and display my policy page
+@app.route("/user_covers", methods=["POST", "Get"])
+def policy_taken():
+    if request.method == "POST":
+        user_policies = db.session.query(User_Cover, User).join(User).all
+        data = [user_cover.to_dict() for user_cover in user_policies]
+        return render_template("user_covers.html", user_covers=data)
+    else:
+        user_policies = db.session.query(User_Cover, User).join(User).all()
+        data = [user_cover.to_dict() for user_cover in user_policies]
+        return render_template("user_covers.html", user_covers=data)
 
 
 # --------------------------------------------------------------------------------------------------
@@ -113,87 +174,10 @@ def contact():
     return render_template("contact.html")
 
 
-# method when the user submits a form
-
-
-# profile page
-# @app.route("/dashboard")
-# def dashboard():
-#     # tesla_df = pd.read_csv("tesla_stock_market_trends.csv")
-#     # graph = plt.scatter(tesla_df["high"], tesla_df["date"])
-#     return render_template("dashboard.html", my_policies=my_policies)
-
-
-# @app.route("/add_new_policy", methods=["POST"])
-# def add_new_policy():
-#     policy_type = request.form["policy_type"]
-#     policy_amount = request.form["policy_amount"]
-#     if policy_type and policy_amount:
-#         my_policies.append({"type": policy_type, "amount": policy_amount})
-#     return redirect(
-#         url_for("dashboard")
-#     )  # Redirect to the dashboard route instead of rendering the template directly
-
-
-# @app.post("/add_new_policy/<new_policy>")
-# def add_new_policy(new_policy):
-#     my_policies.append(new_policy)
-#     return render_template("/add_policy.html")
-
-
-# # takes us to the add_policy page
-# @app.route("/add_policy", methods=["GET"])
-# def add_policy():
-#     return render_template("add_policy.html", policies=policies)
-
-
-# show us a list of policies taken
-# @app.route("/active_policies", methods=["POST"])
-# def active_policies():
-#     return render_template("active_policies.html", my_policies=my_policies)
-
-
 # Policies page for the about page
 @app.route("/policies")
 def policies():
     return render_template("policies.html", policies=policies)
-
-
-# @app.route("/my_policies", methods=["GET", "POST", "PUT", "DELETE"])
-# def my_policies():
-#     username = session.get("username")
-#     if username():  # theu user found
-#         user_data = users.get(username)
-#         if user_data:
-#             policies = user_data.get("policies")
-#             return render_template(
-#                 "my_policies.html", username=username, policies=policies
-#             )
-
-
-@app.route("/visalize", methods=["POST"])
-def visualization():
-    if request.method == "POST":
-        monthly_payments = int(request.form.get("monthly_payments"))
-        no_of_years = int(request.form.get("no_of_years"))
-        premium_payment = monthly_payments * (no_of_years * 3)
-
-        plt.figure(figsize=(6, 4))
-        plt.bar("Premium Payment", no_of_years, color="crimson", alpha=0.5)
-        plt.title("Premium Payment Visualization")
-        plt.xlabel("Payment Type")
-        plt.ylabel("Amount")
-
-        # Save the plot to a BytesIO object
-        img = io.BytesIO()
-        plt.savefig(img, format="png")
-        img.seek(0)
-        plot_url = base64.b64encode(img.getvalue()).decode()
-
-        return render_template(
-            "visualize.html",
-            plot_url=plot_url,  # Pass the graph to the template
-        )
 
 
 # calculator in te nav
@@ -204,24 +188,11 @@ def calculator():
         no_of_years = int(request.form.get("no_of_years"))
         premium_payment = monthly_payments * (no_of_years * 3)
 
-        plt.figure(figsize=(6, 4))
-        plt.bar("Premium Payment", no_of_years, color="crimson", alpha=0.5)
-        plt.title("Premium Payment Visualization")
-        plt.xlabel("Payment Type")
-        plt.ylabel("Amount")
-
-        # Save the plot to a BytesIO object
-        img = io.BytesIO()
-        plt.savefig(img, format="png")
-        img.seek(0)
-        plot_url = base64.b64encode(img.getvalue()).decode()
-
         return render_template(
             "quotation.html",
             monthly_payments=monthly_payments,
             no_of_years=no_of_years,
             premium_payment=premium_payment,
-            plot_url=plot_url,  # Pass the graph to the template
         )
     else:
         return render_template("calculation.html")
@@ -234,9 +205,13 @@ def quote():
         base_price = 50
         type_of_insurance = request.form.get("type")
         location = request.form.get("location")
-        age = request.form.get("age")
+        age = int(request.form.get("age"))
         vehicle_model = request.form.get("vehicle_model")
-        if location in high_risk_areas:
+
+        selected_covers = request.form.get("")
+        if age <= 18:
+            return "<h2>minor : connot take an insurance</h2>"
+        elif location in high_risk_areas:
             amount = base_price * 3
             location += "  (high risk area)"
         elif type_of_insurance == "car" and int(age) < 21:
@@ -255,99 +230,10 @@ def quote():
         return render_template("add_policy.html")
 
 
-my_policies = [
-    {
-        "insurance_name": "Home-Insurance",
-        "createdAt": "2024-03-24T05:56:26.481Z",
-    },
-]
-current_date = date.today()  # a fuction cannot be appended
-
-
-# To add qoute/policy to the my_policy list and display my policy page
-@app.route("/my_policies", methods=["POST", "Get"])
-def policy_taken():
-    if request.method == "POST":
-        type_of_insurance = request.form.get("type")
-        location = request.form.get("location")
-        age = request.form.get("age")
-        vehicle_model = request.form.get("vehicle_model")
-        new_policy = {"insurance_name": type_of_insurance, "createdAt": date.today()}
-        my_policies.append(new_policy)
-        return render_template("my_policies.html", my_policies=my_policies)
-    return render_template("my_policies.html", my_policies=my_policies)
-
-
 @app.route("/submitted")
 def submitted():
     return render_template("submitted.html")
 
-
-# users = [
-#     {
-#         "createdAt": "2024-03-24T04:10:52.579Z",
-#         "name": "Ruby Hane",
-#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1076.jpg",
-#         "password": "Buckinghamshire",
-#         "id": "1",
-#     },
-#     {
-#         "createdAt": "2024-03-24T07:04:31.288Z",
-#         "name": "Dr. Peggy Shields",
-#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/656.jpg",
-#         "password": "Coordinator",
-#         "id": "2",
-#     },
-#     {
-#         "createdAt": "2024-03-23T20:27:51.901Z",
-#         "name": "Joel McDermott",
-#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1083.jpg",
-#         "password": "Gasoline",
-#         "id": "3",
-#     },
-#     {
-#         "createdAt": "2024-03-24T05:56:26.481Z",
-#         "name": "Darla Klein",
-#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/61.jpg",
-#         "password": "withdrawal",
-#         "id": "4",
-#     },
-#     {
-#         "createdAt": "2024-03-23T13:37:53.281Z",
-#         "name": "Connie Daniel",
-#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/330.jpg",
-#         "password": "firewall",
-#         "id": "5",
-#     },
-#     {
-#         "createdAt": "2024-03-24T03:00:13.021Z",
-#         "name": "Dr. Maureen Altenwerth",
-#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/26.jpg",
-#         "password": "Hybrid",
-#         "id": "6",
-#     },
-#     {
-#         "createdAt": "2024-03-23T14:03:03.780Z",
-#         "name": "Lucia Ondricka",
-#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/171.jpg",
-#         "password": "Southeast",
-#         "id": "7",
-#     },
-#     {
-#         "createdAt": "2024-03-23T23:39:56.821Z",
-#         "name": "Mildred Schroeder PhD",
-#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/849.jpg",
-#         "password": "Buckinghamshire",
-#         "id": "8",
-#     },
-#     {
-#         "createdAt": "2024-03-24T07:51:15.092Z",
-#         "name": "Ms. Cristina Beer",
-#         "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/833.jpg",
-#         "password": "Northwest",
-#         "id": "9",
-#     },
-# ]
 
 policies = [
     {
@@ -453,55 +339,6 @@ high_risk_areas = [
     "nyanga",
     "honeydew",
 ]
-# # getting all users
-# @app.get("/users")
-# def get_users():
-#     return jsonify(users)
-
-
-# # getting the user by id
-# @app.get("/users/<id>")
-# def get_user_by_id(id):
-#     user = next((user for user in users if user["id"] == id), None)
-#     if user:
-#         return user
-#     result = {"message": "User not found"}
-#     return jsonify(result), 404
-
-
-# # Creating a user from
-# @app.post("/users")
-# def create_user():
-#     new_user = request.json  # get the data from json
-#     ids = [int(user["id"]) for user in users]
-#     largest_id = max(ids)
-#     new_user["id"] = largest_id + 1
-#     users.append(new_user)
-#     result = {"message": "user added succesfully"}
-#     return jsonify(result)
-
-
-# # deleting a user
-# @app.delete("/users/<id>")
-# def delete_user_by_id(id):
-#     user = next((user for user in users if user["id"] == id), None)
-#     if user:
-#         users.remove(user)
-#         return jsonify({"data": user, "message": "User deleted successfully"})
-#     return jsonify({"message": "user not found"})
-
-
-# # editing the user
-# @app.put("/users/<id>")
-# def update_user(id):
-#     updates = request.json
-#     user = next((user for user in users if user["id"] == id), None)
-#     if user:
-#         user.update(updates)
-#         return jsonify({"data": user, "message": "User updated successfully"})
-#     else:
-#         return jsonify({"message": "User not found"}), 404
-
 
 # methods to add, remove, update and delete insurances from the user profile
 # @app.get("/policies")
@@ -527,35 +364,6 @@ high_risk_areas = [
 #     new_policy["id"] = str(largest_id + 1)  # add one to the max Id
 #     policies.append(new_policy)
 #     return jsonify({"data": new_policy, "message": "policy added succsefully"}), 201
-
-
-# @app.delete("/policies/<id>")  # <> converts to a variable
-# def delete_policy(id):
-#     policy = next(
-#         (policy for policy in policies if policy["id"] == id), None
-#     )  # the ers policy list
-#     if policy:
-#         policies.remove(policy)
-#         return jsonify({"data": policy, "message": "policy deleted sucessfully"})
-#     else:
-#         result = {"message": "policy not found"}
-#         return jsonify(result), 404
-
-
-# @app.put("/policies/<id>")  # <> converts to a variable
-# def update_policy(id):
-#     updates = request.json  # get the data from json
-#     policy = next(
-#         (policy for policy in policies if policy["id"] == id), None
-#     )  # find the movie id
-#     if policy:
-#         policy.update(updates)
-#         return jsonify({"data": policy, "message": "policy updated sucessfully"})
-#     else:
-#         result = {"message": "policy not found"}
-#         return jsonify(result), 404
-
-
 # with open("policies.json", "w") as file:
 #     json_data = json.dump(policies, file, indent=4)
 
@@ -563,6 +371,25 @@ high_risk_areas = [
 from user_bp import user_bp
 
 app.register_blueprint(user_bp)
+
+
+# -------------------------------------------------------------------------------------
+# Management (delete and edit)
+# @app.delete("/<id>")
+# def delete_policy(id):
+#     # Permission to modify the lexical scope variable
+#     filtered_policy = my_policies.query.get(id)
+#     if not filtered_policy:
+#         return jsonify({"message": "Policy not found"}), 404
+
+#     try:
+#         data = filtered_policy.to_dict()
+#         db.session.delete(filtered_policy)
+#         db.session.commit()  # Making the change (update/delete/create) permanent
+#         return jsonify({"message": "Deleted Successfully", "data": data})
+#     except Exception as e:
+#         db.session.rollback()  # Undo the change
+#         return jsonify({"message": str(e)}), 500
 
 
 if __name__ == "__main__":

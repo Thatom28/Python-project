@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>User Covers</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Cover ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_cover in user_covers %}
+                <tr>
+                    <td>{{ user_cover.id }}</td>
+                    <td>{{ user_cover.user_id }}</td>
+                    <td>{{ user_cover.cover_id }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock body %}

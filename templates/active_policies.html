@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 <ul>
-    {% for policy in my_policies %}
+    {% for policy in user_covers %}
     <li>
         <li>
             <strong>{{ policy['type']}}</strong> - R{{ policy['amount']}}

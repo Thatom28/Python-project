@@ -15,17 +15,52 @@
         </select>
     </div>
     <div>
+        <input type="checkbox" name="Accidents cover" value="Accidents cover">
+        <label for="Accidents cover">Accidents cover</label><br>
+
+        <input type="checkbox" name="Theft and hijacking cover" value="Theft and hijacking cover">
+        <label for="Theft and hijacking cover">Theft and hijacking cover</label><br>
+
+        <input type="checkbox" name="Weather damage cover" value="Weather damage cover">
+        <label for="Weather damage cover">Weather damage cover</label><br>
+
+        <input type="checkbox" name="Damage to others property cover" value="Damage to others property cover">
+        <label for="Damage to others property cover">Damage to others property cover</label><br>
+
+        <input type="checkbox" name="Vandalism cover" value="Vandalism cover">
+        <label for="Vandalism cover">Vandalism</label><br>
+
+        <input type="checkbox" name="Fire and explosion" value="Fire and explosion">
+        <label for="Fire and explosion">Fire and explosion</label><br>
+
+    </div>
+    <div>
         <label for="location" >Location</label>
         <input for="location" name="location" placeholder="Location" required />
     </div>
     <div>
-        <label for="age" >Location</label>
+        <label for="age" >Age</label>
         <input for="age" name="age" placeholder="Age" required />
     </div>
     <div>
-        <label for="vehicle_model">vehicle model</label>
-        <input for="vehicle_model" name="age" placeholder="vehicle_model" required/>
+        <label for="Year_bought" >Year bought</label>
+        <input type="CalendarYear" for="Year_bought" name="Year_bought" placeholder="2019" required />
     </div>
-    <button type="submit">View Quote</button>
+
+    <div>
+        <label for="car_worth" >Current car worth</label>
+        <input for="car_worth" name="car_worth" placeholder="R120 0000" required />
+    </div>
+    <div>
+        <label for="vehicle_model">vehicle model</label>
+        <input for="vehicle_model" name="vehicle_model" placeholder="vehicle_model" required/>
+    </div>
+    <div>
+        <label for="ownerhip_docs">Ownership documents</label>
+        <input type="file" name="file" accept=".pdf, .doc, .docx">
+    </div>
+
+        <button type="submit">View Quote</button>
     </form>
+    <script src="script.js"></script>
 {% endblock body %}

@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 {% block body %}
-<div class="container"> 
-    <img class ='logo' src="https://www.svgheart.com/wp-content/uploads/2021/11/cute-owl-silhouette-free-svg-file-SvgHeart.Com.png" />
-    <h3>car insurance</h3>
-    {% for insurance in car_insurances %}
-            <li>{{ insurance.cover_name }} - {{ insurance.Cover_decription }} - {{ insurance.base_price }}</li>
-            {% endfor %}
+<div class="insurance-container">
+    {% for policy in car_insurances %}
+        <div class="banner">
+            <div><img class="policy-image" src="{{ policy.image_url }}" /></div>
+            <div>
+                <div class="policy-name">{{ policy.cover_name }}</div>
+                <div class="policy-slogan">{{ policy.cover_description }}</div>
+                <div class="policy-premium">Premium from R{{ policy.base_price }}p.m</div>
+            </div>
+            <div>
+                <a href="" class="button learn-more">Learn more</a>
+            </div>
+        </div>
+    {% endfor %}
 </div>
 {% endblock body %}
