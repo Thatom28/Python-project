@@ -3,7 +3,8 @@ from flask import (
     request,
     render_template,
     render_template,
-    jsonify,
+    redirect,
+    url_for,
 )
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
@@ -137,6 +138,14 @@ class User_Cover(db.Model):
     user_id = db.Column(db.Integer)
     cover_id = db.Column(db.Integer)
 
+    def to_dict(self):
+        # the name the front end wants the key to be
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "cover_id": self.cover_id,
+        }
+
     def __repr__(self):
         return f"<User_Cover(user_id={self.user_id}, cover_id={self.cover_id})>"
 
@@ -145,12 +154,12 @@ class User_Cover(db.Model):
 @app.route("/user_covers", methods=["POST", "Get"])
 def policy_taken():
     if request.method == "POST":
-        user_policies = db.session.query(User_Cover, User).join(User).all
-        data = [user_cover.to_dict() for user_cover in user_policies]
+        user_policies = db.session.query(User_Cover, User).all()
+        data = [user_cover.to_dict() for user_cover, _ in user_policies]
         return render_template("user_covers.html", user_covers=data)
     else:
-        user_policies = db.session.query(User_Cover, User).join(User).all()
-        data = [user_cover.to_dict() for user_cover in user_policies]
+        user_policies = db.session.query(User_Cover).all()
+        data = [user_cover.to_dict() for user_cover, _ in user_policies]
         return render_template("user_covers.html", user_covers=data)
 
 
@@ -343,4 +352,5 @@ app.register_blueprint(user_bp)
 
 
 if __name__ == "__main__":
+    db.create_all()
     app.run(debug=True)  # to catch errors immediately
