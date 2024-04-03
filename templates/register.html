@@ -44,6 +44,14 @@
           {{form.password.label}}: {{form.password(placeholder="Password",
           class="form-control")}}
         </div>
+        <!-- <div class="form-group">
+            {{form.Email.label}}: {{form.Email(placeholder="Email",
+            class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{form.DOB.label}}: {{form.DOB(placeholder="2001/09/02",
+            class="form-control")}}
+          </div> -->
         {{form.submit(class="btn btn-info submit-button")}}
       </form>
     <a href="{{url_for('user_bp.login')}}" style="color: gray;">Don't have an account? Sign in</a>

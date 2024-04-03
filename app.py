@@ -37,6 +37,45 @@ class User(db.Model):
     password = db.Column(db.String(50))
 
 
+# --------------------------------------------------------------------------------------
+# Policies
+class Policies(db.Model):
+    __tablename__ = "Policies"
+
+    id = db.Column(
+        db.String(50),
+        primary_key=True,
+        nullable=False,
+        default=lambda: str(uuid.uuid4()),
+    )
+    name = db.column(db.String(255))
+    cover = db.Column(db.String(255))
+    premium = db.Column(db.Float)
+    short_description = db.Column(db.String(255))
+    description = db.Column(db.String(255))
+    bonus = db.Column(db.String(255))
+    image = db.Column(db.String(255))
+
+    def to_dict(self):
+        # the name the front end wants the key to be
+        return {
+            "id": self.id,
+            "premium": self.premium,
+            "short_description": self.short_description,
+            "description": self.description,
+            "image": self.image,
+            "bonus": self.bonus,
+        }
+
+
+# Policies page for the about page
+@app.route("/policies")
+def policies():
+    policies = Policies.query.all()
+    data = [policy.to_dict() for policy in policies]
+    return render_template("policies.html", policies=data)
+
+
 # -----------------------------------------------------------------------------------------------
 # car insurance covers
 class Car_insurance(db.Model):
@@ -174,12 +213,6 @@ def contact():
     return render_template("contact.html")
 
 
-# Policies page for the about page
-@app.route("/policies")
-def policies():
-    return render_template("policies.html", policies=policies)
-
-
 # calculator in te nav
 @app.route("/calculator", methods=["GET", "POST"])
 def calculator():
@@ -234,89 +267,6 @@ def quote():
 def submitted():
     return render_template("submitted.html")
 
-
-policies = [
-    {
-        "cover": 6,
-        "premium": 12,
-        "name": "Life Cover",
-        "short_description": "Secure Your Legacy, Protect Your Loved Ones",
-        "Bonus": "grey",
-        "image": "https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/blog/importance-of-having-savings-717x404.jpg",
-        "description": "We ease the burdern on your family should you die unexpectedly by paying once-off tax-free amout that can be used to cover their expenses for now and the future.",
-        "id": "1",
-    },
-    {
-        "cover": 1,
-        "premium": 82,
-        "name": "car Insurance",
-        "short_description": "Safeguarding Your Drive",
-        "Bonus": "Investment",
-        "image": "https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/blog/importance-of-having-savings-717x404.jpg",
-        "description": "Hit the road with confidence knowing that your journey is protected by our comprehensive car insurance. From daily commutes to cross-country adventures, our coverage keeps you and your vehicle secure against life's unexpected twists and turns.",
-        "id": "2",
-    },
-    {
-        "cover": 51,
-        "premium": 97,
-        "name": "Home Insurance",
-        "short_description": "Safeguarding Every Brick in Your Haven",
-        "Bonus": "Metal",
-        "image": "https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/blog/importance-of-having-savings-717x404.jpg",
-        "description": "Protecting your home is more than just safeguarding a structure—it's safeguarding your sanctuary, your memories, and your peace of mind, our home insurance coverage ensures that your home is shielded against life's uncertainties, whether it's fire, theft, or natural disasters. ",
-        "id": "3",
-    },
-    {
-        "cover": 59,
-        "premium": 8,
-        "name": "Business Insurance",
-        "short_description": "Securing Your Sucess",
-        "Bonus": "application",
-        "image": "https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/blog/importance-of-having-savings-717x404.jpg",
-        "description": "we understand that your business is more than just a venture—it's your livelihood, your passion, and your legacy. That's why we offer comprehensive business insurance solutions designed to protect every aspect of your enterprise.",
-        "id": "4",
-    },
-    {
-        "cover": 22,
-        "premium": 68,
-        "name": "Retiremnet Annuity",
-        "short_description": "Nurturing Security for Your Future",
-        "Bonus": "Rutherfordium",
-        "image": "https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/blog/importance-of-having-savings-717x404.jpg",
-        "description": " We understand the importance of planning for your future, especially during retirement. Our retirement annuity options offer a path to financial security, allowing you to enjoy the fruits of your labor with confidence. ",
-        "id": "5",
-    },
-    {
-        "cover": 42,
-        "premium": 31,
-        "name": "Short-term Insurance",
-        "short_description": "Safeguard Your Adventures, Insure Your Thrills",
-        "Bonus": "sternly",
-        "image": "https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/blog/importance-of-having-savings-717x404.jpg",
-        "description": "Whether you're hitting the slopes, embarking on a road trip, or trying out a new extreme sport, our short-term insurance has you covered. Enjoy peace of mind knowing that your fun activities are protected against unexpected mishaps.  Explore worry-free",
-        "id": "6",
-    },
-    {
-        "cover": 3,
-        "premium": 23,
-        "name": "Agriculture Insurance",
-        "short_description": "Harvesting Security, Cultivating Success",
-        "Bonus": "City",
-        "image": "https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/blog/importance-of-having-savings-717x404.jpg",
-        "description": "Despite modern techniques, there are still numerous risks and challenges facing farmers and their crops. As your partner in agriculture, we understand that effective risk management is crucial. We offer more than insurance expertise, we do our research to advise on growth effectiveness.",
-        "id": "7",
-    },
-    {
-        "cover": 49,
-        "premium": 11,
-        "name": "Income Protection",
-        "short_description": "Cover for when you can't work",
-        "Bonus": "ha",
-        "image": "https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/blog/importance-of-having-savings-717x404.jpg",
-        "description": "covers you and your family if you lose your income due to permanent or temporary disability or illness, by paying you a monthly income that allows you to maintain your standard of living.",
-        "id": "8",
-    },
-]
 
 high_risk_areas = [
     "cape town cbd",
