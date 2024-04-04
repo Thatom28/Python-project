@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 <div>
-    <form action="{{url_for('quote')}}" method="POST">
+    <form action="{{url_for('calculation_bp.quote')}}" method="POST">
         <label for="type">Insurance Type : </label>
         <select name="type" required>
             <option value="Car Insurance">Car insurance</option>
