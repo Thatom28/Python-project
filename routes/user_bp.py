@@ -2,9 +2,9 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from models.users import User
 from extensions import db
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, EmailField, DateField
 from wtforms.validators import InputRequired, Length, ValidationError
-from flask_login import login_user, login_required
+from flask_login import login_user, login_required, logout_user
 from models.users import User
 
 user_bp = Blueprint("user_bp", __name__)
@@ -36,7 +36,8 @@ class RegistrationForm(FlaskForm):
     password = PasswordField(
         "Password", validators=[InputRequired(), Length(min=8, max=12)]
     )
-
+    email = EmailField("Email", validators=[InputRequired()])
+    date_of_birth = DateField("Date of Birth", validators=[InputRequired()])
     submit = SubmitField("sign up")
 
     # to display something to the user if error occurs
@@ -58,7 +59,12 @@ def register():
         # get the user from the form
         # username = form.username.data
         # password = form.password.data
-        new_user = User(username=form.username.data, password=form.password.data)
+        new_user = User(
+            username=form.username.data,
+            password=form.password.data,
+            email=form.email.data,
+            date_of_birth=form.date_of_birth.data,
+        )
         try:
             db.session.add(new_user)
             db.session.commit()
@@ -83,3 +89,10 @@ def login():
         return render_template("dashboard.html", username=form.username.data)
     else:
         return render_template("login.html", form=form)
+
+
+@user_bp.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("login_page"))

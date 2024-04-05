@@ -6,6 +6,7 @@ from flask import (
     redirect,
     url_for,
 )
+from sqlalchemy.sql import text
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
@@ -24,6 +25,10 @@ from models.users import User
 app = Flask(__name__)
 connection_string = os.environ.get("AZURE_DATABASE_URL")
 app.config["SQLALCHEMY_DATABASE_URI"] = connection_string
+
+# connection_string = os.environ.get("LOCAL_DATABASE_URL")
+# app.config["SQLALCHEMY_DATABASE_URI"] = connection_string
+
 app.config["SECRET_KEY"] = os.environ.get("FORM_SECRET_KEY")
 db.init_app(app)
 
@@ -56,9 +61,18 @@ app.register_blueprint(add_bp)
 
 # verifys the user with this
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+def load_user(userid):
+    return User.query.get(userid)
 
+
+try:
+    with app.app_context():
+        # Use text() to explicitly declare your SQL command
+        result = db.session.execute(text("SELECT 1")).fetchall()
+        print("Connection successful:", result)
+        print("creation done")
+except Exception as e:
+    print("Error connecting to the database:", e)
 
 if __name__ == "__main__":
     db.create_all()

@@ -11,13 +11,13 @@ class Policies(db.Model):
         nullable=False,
         default=lambda: str(uuid.uuid4()),
     )
-    name = db.column(db.String(255))
     cover = db.Column(db.String(255))
     premium = db.Column(db.Float)
+    name = db.Column(db.String(255))
     short_description = db.Column(db.String(255))
-    description = db.Column(db.String(255))
     bonus = db.Column(db.String(255))
     image = db.Column(db.String(255))
+    description = db.Column(db.String(255))
 
     def to_dict(self):
         # the name the front end wants the key to be
