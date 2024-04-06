@@ -4,23 +4,22 @@ from models.users import User
 from models.user_cover import User_Cover
 from models.policies import Car_insurance
 from loguru import logger
+from flask_wtf import FlaskForm
 
 add_bp = Blueprint("add_bp", __name__)
 
 
 # to display added policies
-@add_bp.route("/user_covers", methods=["POST", "Get"])
+@add_bp.route("/user_covers", methods=["POST", "GET"])
 def policy_taken():
     if request.method == "POST":
         logger.info("User has posted to /user_covers route")
-        userid = request.get["userId"]
-        username = request.get["username"]
+        # userid = request.get["userId"]
+        # username = request.get["username"]
         cover_id = request.form.get("cover_id")
         cover_name = request.form.get("cover_name")
 
-        new_cover = User_Cover(
-            userid=userid, username=username, cover_id=cover_id, cover_name=cover_name
-        )
+        new_cover = User_Cover(cover_name=cover_name)
         try:
             db.session.add(new_cover)
             db.session.commit()
@@ -53,6 +52,7 @@ def upload_file():
 def create_user_policy():
     data = {"cover_name": request.form.get("cover_name")}
     new_cover = User_Cover(**data)
+    print(request.form.getlist("Accidents_cover"))
     try:
         db.session.add(new_cover)
         db.session.commit()
@@ -75,7 +75,7 @@ def add_policy(id):
         if car_insurance:
             return render_template("add_policy.html", car_insurance=car_insurance)
         else:
-            return "<h1>Movie not found</h1>", 404
+            return "<h1>Policy not found</h1>", 404
     else:
         # car_insurance.name = request.form.get('name') #add all columns
         # try and catch

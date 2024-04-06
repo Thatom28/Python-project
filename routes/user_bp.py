@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, session, url_for
 from models.users import User
 from extensions import db
 from flask_wtf import FlaskForm
@@ -93,6 +93,10 @@ def register():
 
 
 # -------------------------------------------------------------------------------------
+
+
+def is_logged_in():
+    return "id" in session
 
 
 @user_bp.route("/logout")
