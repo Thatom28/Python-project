@@ -1,9 +1,11 @@
 from flask import Blueprint, request, render_template
+import flask_login
 
 # from models.High_risk_areas import High_risk_areas
 from extensions import db
 from datetime import datetime
 from sqlalchemy import exists
+from loguru import logger
 
 calculation_bp = Blueprint("calculation_bp", __name__)
 
@@ -12,6 +14,8 @@ calculation_bp = Blueprint("calculation_bp", __name__)
 @calculation_bp.route("/quote", methods=["GET", "POST"])
 def quote():
     if request.method == "POST":
+        current_user = flask_login.current_user
+        logger.info(f"Current user: {current_user}")
         base_price = 500
         type_of_insurance = request.form.get("type")
         location = request.form.get("location")

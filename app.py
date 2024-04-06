@@ -1,26 +1,14 @@
-from flask import (
-    Flask,
-    request,
-    render_template,
-    render_template,
-    redirect,
-    url_for,
-)
+from flask import Flask
 from sqlalchemy.sql import text
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import InputRequired, Length, ValidationError
-import matplotlib.pyplot as plt
-import pandas as pd
-from datetime import date
-from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
 import os
-import uuid
-import matplotlib.pyplot as plt
 from extensions import db
 from flask_login import LoginManager
 from models.users import User
 
+
+load_dotenv()  # load -> os env (enviroment variables)
+print(os.environ.get("AZURE_DATABASE_URL"), os.environ.get("FORM_SECRET_KEY"))
 
 app = Flask(__name__)
 connection_string = os.environ.get("AZURE_DATABASE_URL")
@@ -61,8 +49,8 @@ app.register_blueprint(add_bp)
 
 # verifys the user with this
 @login_manager.user_loader
-def load_user(userid):
-    return User.query.get(userid)
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
 try:

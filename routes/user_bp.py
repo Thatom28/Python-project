@@ -6,6 +6,7 @@ from wtforms import StringField, PasswordField, SubmitField, EmailField, DateFie
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_login import login_user, login_required, logout_user
 from models.users import User
+from werkzeug.security import generate_password_hash, check_password_hash
 
 user_bp = Blueprint("user_bp", __name__)
 
@@ -24,14 +25,28 @@ class LoginForm(FlaskForm):
     def validate_password(self, field):
         user = User.query.filter_by(username=self.username.data).first()
         if user:
-            if user.password != field.data:
+            user_data = user.to_dict()
+            form_password = field.data
+            print(f"Form passowrd is: {form_password}")
+            if not check_password_hash(user_data["password"], form_password):
                 raise ValidationError("Username or password incorrect")
+
+
+@user_bp.route("/login", methods=["POST", "GET"])
+def login():
+    form = LoginForm()
+    # if post(when submit is clicked)
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        login_user(user)
+        return render_template("dashboard.html", username=form.username.data)
+    else:
+        return render_template("login.html", form=form)
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
 # Register
 class RegistrationForm(FlaskForm):
-    # the fields (How they look on the template, the validators to the form)
     username = StringField("Username", validators=[InputRequired(), Length(min=6)])
     password = PasswordField(
         "Password", validators=[InputRequired(), Length(min=8, max=12)]
@@ -56,19 +71,20 @@ def register():
     form = RegistrationForm()
     # if post(when submit is clicked)
     if form.validate_on_submit():
+
+        hashed_password = generate_password_hash(form.password.data)
+        print(hashed_password, form.password.data)
         # get the user from the form
-        # username = form.username.data
-        # password = form.password.data
         new_user = User(
             username=form.username.data,
-            password=form.password.data,
+            password=hashed_password,
             email=form.email.data,
             date_of_birth=form.date_of_birth.data,
         )
         try:
             db.session.add(new_user)
             db.session.commit()
-            return "<h1>Registration successful"
+            return render_template("dashboard.html")
         except Exception as e:
             db.session.rollback()
             return f"<h1>Error happend {str(e)}</h1>", 500
@@ -77,18 +93,6 @@ def register():
 
 
 # -------------------------------------------------------------------------------------
-
-
-@user_bp.route("/login", methods=["POST", "GET"])
-def login():
-    form = LoginForm()
-    # if post(when submit is clicked)
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        login_user(user)
-        return render_template("dashboard.html", username=form.username.data)
-    else:
-        return render_template("login.html", form=form)
 
 
 @user_bp.route("/logout")

@@ -17,7 +17,7 @@ class Policies(db.Model):
     short_description = db.Column(db.String(255))
     bonus = db.Column(db.String(255))
     image = db.Column(db.String(255))
-    description = db.Column(db.String(255))
+    description = db.Column(db.String(350))
 
     def to_dict(self):
         # the name the front end wants the key to be
