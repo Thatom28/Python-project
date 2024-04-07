@@ -73,9 +73,11 @@ def delete_cover_by_id():
     filter_cover = User_Cover.query.get(id)
     if filter_cover:
         try:
+            data = filter_cover.to_dict()
             db.session.delete(filter_cover)
             db.session.commit()
             flash("cover deleted")
+            f"<h1>{data['name']} Movie deleted Successfully</h1>"
             return render_template(
                 "user_covers.html",
             )

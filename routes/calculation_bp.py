@@ -25,6 +25,7 @@ def quote():
         year_bought = request.form.get("year_bought")
         car_worth = request.form.get("car_worth")
         cover_name = request.form.get("cover_name")
+        cover_id = request.form.get("cover_id")
         risk_area = [area for area in high_risk_areas if area == location]
         currentYear = datetime.now().year
         if year_bought is not None:
@@ -68,7 +69,7 @@ def quote():
                 amount = base_price * 2
             else:
                 amount = base_price
-        new_cover = User_Cover(cover_name=cover_name)
+        new_cover = User_Cover(cover_name=cover_name, cover_id=cover_id)
         try:
             db.session.add(new_cover)
             db.session.commit()

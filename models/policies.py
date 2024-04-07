@@ -34,7 +34,7 @@ class Policies(db.Model):
 class Car_insurance(db.Model):
     __tablename__ = "Car_insurance"
 
-    id = db.Column(
+    cover_id = db.Column(
         db.String(50),
         primary_key=True,
         nullable=False,
@@ -48,7 +48,7 @@ class Car_insurance(db.Model):
     def to_dict(self):
         # the name the front end wants the key to be
         return {
-            "id": self.id,
+            "cover_id": self.cover_id,
             "cover_name": self.cover_name,
             "cover_description": self.cover_description,
             "base_price": self.base_price,
