@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, send_file
 from extensions import db
 from models.users import User
 from models.user_cover import User_Cover
@@ -14,25 +14,12 @@ add_bp = Blueprint("add_bp", __name__)
 def policy_taken():
     if request.method == "POST":
         logger.info("User has posted to /user_covers route")
-        # userid = request.get["userId"]
-        # username = request.get["username"]
-        cover_id = request.form.get("cover_id")
-        cover_name = request.form.get("cover_name")
-
-        new_cover = User_Cover(cover_name=cover_name)
-        try:
-            db.session.add(new_cover)
-            db.session.commit()
-        except Exception as e:
-            logger.error(f"Failed to add cover to database: {e}")
-            db.session.rollback()  # Undo the change
-            flash("Cover not added")
-        return render_template("user_covers.html")
+        user_covers = User_Cover.query.all()
+        return render_template("user_covers.html", user_covers=user_covers)
 
     else:
-        user_policies = User_Cover.query.all()
-        data = [user_cover.to_dict() for user_cover, _ in user_policies]
-        return render_template("user_covers.html", user_covers=data)
+        user_covers = User_Cover.query.all()
+        return render_template("user_covers.html", user_covers=user_covers)
 
 
 # for the file upload
@@ -50,8 +37,9 @@ def upload_file():
 # Adding the policy to the db
 @add_bp.route("/success")
 def create_user_policy():
-    data = {"cover_name": request.form.get("cover_name")}
-    new_cover = User_Cover(**data)
+    cover_name = request.form.get("cover_name")
+
+    new_cover = User_Cover(cover_name=cover_name)
     print(request.form.getlist("Accidents_cover"))
     try:
         db.session.add(new_cover)
@@ -66,8 +54,6 @@ def create_user_policy():
 
 # --------------------------------------------------------
 # CREATE A TABLE FOR THIS
-
-
 @add_bp.route("/add_policy/<id>", methods=["GET", "POST"])
 def add_policy(id):
     car_insurance = Car_insurance.query.get(id)
@@ -82,19 +68,23 @@ def add_policy(id):
         return render_template("add_policy.html")
 
 
-@add_bp.route("/delete_cover", methods=["POST"])
+@add_bp.route("/delete", methods=["POST"])
 def delete_cover_by_id():
-    id = request.form.get("cover_id")
     filter_cover = User_Cover.query.get(id)
     if filter_cover:
         try:
             db.session.delete(filter_cover)
             db.session.commit()
             flash("cover deleted")
-            return render_template("user_covers.html")
+            return render_template(
+                "user_covers.html",
+            )
         except Exception as e:
             db.session.rollback()
             return str(e)
     else:
         flash("cover not found")
         return render_template("user_covers.html")
+
+
+# ----------------------------------------------------------------

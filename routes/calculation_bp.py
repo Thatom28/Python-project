@@ -1,8 +1,9 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, flash
 import flask_login
 
 # from models.High_risk_areas import High_risk_areas
 from extensions import db
+from models.user_cover import User_Cover
 from datetime import datetime
 from sqlalchemy import exists
 from loguru import logger
@@ -23,6 +24,7 @@ def quote():
         vehicle_model = request.form.get("vehicle_model")
         year_bought = request.form.get("year_bought")
         car_worth = request.form.get("car_worth")
+        cover_name = request.form.get("cover_name")
         risk_area = [area for area in high_risk_areas if area == location]
         currentYear = datetime.now().year
         if year_bought is not None:
@@ -66,6 +68,16 @@ def quote():
                 amount = base_price * 2
             else:
                 amount = base_price
+        new_cover = User_Cover(cover_name=cover_name)
+        try:
+            db.session.add(new_cover)
+            db.session.commit()
+            # users_cover = User_Cover.query.all()
+            flash("Cover added successfully")
+        except Exception as e:
+            logger.error(f"Failed to add cover to database: {e}")
+            db.session.rollback()  # Undo the change
+            flash("Cover not added")
         return render_template(
             "quote.html",
             type_of_insurance=type_of_insurance,
@@ -73,6 +85,7 @@ def quote():
             age=age,
             vehicle_model=vehicle_model,
             amount=base_price,
+            cover_name=cover_name,
         )
     else:
         return render_template("add_policy.html")

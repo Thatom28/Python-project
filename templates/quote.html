@@ -23,6 +23,7 @@
         <p>Location: {{location}}</p>
         <p>Age: {{age}}</p>
         <p>Vehicle type: {{vehicle_model}}</p>
+        <p>Cover name: {{cover_name}}</p>
         <h4>Monthly payment: R{{amount}}</h4>
     </div>
 </div>
@@ -30,7 +31,7 @@
     <form action="{{url_for('add_bp.policy_taken')}}" method="post">
         <button type="submit" class="button">Add_policy</button>
     </form>
-    <a href="" class="btn submit-button">Download</a>
+    <a href="/submitted" class="btn submit-button">Download</a>
 </div>
 
     
