@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
+<h1>Secure and Invest in your family's future</h1>
     <form action="{{url_for('calculation_bp.calculator')}}" method="post">
         <label for="monthly_payments">Monthly Payment</label>
         <input type="number"  name="monthly_payments" required>

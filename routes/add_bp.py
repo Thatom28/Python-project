@@ -69,7 +69,9 @@ def add_policy(id):
 
 
 @add_bp.route("/delete", methods=["POST"])
-def delete_cover_by_id():
+def delete_cover():
+    print(f'The cover id is :{request.form.get("id")}')
+    id = request.form.get("id")
     filter_cover = User_Cover.query.get(id)
     if filter_cover:
         try:
@@ -78,9 +80,7 @@ def delete_cover_by_id():
             db.session.commit()
             flash("cover deleted")
             f"<h1>{data['name']} Movie deleted Successfully</h1>"
-            return render_template(
-                "user_covers.html",
-            )
+            return render_template("user_covers.html")
         except Exception as e:
             db.session.rollback()
             return str(e)
@@ -90,3 +90,32 @@ def delete_cover_by_id():
 
 
 # ----------------------------------------------------------------
+
+
+@add_bp.route("/update/<id>", methods=["POST", "GET"])
+def update_cover(id):
+    cover = User_Cover.query.get(id)
+    print(f"THE COVER ID IS == {User_Cover.query.get(id)}")
+    if request.method == "GET":
+        if cover:
+            return render_template("edit_cover.html", cover=cover)
+        else:
+            return "<h1>Cover not found</h1>", 404
+    else:
+        if cover:
+            cover.cover_id = request.form.get("cover_id", cover.cover_id)
+            cover.cover_name = request.form.get("cover_name", cover.cover_name)
+            cover.vehicle_model = request.form.get("vehicle_model", cover.vehicle_model)
+            cover.vehicle_current_worth = request.form.get(
+                "vehicle_current_worth", cover.vehicle_current_worth
+            )
+            cover.location = request.form.get("location", cover.location)
+            cover.date = request.form.get("date", cover.date)
+            try:
+                db.session.commit()
+                user_covers = User_Cover.query.all()
+                return render_template("user_covers.html", user_covers=user_covers)
+            except Exception as e:
+                return f"<h1>Error happened {str(e)}</h1>", 500
+        else:
+            return f"<h1>Cover not found</h1>", 500

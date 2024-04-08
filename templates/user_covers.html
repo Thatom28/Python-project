@@ -4,8 +4,12 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>User ID</th>
                 <th>Cover name</th>
+                <th>Car model</th>
+                <th>Car worth</th>
+                <th>Location</th>
+                <th>Policy date</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -13,8 +17,17 @@
             {% for user_cover in user_covers %} 
                 <tr>
                     <td>{{ user_cover.cover_name }}</td>
-                    <td><form><button type="submit" class="btn btn-primary">Edit</button></form> <form method="{{url_for('add_bp.delete_cover_by_id')}}" method="POST"><button type="submit" class="btn btn-danger">Delete</button></form></td>
-                    <!-- <td>{{ user_cover.cover_id }}</td> -->
+                    <td>{{ user_cover.vehicle_model }}</td>
+                    <td>{{ user_cover.vehicle_current_worth }}</td>
+                    <td>{{ user_cover.location }}</td>
+                    <td>{{ user_cover.date }}</td>
+                    <td><a href="/update/{{user_cover.id}}" class="btn btn-primary">Update</a></td>
+                    <td>
+                        <form method="{{url_for('add_bp.delete_cover')}}" method="POST">
+                             <input name="id" type="text" value="{{user_cover.id}}" hidden />   
+                             <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

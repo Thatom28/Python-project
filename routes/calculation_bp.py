@@ -4,7 +4,7 @@ import flask_login
 # from models.High_risk_areas import High_risk_areas
 from extensions import db
 from models.user_cover import User_Cover
-from datetime import datetime
+from datetime import datetime, date
 from sqlalchemy import exists
 from loguru import logger
 
@@ -23,7 +23,7 @@ def quote():
         age = int(request.form.get("age"))
         vehicle_model = request.form.get("vehicle_model")
         year_bought = request.form.get("year_bought")
-        car_worth = request.form.get("car_worth")
+        vehicle_current_worth = request.form.get("vehicle_current_worth")
         cover_name = request.form.get("cover_name")
         cover_id = request.form.get("cover_id")
         risk_area = [area for area in high_risk_areas if area == location]
@@ -32,7 +32,7 @@ def quote():
             if risk_area:
                 if year_bought - currentYear < 5:
                     base_price *= base_price * 0.5
-                if car_worth < 300_000:
+                if vehicle_current_worth < 300_000:
                     base_price += 30
                 if 18 <= age <= 25:
                     base_price *= 0.5
@@ -40,15 +40,15 @@ def quote():
                 year_bought - currentYear < 5
                 and risk_area
                 or year_bought - currentYear < 5
-                and car_worth < 300_000
+                and vehicle_current_worth < 300_000
                 or risk_area
                 and 18 <= age <= 25
                 or year_bought - currentYear < 5
                 and 18 <= age <= 25
                 or risk_area
-                and car_worth < 300_000
+                and vehicle_current_worth < 300_000
                 or 18 <= age <= 25
-                and car_worth < 300_000
+                and vehicle_current_worth < 300_000
             ):
                 amount += base_price * 2.0
             elif risk_area:
@@ -69,7 +69,14 @@ def quote():
                 amount = base_price * 2
             else:
                 amount = base_price
-        new_cover = User_Cover(cover_name=cover_name, cover_id=cover_id)
+        new_cover = User_Cover(
+            cover_name=cover_name,
+            cover_id=cover_id,
+            vehicle_model=vehicle_model,
+            vehicle_current_worth=vehicle_current_worth,
+            location=location,
+            date=date.today(),
+        )
         try:
             db.session.add(new_cover)
             db.session.commit()
@@ -132,3 +139,35 @@ high_risk_areas = [
     "nyanga",
     "honeydew",
 ]
+
+# Base premium rate
+# base_premium_rate = 0.02  # 2% of car worth
+
+# # Location-based adjustment
+# if location in high_risk_areas:
+#     location_adjustment = 1.5  # Increase premium by 50% if in high risk areas
+# else:
+#     location_adjustment = 1.0  # No adjustment for rural areas
+
+# # Duration-based adjustment
+# if duration_owned < 1:
+#     duration_adjustment = 1.2  # Increase premium by 20% for less than 1 year ownership
+# elif duration_owned < 5:
+#     duration_adjustment = 1.0  # No adjustment for 1-4 years ownership
+# else:
+#     duration_adjustment = 0.8  # Decrease premium by 20% for 5 or more years ownership
+
+# # Age-based adjustment
+# if age < 25:
+#     age_adjustment = 1.5  # Increase premium by 50% for age under 25
+# elif age < 40:
+#     age_adjustment = 1.2  # Increase premium by 20% for age 25-39
+# elif age < 60:
+#     age_adjustment = 1.0  # No adjustment for age 40-59
+# else:
+#     age_adjustment = 1.3  # Increase premium by 30% for age 60 and above
+
+# # Calculate total premium
+# total_premium = base_premium_rate * car_worth * location_adjustment * duration_adjustment * age_adjustment
+
+# return total_premium

@@ -8,6 +8,10 @@ class User_Cover(db.Model):
     username = db.Column(db.String(255))
     cover_id = db.Column(db.String(255))
     cover_name = db.Column(db.String(255))
+    vehicle_model = db.Column(db.String(50))
+    vehicle_current_worth = db.Column(db.Float)
+    location = db.Column(db.String(50))
+    date = db.Column(db.Date)
     # amount =
 
     def to_dict(self):
@@ -18,6 +22,10 @@ class User_Cover(db.Model):
             "username": self.username,
             "cover_id": self.cover_id,
             "cover_name": self.cover_name,
+            "vehicle_model": self.vehicle_model,
+            "vehicle_current_worth": self.vehicle_current_worth,
+            "location": self.location,
+            "date": self.date,
         }
 
     # def __repr__(self):
