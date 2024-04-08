@@ -1,35 +1,68 @@
 {% extends 'base.html' %}
 {% block body %}
 <h1>User Covers</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Cover name</th>
-                <th>Car model</th>
-                <th>Car worth</th>
-                <th>Location</th>
-                <th>Policy date</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user_cover in user_covers %} 
-                <tr>
-                    <td>{{ user_cover.cover_name }}</td>
-                    <td>{{ user_cover.vehicle_model }}</td>
-                    <td>{{ user_cover.vehicle_current_worth }}</td>
-                    <td>{{ user_cover.location }}</td>
-                    <td>{{ user_cover.date }}</td>
-                    <td><a href="/update/{{user_cover.id}}" class="btn btn-primary">Update</a></td>
-                    <td>
-                        <form method="{{url_for('add_bp.delete_cover')}}" method="POST">
-                             <input name="id" type="text" value="{{user_cover.id}}" hidden />   
-                             <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">Claims</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">Rewards</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">Log out</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="container-fluid">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Cover name</th>
+                        <th>Car model</th>
+                        <th>Car worth</th>
+                        <th>Location</th>
+                        <th>Policy date</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user_cover in user_covers %} 
+                        <tr>
+                            <td>{{ user_cover.cover_name }}</td>
+                            <td>{{ user_cover.vehicle_model }}</td>
+                            <td>{{ user_cover.vehicle_current_worth }}</td>
+                            <td>{{ user_cover.location }}</td>
+                            <td>{{ user_cover.date }}</td>
+                            <td><a href="/update/{{user_cover.id}}" class="btn btn-primary">Update</a></td>
+                            <td>
+                                <form method="{{url_for('add_bp.delete_cover')}}" method="POST">
+                                     <input name="id" type="text" value="{{user_cover.id}}" hidden />   
+                                     <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+
     {% endblock body %}
