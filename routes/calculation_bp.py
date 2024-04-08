@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, flash
+from flask import Blueprint, request, render_template, flash, send_file
 import flask_login
 
 # from models.High_risk_areas import High_risk_areas
@@ -7,6 +7,7 @@ from models.user_cover import User_Cover
 from datetime import datetime, date
 from sqlalchemy import exists
 from loguru import logger
+import os
 
 calculation_bp = Blueprint("calculation_bp", __name__)
 
@@ -103,18 +104,81 @@ def quote():
 @calculation_bp.route("/calculator", methods=["GET", "POST"])
 def calculator():
     if request.method == "POST":
-        monthly_payments = int(request.form.get("monthly_payments"))
-        no_of_years = int(request.form.get("no_of_years"))
-        premium_payment = monthly_payments * (no_of_years * 3)
+        location = request.form["location"]
+        age = int(request.form["age"])
+        gender = request.form["gender"]
+        car_type = request.form["car_type"]
+        driving_experience = int(request.form["driving_experience"])
+        inflation_rate = float(request.form["inflation_rate"])
+
+        base_premium_rate = 600
+
+        if location in high_risk_areas:
+            location_amount = 1.5
+        else:
+            location_amount = 1.0
+
+        if age < 25:
+            age_amount = 1.5  # Increase premium by 50% for age under 25
+        elif age < 40:
+            age_amount = 1.2  # Increase premium by 20% for age 25-39
+        else:
+            age_amount = 1.0  # No adjustment for age 40 and above
+
+        if gender == "male":
+            gender_amount = 1.5
+        else:
+            gender_amount = 1.0
+
+        if car_type in luxury_cars:
+            car_type_amount = 1.5
+        else:
+            car_type_amount = 1
+
+        if driving_experience < 1:
+            experience_amount = 1.3
+        elif driving_experience < 5:
+            experience_amount = 1.2
+        else:
+            experience_amount = (
+                0.9  # decrease premium if you have more than 5 years experience
+            )
+
+        total_adjustment = (
+            location_amount
+            * age_amount
+            * gender_amount
+            * car_type_amount
+            * experience_amount
+        )
+        total_premium = (
+            base_premium_rate * total_adjustment * (1 + inflation_rate / 100)
+        )
 
         return render_template(
             "quotation.html",
-            monthly_payments=monthly_payments,
-            no_of_years=no_of_years,
-            premium_payment=premium_payment,
+            location=location,
+            gender=gender,
+            age=age,
+            car_type=car_type,
+            driving_experience=driving_experience,
+            total_premium=total_premium,
         )
     else:
         return render_template("calculation.html")
+
+
+@calculation_bp.route("/download")
+def download_file():
+    # Specify the path to the file to be downloaded
+    file_path = "Libraries\Documents"
+
+    # Check if the file exists
+    if os.path.exists(file_path):
+        # Send the file as an attachment and open it in a new browser tab
+        return send_file(file_path, as_attachment=True)
+    else:
+        return "File not found"
 
 
 # ------------------------------------------------------------------------------------------------
@@ -138,6 +202,31 @@ high_risk_areas = [
     "rusternburg",
     "nyanga",
     "honeydew",
+]
+luxury_cars = [
+    "Mercedes-Benz S-Class",
+    "BMW 7 Series",
+    "Audi A8",
+    "Lexus LS",
+    "Porsche Panamera",
+    "Jaguar XJ",
+    "Bentley Continental GT",
+    "Rolls-Royce Phantom",
+    "Tesla Model S Plaid",
+    "Cadillac CT6",
+    "Lincoln Continental",
+    "Maserati Quattroporte",
+    "Aston Martin DB11",
+    "Ferrari GTC4Lusso",
+    "Lamborghini Aventador",
+    "Bugatti Chiron",
+    "McLaren 720S",
+    "Bentley Flying Spur",
+    "Genesis G90",
+    "Karma Revero GT",
+    "Acura RLX",
+    "Infiniti Q70",
+    # Add more luxury car models as needed
 ]
 
 # Base premium rate

@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>User Covers</h1>
 <div class="container-fluid">
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
@@ -16,7 +15,7 @@
                         <a class="nav-link" href="/about">Rewards</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">Log out</a>
+                        <a class="nav-link" href="/logout">Log out</a>
                     </li>
                 </ul>
             </div>
@@ -26,6 +25,7 @@
                 {% block content %}
                 {% endblock %}
             </div>
+            <h1>User Covers</h1>
             <table class="table table-striped">
                 <thead>
                     <tr>

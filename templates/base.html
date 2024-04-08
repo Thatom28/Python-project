@@ -168,12 +168,16 @@
             <li class="nav-item">
               <a class="nav-link" href="/contact">contact us</a>
             </li>
+            {% if logged_in %}
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Log out</a>
+            </li>
+        {% else %}
             <li class="nav-item">
                 <a class="nav-link" href="/login">Log in</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/login">Log out</a>
-              </li>
+            </li>
+        {% endif %}
+        
           </ul>
         </div>
       </nav>

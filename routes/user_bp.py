@@ -7,6 +7,7 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from flask_login import login_user, login_required, logout_user
 from models.users import User
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_session import Session
 
 user_bp = Blueprint("user_bp", __name__)
 
@@ -38,8 +39,10 @@ def login():
     # if post(when submit is clicked)
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        login_user(user)
-        return render_template("dashboard.html", username=form.username.data)
+        # session["logged_in"] = True
+        if not session.get("username"):
+            login_user(user)
+            return render_template("dashboard.html", username=form.username.data)
     else:
         return render_template("login.html", form=form)
 
@@ -84,7 +87,11 @@ def register():
         try:
             db.session.add(new_user)
             db.session.commit()
-            return render_template("dashboard.html")
+            # storing in session to access in other methods
+            session["username"] = request.form.get("username")
+            session["date_of_birth"] = request.form.get("date_of_birth")
+            session["email"] = request.form.get("email")
+            return render_template("login.html")
         except Exception as e:
             db.session.rollback()
             return f"<h1>Error happend {str(e)}</h1>", 500
@@ -93,14 +100,43 @@ def register():
 
 
 # -------------------------------------------------------------------------------------
+@user_bp.route("/add_personal_info", methods=["POST", "GET"])
+def add_personal_info():
+    if request.method == "POST":
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        gender = request.form.get("gender")
+        username = request.form.get("username")
+        date_of_birth = request.form.get("date_of_birth")
+        mobile_number = request.form.get("mobile_number")
+        email = session.get("email")
+        return render_template(
+            "dashboard.html",
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            date_of_birth=date_of_birth,
+            gender=gender,
+            mobile_number=mobile_number,
+            email=email,
+        )
+    else:
+        username = session.get("username")
+        print(session.get("username"))
+        date_of_birth = session.get("date_of_birth")
+        return render_template(
+            "add_personal_info.html", username=username, date_of_birth=date_of_birth
+        )
 
 
-def is_logged_in():
-    return "id" in session
+# def is_logged_in():
+#     return "id" in session
 
 
 @user_bp.route("/logout")
 @login_required
 def logout():
     logout_user()
+    # session.pop("logged_in", None)
+    session["usersname"] = None
     return redirect(url_for("login_page"))
