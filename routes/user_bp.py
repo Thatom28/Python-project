@@ -48,8 +48,10 @@ def login():
     # if post(when submit is clicked)
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        session["username"] = request.form["username"]
+        # session["username"] = request.form["username"]
         # session["logged_in"] = True
+        username = request.form["username"]
+        session["username"] = username
         login_user(user)
         return render_template("dashboard.html", username=session["username"])
     else:
@@ -105,6 +107,7 @@ def register():
             db.session.commit()
             # storing in session to access in other methods
             session["username"] = request.form.get("username")
+            session["userid"] = request.form.get("userid")
             session["date_of_birth"] = request.form.get("date_of_birth")
             session["email"] = request.form.get("email")
             session["first_name"] = request.form.get("first_name")

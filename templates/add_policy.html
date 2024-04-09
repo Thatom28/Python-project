@@ -64,12 +64,18 @@
         <input for="vehicle_model" name="vehicle_model" placeholder="vehicle_model" required/>
     </div>
     <div>
+        <label for="driving_experience" >Driving Experience</label>
+        <input type="integer" for="driving_experience" name="driving_experience" placeholder="4" required />
+    </div>
+    <div>
         <label for="ownerhip_docs">Ownership documents</label>
         <input type="file" name="file" accept=".pdf, .doc, .docx">
     </div>
     <div>
         <label for="ownerhip_docs">Proof Of Address</label>
         <input type="file" name="POA" accept=".pdf, .doc, .docx">
+        <input type="integer"  name="inflation_rate" value="0.056" hidden >
+        <input type="integer"  name="inflation_rate_display" value="5.60%" disabled />
     </div>
 
         <button type="submit">View Quote</button>

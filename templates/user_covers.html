@@ -39,13 +39,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for user_cover in user_covers %} 
+                    {% for user_cover in user_covers%} 
                         <tr>
                             <td>{{ user_cover.cover_name }}</td>
                             <td>{{ user_cover.vehicle_model }}</td>
                             <td>{{ user_cover.vehicle_current_worth }}</td>
                             <td>{{ user_cover.location }}</td>
                             <td>{{ user_cover.date }}</td>
+                            <td>{{ user_cover.premium_amount }}</td>
                             <td><a href="/update/{{user_cover.id}}" class="btn btn-primary">Update</a></td>
                             <td>
                                 <form action="{{url_for('add_bp.delete_cover')}}" method="POST">
