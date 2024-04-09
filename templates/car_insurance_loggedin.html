@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="insurance-container">
+    {% for policy in car_insurances %}
+        <div class="banner">
+            <div><img class="policy-image" src="{{ policy.image_url }}" /></div>
+            <div>
+                <div class="policy-name">{{ policy.cover_name }}</div>
+                <div class="policy-slogan">{{ policy.cover_description }}</div>
+                <div class="policy-premium">Premium from R{{ policy.base_price }}p.m</div>
+                <input name="cover_id" type="text" value="{{policy.cover_id}}" hidden />
+            </div>
+            <div>
+                <a href="" class="button learn-more">Learn more</a>
+            </div>
+            <a href="/add_policy/{{policy.cover_id}}" style="color:black;">Add policy</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock body %}

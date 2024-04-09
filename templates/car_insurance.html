@@ -1,19 +1,36 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+        /* Style for blocks */
+        .block {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: crimson;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 400px;
+        }
+
+        /* Style for links */
+        .block a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Style for hover effect on links */
+        .block:hover {
+            color: #555;
+        }
+</style>
 <div class="insurance-container">
+    <h3>Hit the road with confidence knowing that your journey is protected by our comprehensive car insurance. From daily commutes to cross-country adventures, our coverage keeps you and your vehicle secure against life's unexpected twists and turns.</h3>
     {% for policy in car_insurances %}
-        <div class="banner">
-            <div><img class="policy-image" src="{{ policy.image_url }}" /></div>
+        <div class="block">
             <div>
-                <div class="policy-name">{{ policy.cover_name }}</div>
-                <div class="policy-slogan">{{ policy.cover_description }}</div>
-                <div class="policy-premium">Premium from R{{ policy.base_price }}p.m</div>
-                <input name="cover_id" type="text" value="{{policy.cover_id}}" hidden />
+                <a class="policy-name" href="/car_insurance/{{policy.cover_id}}">{{ policy.cover_name }}</a>
             </div>
-            <div>
-                <a href="" class="button learn-more">Learn more</a>
-            </div>
-            <a href="/add_policy/{{policy.cover_id}}" style="color:black;">Add policy</a>
         </div>
     {% endfor %}
 </div>

@@ -110,16 +110,29 @@ def add_personal_info():
         date_of_birth = request.form.get("date_of_birth")
         mobile_number = request.form.get("mobile_number")
         email = session.get("email")
-        return render_template(
-            "dashboard.html",
+        password = session.get("password")
+        new_user = User(
             first_name=first_name,
             last_name=last_name,
-            username=username,
-            date_of_birth=date_of_birth,
             gender=gender,
             mobile_number=mobile_number,
-            email=email,
         )
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            return render_template(
+                "dashboard.html",
+                username=username,
+                password=password,
+                email=email,
+                date_of_birth=date_of_birth,
+                first_name=first_name,
+                last_name=last_name,
+                mobile_number=mobile_number,
+                gender=gender,
+            )
+        except Exception as e:
+            return f"{e}"
     else:
         username = session.get("username")
         print(session.get("username"))
@@ -139,4 +152,4 @@ def logout():
     logout_user()
     # session.pop("logged_in", None)
     session["usersname"] = None
-    return redirect(url_for("login_page"))
+    return redirect(url_for("user_bp.login"))

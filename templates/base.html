@@ -149,19 +149,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/policies">about</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                  Our policies
-                </a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Life insurance</a>
-                  <a class="dropdown-item" href="/car_insurance">Car insurance</a>
-                  <a class="dropdown-item" href="#">Home insurance</a>
-                  <a class="dropdown-item" href="#">Business insurance</a>
-                  <a class="dropdown-item" href="#">Short term insurance</a>
-                  <a class="dropdown-item" href="#">Retirement Annuity</a>
-                </div>
-              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/car_insurance">Our Policies</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="/calculator">Calculator</a>
             </li>
@@ -181,17 +171,6 @@
           </ul>
         </div>
       </nav>
-    <!-- To not show the nav until a particular width -->
-    <!-- <script>
-        function myFunction() {
-          var x = document.getElementById("myLinks");
-          if (x.style.display === "block") {
-            x.style.display = "none";
-          } else {
-            x.style.display = "block";
-          }
-        }
-        </script> -->
     {% block body %}
     {% endblock body %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

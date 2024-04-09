@@ -6,7 +6,7 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Profile</a>
+                        <a class="nav-link" href="/dashboard">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">Claims</a>
@@ -15,7 +15,7 @@
                         <a class="nav-link" href="/about">Rewards</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">Log out</a>
+                        <a class="nav-link" href="{{url_for('user_bp.logout')}}">Log out</a>
                     </li>
                 </ul>
             </div>

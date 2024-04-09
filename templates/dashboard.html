@@ -12,35 +12,48 @@ a{
   color:#1f6b8a;
 }
 </style>
-<div class = "container">
-    <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <a href="/profile">My profile</a>
-    <a href="/user_covers" >Policies</a>
-    <a href="/claims" >Claims</a>
-    <a href="/rewards" >Rewards</a>
-    <a href="/market">Market</a>
-    </div>
+<div class="container-fluid">
+  <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+          <div class="sidebar-sticky">
+              <ul class="nav flex-column">
+                  <li class="nav-item">
+                      <a class="nav-link" href="/dashboard">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/about">Claims</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/about">Rewards</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/logout">Log out</a>
+                  </li>
+              </ul>
+          </div>
+      </nav>
 
-  <div class="container">
-    <h2>Welcome, {{username}}</h2>
-    <div class="user-info">
-      <p>First Name: {{first_name}}</p>
-      <p>Last name : {{last_name}}</p>
-      <p>UserName : {{username}}</p>
-      <p>Mobile Number: {{mobile_number}}</p>
-      <p>Email: {{email}}</p>
-      <p>Gender : {{gender}}</p>
+      <div class="container">
+        <h2>Welcome, {{username}}</h2>
+        <div class="user-info">
+          <p>First Name: {{first_name}}</p>
+          <p>Last name : {{last_name}}</p>
+          <p>UserName : {{username}}</p>
+          <p>Mobile Number: {{mobile_number}}</p>
+          <p>Email: {{email}}</p>
+          <p>Gender : {{gender}}</p>
+      </div>
+        <p>Policies</p>
+        <a href="user_covers" class="doc_icon"><i class="fa-solid fa-file"></i></a>
+        <p>number of Active Policies</p>
+        <form action="{{url_for('displays_bp.car_insurance')}}" method="get">
+          <button type="submit" class="button">Add Policy</button>
+        </form> 
+        <a class="button" href="/add_personal_info">Add personal information</a>
+      </div>
+      
+    </div>
   </div>
-    <p>Policies</p>
-    <a href="user_covers" class="doc_icon"><i class="fa-solid fa-file"></i></a>
-    <p>number of Active Policies</p>
-    <form action="{{url_for('calculation_bp.quote')}}" method="get">
-      <button type="submit" class="button">Add Policy</button>
-    </form> 
-    <a class="button" href="{{url_for('user_bp.add_personal_info')}}">Add personal information</a>
-  </div>
-   
 </div>
 {% endblock body %}
 
