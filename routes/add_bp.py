@@ -68,19 +68,20 @@ def add_policy(id):
         return render_template("add_policy.html")
 
 
+# ------------------------------------------------------------------
 @add_bp.route("/delete", methods=["POST"])
 def delete_cover():
     print(f'The cover id is :{request.form.get("id")}')
     id = request.form.get("id")
     filter_cover = User_Cover.query.get(id)
+    user_covers = User_Cover.query.all()
     if filter_cover:
         try:
-            data = filter_cover.to_dict()
             db.session.delete(filter_cover)
             db.session.commit()
             flash("cover deleted")
-            f"<h1>{data['name']} Movie deleted Successfully</h1>"
-            return render_template("user_covers.html")
+            user_covers = User_Cover.query.all()
+            return render_template("user_covers.html", user_covers=user_covers)
         except Exception as e:
             db.session.rollback()
             return str(e)
@@ -90,8 +91,6 @@ def delete_cover():
 
 
 # ----------------------------------------------------------------
-
-
 @add_bp.route("/update/<id>", methods=["POST", "GET"])
 def update_cover(id):
     cover = User_Cover.query.get(id)

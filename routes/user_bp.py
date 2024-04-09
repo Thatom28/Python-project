@@ -1,4 +1,13 @@
-from flask import Blueprint, render_template, request, flash, redirect, session, url_for
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    flash,
+    redirect,
+    session,
+    url_for,
+    Flask,
+)
 from models.users import User
 from extensions import db
 from flask_wtf import FlaskForm
@@ -39,8 +48,8 @@ def login():
     # if post(when submit is clicked)
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        # session["logged_in"] = True
-        if not session.get("username"):
+        session["logged_in"] = True
+        if session.get("username"):
             login_user(user)
             return render_template("dashboard.html", username=form.username.data)
     else:
@@ -56,6 +65,10 @@ class RegistrationForm(FlaskForm):
     )
     email = EmailField("Email", validators=[InputRequired()])
     date_of_birth = DateField("Date of Birth", validators=[InputRequired()])
+    first_name = StringField("First Name", validators=[InputRequired()])
+    last_name = StringField("Last Name", validators=[InputRequired()])
+    gender = StringField("Gender", validators=[InputRequired()])
+    mobile_number = StringField("Mobile Number", validators=[InputRequired()])
     submit = SubmitField("sign up")
 
     # to display something to the user if error occurs
@@ -74,7 +87,6 @@ def register():
     form = RegistrationForm()
     # if post(when submit is clicked)
     if form.validate_on_submit():
-
         hashed_password = generate_password_hash(form.password.data)
         print(hashed_password, form.password.data)
         # get the user from the form
@@ -83,14 +95,20 @@ def register():
             password=hashed_password,
             email=form.email.data,
             date_of_birth=form.date_of_birth.data,
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            mobile_number=form.mobile_number.data,
+            gender=form.gender.data,
         )
         try:
             db.session.add(new_user)
             db.session.commit()
             # storing in session to access in other methods
-            session["username"] = request.form.get("username")
-            session["date_of_birth"] = request.form.get("date_of_birth")
-            session["email"] = request.form.get("email")
+            # session["username"] = request.form.get("username")
+            # session["date_of_birth"] = request.form.get("date_of_birth")
+            # session["email"] = request.form.get("email")
+            # session["first_name"] = request.form.get("first_name")
+            # session["last_name"] = request.form.get("last_name")
             return render_template("login.html")
         except Exception as e:
             db.session.rollback()

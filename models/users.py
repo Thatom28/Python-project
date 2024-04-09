@@ -15,7 +15,6 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
     mobile_number = db.Column(db.String(10))
-    age = db.Column(db.Integer)
     gender = db.Column(db.String(10))
 
     def to_dict(self):
@@ -30,6 +29,5 @@ class User(UserMixin, db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "mobile_number": self.mobile_number,
-            "age": self.age,
             "gender": self.gender,
         }

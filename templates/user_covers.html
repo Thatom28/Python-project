@@ -48,7 +48,7 @@
                             <td>{{ user_cover.date }}</td>
                             <td><a href="/update/{{user_cover.id}}" class="btn btn-primary">Update</a></td>
                             <td>
-                                <form method="{{url_for('add_bp.delete_cover')}}" method="POST">
+                                <form action="{{url_for('add_bp.delete_cover')}}" method="POST">
                                      <input name="id" type="text" value="{{user_cover.id}}" hidden />   
                                      <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
@@ -56,13 +56,12 @@
                         </tr>
                     {% endfor %}
                 </tbody>
+                <form action="{{url_for('displays_bp.car_insurance')}}" method="get">
+                    <button type="submit" class="button">Add Policy</button>
+                  </form> 
             </table>
         </main>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
 
     {% endblock body %}
