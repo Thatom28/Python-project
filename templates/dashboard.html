@@ -34,14 +34,18 @@ a{
       </nav>
 
       <div class="container">
-        <h2>Welcome, {{username}}</h2>
+        {% if session['username'] %}
+        <h2>Welcome, {{session['username']}}</h2>
+        {% endif %}
         <div class="user-info">
-          <p>First Name: {{first_name}}</p>
-          <p>Last name : {{last_name}}</p>
+          <p>First Name: {{session["first_name"]}}</p>
+          <p>Last name : {{session["last_name"] }}</p>
           <p>UserName : {{username}}</p>
-          <p>Mobile Number: {{mobile_number}}</p>
-          <p>Email: {{email}}</p>
-          <p>Gender : {{gender}}</p>
+          <p>Mobile Number: {{session["mobile_number"] }}</p>
+          <p>Email: {{session["email"]}}</p>
+          <p>Gender : {{session["gender"]}}</p>
+          <p>Date Of Birth : {{session["date_of_birth"]}}</p>
+
       </div>
         <p>Policies</p>
         <a href="user_covers" class="doc_icon"><i class="fa-solid fa-file"></i></a>
