@@ -115,7 +115,15 @@ def register():
             session["mobile_number"] = request.form.get("mobile_number")
             session["date_of_birth"] = request.form.get("date_of_birth")
             session["gender"] = request.form.get("gender")
-            return render_template("login.html")
+            return render_template(
+                "login.html",
+                username=session["username"],
+                first_name=session["first_name"],
+                last_name=session["last_name"],
+                mobile_number=session["mobile_number"],
+                date_of_birth=session["date_of_birth"],
+                gender=session["gender"],
+            )
         except Exception as e:
             db.session.rollback()
             return f"<h1>Error happend {str(e)}</h1>", 500
@@ -124,22 +132,23 @@ def register():
 
 
 # -------------------------------------------------------------------------------------
-@user_bp.route("/add_personal_info", methods=["POST", "GET"])
-def add_personal_info():
+@user_bp.route("/update_personal_info/<id>", methods=["POST", "GET"])
+def update_personal_info(id):
+    user = User.query.get(id)
     if request.method == "POST":
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        gender = request.form.get("gender")
-        username = request.form.get("username")
-        date_of_birth = request.form.get("date_of_birth")
-        mobile_number = request.form.get("mobile_number")
-        email = session.get("email")
-        password = session.get("password")
+        user.first_name = request.form.get("first_name", user.first_name)
+        user.last_name = request.form.get("last_name", user.last_name)
+        user.gender = request.form.get("gender", user.gender)
+        user.username = request.form.get("username", user.username)
+        user.date_of_birth = request.form.get("date_of_birth", user.date_of_birth)
+        user.mobile_number = request.form.get("mobile_number", user.mobile_number)
+        user.email = session.get("email", user.email)
+        user.password = session.get("password", user.password)
         new_user = User(
-            first_name=first_name,
-            last_name=last_name,
-            gender=gender,
-            mobile_number=mobile_number,
+            first_name=user.first_name,
+            last_name=user.last_name,
+            gender=user.gender,
+            mobile_number=user.mobile_number,
         )
         try:
             db.session.add(new_user)
@@ -147,13 +156,13 @@ def add_personal_info():
             return render_template(
                 "dashboard.html",
                 username=username,
-                password=password,
-                email=email,
-                date_of_birth=date_of_birth,
-                first_name=first_name,
-                last_name=last_name,
-                mobile_number=mobile_number,
-                gender=gender,
+                password=user.password,
+                email=user.email,
+                date_of_birth=user.date_of_birth,
+                first_name=user.first_name,
+                last_name=user.last_name,
+                mobile_number=user.mobile_number,
+                gender=user.gender,
             )
         except Exception as e:
             return f"{e}"
@@ -162,7 +171,7 @@ def add_personal_info():
         print(session.get("username"))
         date_of_birth = session.get("date_of_birth")
         return render_template(
-            "add_personal_info.html", username=username, date_of_birth=date_of_birth
+            "update_personal_info.html", username=username, date_of_birth=date_of_birth
         )
 
 

@@ -8,7 +8,7 @@ from models.users import User
 from flask_session import Session
 
 load_dotenv()  # load -> os env (enviroment variables)
-print(os.environ.get("AZURE_DATABASE_URL"), os.environ.get("FORM_SECRET_KEY"))
+# print(os.environ.get("AZURE_DATABASE_URL"), os.environ.get("FORM_SECRET_KEY"))
 
 app = Flask(__name__)
 # connection_string = os.environ.get("AZURE_DATABASE_URL")

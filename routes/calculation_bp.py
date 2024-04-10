@@ -31,7 +31,7 @@ def quote():
         userid = session.get("userid")
         print(f'The usernae is {session.get("username")}')
         # session["userid"] = request.form.get("userid")
-        gender = session.get(session["gender"])
+        gender = session.get("gender")
         driving_experience = int(request.form["driving_experience"])
         inflation_rate = float(request.form["inflation_rate"])
 

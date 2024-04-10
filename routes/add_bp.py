@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, send_file
+from flask import Blueprint, render_template, request, flash, send_file, session
 from extensions import db
 from models.users import User
 from models.user_cover import User_Cover
@@ -14,11 +14,16 @@ add_bp = Blueprint("add_bp", __name__)
 def policy_taken():
     if request.method == "POST":
         logger.info("User has posted to /user_covers route")
-        user_covers = User_Cover.query.all()
+        print(session["username"])
+        user_covers = User_Cover.query.filter(
+            User_Cover.username == session["username"]
+        ).all()
         return render_template("user_covers.html", user_covers=user_covers)
 
     else:
-        user_covers = User_Cover.query.all()
+        user_covers = User_Cover.query.filter(
+            User_Cover.username == session["username"]
+        ).all()
         return render_template("user_covers.html", user_covers=user_covers)
 
 
@@ -80,7 +85,9 @@ def delete_cover():
             db.session.delete(filter_cover)
             db.session.commit()
             flash("cover deleted")
-            user_covers = User_Cover.query.all()
+            user_covers = User_Cover.query.filter(
+                User_Cover.username == session["username"]
+            ).all()
             return render_template("user_covers.html", user_covers=user_covers)
         except Exception as e:
             db.session.rollback()
@@ -112,7 +119,9 @@ def update_cover(id):
             cover.date = request.form.get("date", cover.date)
             try:
                 db.session.commit()
-                user_covers = User_Cover.query.all()
+                user_covers = User_Cover.query.filter(
+                    User_Cover.username == session["username"]
+                ).all()
                 return render_template("user_covers.html", user_covers=user_covers)
             except Exception as e:
                 return f"<h1>Error happened {str(e)}</h1>", 500
