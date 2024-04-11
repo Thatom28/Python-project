@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, flash, send_file, session
+from flask_login import current_user
 from extensions import db
 from models.users import User
 from models.user_cover import User_Cover
@@ -8,6 +9,8 @@ from flask_wtf import FlaskForm
 
 add_bp = Blueprint("add_bp", __name__)
 
+user = current_user
+
 
 # to display added policies
 @add_bp.route("/user_covers", methods=["POST", "GET"])
@@ -16,13 +19,13 @@ def policy_taken():
         logger.info("User has posted to /user_covers route")
         print(session["username"])
         user_covers = User_Cover.query.filter(
-            User_Cover.username == session["username"]
+            User_Cover.username == user.username
         ).all()
         return render_template("user_covers.html", user_covers=user_covers)
 
     else:
         user_covers = User_Cover.query.filter(
-            User_Cover.username == session["username"]
+            User_Cover.username == user.username
         ).all()
         return render_template("user_covers.html", user_covers=user_covers)
 

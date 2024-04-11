@@ -26,7 +26,7 @@ def policies():
 def car_insurance():
     car_insurances = Car_insurance.query.all()
     data = [car_insurance.to_dict() for car_insurance in car_insurances]
-    return render_template("car_insurance.html", car_insurances=data)
+    return render_template("car_insurance_loggedin.html", car_insurances=data)
 
 
 @displays_bp.route("/car_insurance/<id>")  # HOF
@@ -36,4 +36,4 @@ def car_insurance_details(id):
         data = filtered_cover.to_dict()
         return render_template("cover_detail.html", policy=data)
     else:
-        return "<h1>Movie not found</h1>"
+        return "<h1>Policy not found</h1>"

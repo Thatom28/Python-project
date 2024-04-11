@@ -116,8 +116,8 @@ def register():
 
 
 # -------------------------------------------------------------------------------------
-@user_bp.route("/add_personal_info", methods=["POST", "GET"])
-def add_personal_info():
+@user_bp.route("/update_personal_info", methods=["POST", "GET"])
+def update_personal_info():
     if request.method == "POST":
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
@@ -127,14 +127,7 @@ def add_personal_info():
         mobile_number = request.form.get("mobile_number")
         email = session.get("email")
         password = session.get("password")
-        new_user = User(
-            first_name=first_name,
-            last_name=last_name,
-            gender=gender,
-            mobile_number=mobile_number,
-        )
         try:
-            db.session.add(new_user)
             db.session.commit()
             return render_template(
                 "dashboard.html",
@@ -150,12 +143,8 @@ def add_personal_info():
         except Exception as e:
             return f"{e}"
     else:
-        username = session.get("username")
-        print(session.get("username"))
-        date_of_birth = session.get("date_of_birth")
-        return render_template(
-            "add_personal_info.html", username=username, date_of_birth=date_of_birth
-        )
+        user = current_user
+        return render_template("update_personal_info.html", user=user)
 
 
 # def is_logged_in():

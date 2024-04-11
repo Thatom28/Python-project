@@ -1,0 +1,173 @@
+[33mcommit de023f5edb54859d8a728c5b6565342a107daf11[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Thu Apr 11 18:43:55 2024 +0200
+
+    semi-fixed dashbord
+
+[33mcommit 1f875c7a3d5c9a1ea0c70eb2ea3a01bf836d694d[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Thu Apr 11 08:15:31 2024 +0200
+
+    static folder with stylesheet
+
+[33mcommit 54a381a85da3a9a4b9f11f86ed3cad330f8f4553[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Wed Apr 10 21:01:59 2024 +0200
+
+    filtered user_covers based on the username
+
+[33mcommit f7bacbe166025bf529f7d2a69c3884526fcf6d27[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Tue Apr 9 21:46:58 2024 +0200
+
+    session semi implemented
+
+[33mcommit bc60686f94ab3830b2be7e79be77b49630b48345[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Tue Apr 9 19:19:24 2024 +0200
+
+    Session implemented
+
+[33mcommit ac42a03804148d27a1ac930425d27c7d423680c2[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Tue Apr 9 18:44:49 2024 +0200
+
+    Delete method implemented
+
+[33mcommit 9963d1a46bc0127cad78ee2e1d90eefc679a7410[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Tue Apr 9 05:57:19 2024 +0200
+
+    improved policies page
+
+[33mcommit 3b66c0cfc10adfe1e5498621e488b6f824b31b88[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Mon Apr 8 22:07:42 2024 +0200
+
+    improved calculator
+
+[33mcommit e8d9ad8937f0a55c61084ed8c93d7fb507f093fd[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Mon Apr 8 04:10:02 2024 +0200
+
+    side menu
+
+[33mcommit 3beeec5fbdaa89b34435fe23937e4db9e4eb81ec[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Mon Apr 8 04:03:00 2024 +0200
+
+    Update method
+
+[33mcommit 8a7d2181b72ead6dc9ecb5637ef6f5de4528d646[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Sun Apr 7 07:31:26 2024 +0200
+
+    coverid added to usercove
+
+[33mcommit def19949399d4dce0dea6b16a9c4d93e0297fe27[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Sun Apr 7 06:51:49 2024 +0200
+
+    able to view cover name in database
+
+[33mcommit a1e70a5090234bbce0d508ea08e2a841a62de13d[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Sat Apr 6 14:21:00 2024 +0200
+
+    log out
+
+[33mcommit 374a26ed20e1ea9e08f42d55593a008ca39d69ed[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Sat Apr 6 13:41:33 2024 +0200
+
+    user login
+
+[33mcommit be189c9210c468d157a61afa50c7723539c615a2[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Fri Apr 5 06:27:35 2024 +0200
+
+    registratioon page with email and DOB
+
+[33mcommit 4e1d4302f0736e73f0a67246ab10cd733bdd9033[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Thu Apr 4 04:11:11 2024 +0200
+
+    1st calcuations
+
+[33mcommit 142c5c96d3dfe414d07265384d8f7cdd4eda0255[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Thu Apr 4 02:01:53 2024 +0200
+
+    MVC model
+
+[33mcommit 0dce185b2c2ea568be7343eb7b6387f8e29e91bf[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Thu Apr 4 01:12:56 2024 +0200
+
+    add policy not working properly
+
+[33mcommit 749217cf175128246f96a4922c27789834f97d75[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Wed Apr 3 06:10:36 2024 +0200
+
+    policies list inserted in database
+
+[33mcommit f48bbd8c4b0f67a466150a909b9beb2abb27d5b2[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Wed Apr 3 05:17:12 2024 +0200
+
+    car isurance display
+
+[33mcommit ac775d394aee8214ee91431d97d883d7c49f0df8[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Sat Mar 30 08:58:49 2024 +0200
+
+    graph
+
+[33mcommit 053b699111d4b3f01390807d7aafdd99e23070df[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Sat Mar 30 08:38:05 2024 +0200
+
+    first visualization
+
+[33mcommit fc4133af317ad13ee5beeb11c98f9b604f2d226e[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Fri Mar 29 16:38:40 2024 +0200
+
+    insurance link
+
+[33mcommit 98502b2a580007544455ca1f6faa13c99f38c91e[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Fri Mar 29 05:59:40 2024 +0200
+
+    user blue print
+
+[33mcommit de958d5475658ccec1a0dca95a189b35b2cd5d08[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Fri Mar 29 04:49:30 2024 +0200
+
+    before modifications
+
+[33mcommit bb8b49c92dd67e6e7ef87221afdfbbf13cd47cf6[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Tue Mar 26 17:56:43 2024 +0200
+
+    adding to my policies
+
+[33mcommit b7f10d4f865aebde072b0b136bc8f738396a68e9[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Tue Mar 26 04:58:51 2024 +0200
+
+    Add_policy_page
+
+[33mcommit 25d6519f086118f13e4c941b2463aafa57adffea[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Sun Mar 24 12:35:52 2024 +0200
+
+    Crud for users and policies
+
+[33mcommit d954e742fceab71b6147d782a5ccbbb72d93eda0[m
+Author: Thatom28 <thatomatlala28@gmail.com>
+Date:   Thu Mar 21 01:30:24 2024 +0200
+
+    Initial commit

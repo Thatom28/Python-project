@@ -1,11 +1,13 @@
 from extensions import db
+import uuid
 
 
 class User_Cover(db.Model):
     __tablename__ = "User_covers"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(255), primary_key=True, default=lambda: str(uuid.uuid4()))
     username = db.Column(db.String(255))
-    cover_id = db.Column(db.String(255))
+    user_id = db.Column(db.String(50), db.ForeignKey("Users.id"))
+    cover_id = db.Column(db.String(50), db.ForeignKey("Car_insurance.cover_id"))
     cover_name = db.Column(db.String(255))
     vehicle_model = db.Column(db.String(50))
     vehicle_current_worth = db.Column(db.Float)
@@ -19,6 +21,7 @@ class User_Cover(db.Model):
         # the name the front end wants the key to be
         return {
             "id": self.id,
+            "user_id": self.user_id,
             "username": self.username,
             "cover_id": self.cover_id,
             "cover_name": self.cover_name,

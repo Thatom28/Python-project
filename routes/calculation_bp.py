@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, flash, send_file, session
-import flask_login
+from flask_login import current_user
 
 # from models.High_risk_areas import High_risk_areas
 from extensions import db
@@ -16,9 +16,10 @@ calculation_bp = Blueprint("calculation_bp", __name__)
 @calculation_bp.route("/quote", methods=["GET", "POST"])
 def quote():
     if request.method == "POST":
-        current_user = flask_login.current_user
-        logger.info(f"Current user: {current_user}")
+        user = current_user
+        logger.info(f"Current user: {user}")
         base_price = 500
+        # user_id = user.user_id
         type_of_insurance = request.form.get("type")
         location = request.form.get("location")
         age = int(request.form.get("age"))
@@ -29,8 +30,6 @@ def quote():
         cover_id = request.form.get("cover_id")
         username = session.get("username")
         userid = session.get("userid")
-        print(f'The usernae is {session.get("username")}')
-        # session["userid"] = request.form.get("userid")
         gender = session.get("gender")
         driving_experience = int(request.form["driving_experience"])
         inflation_rate = float(request.form["inflation_rate"])
@@ -79,6 +78,7 @@ def quote():
         total_premium = round(total, 2)
         new_cover = User_Cover(
             username=username,
+            # user_id=user.user_id,
             cover_name=cover_name,
             cover_id=cover_id,
             vehicle_model=vehicle_model,
@@ -91,8 +91,9 @@ def quote():
         try:
             db.session.add(new_cover)
             db.session.commit()
-            # users_cover = User_Cover.query.all()
+            # user_covers = User_Cover.query.all()
             flash("Cover added successfully")
+            # return render_template("user_covers.html", user_covers=users_covers)
         except Exception as e:
             logger.error(f"Failed to add cover to database: {e}")
             db.session.rollback()  # Undo the change
