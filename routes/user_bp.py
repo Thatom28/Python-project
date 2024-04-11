@@ -13,7 +13,7 @@ from extensions import db
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, EmailField, DateField
 from wtforms.validators import InputRequired, Length, ValidationError
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from models.users import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_session import Session
@@ -51,15 +51,10 @@ def login():
         username = request.form["username"]
         session["username"] = username
         login_user(user)
+        user = current_user
         return render_template(
             "dashboard.html",
-            username=session["username"],
-            first_name=user.first_name,
-            last_name=user.last_name,
-            mobile_number=user.mobile_number,
-            email=user.email,
-            gender=user.gender,
-            date_of_birth=user.date_of_birth,
+            user=user,
         )
     else:
         return render_template("login.html", form=form)
@@ -112,16 +107,6 @@ def register():
         try:
             db.session.add(new_user)
             db.session.commit()
-            # storing in session to access in other methods
-            session["username"] = request.form.get("username")
-            session["userid"] = request.form.get("userid")
-            session["date_of_birth"] = request.form.get("date_of_birth")
-            session["email"] = request.form.get("email")
-            session["first_name"] = request.form.get("first_name")
-            session["last_name"] = request.form.get("last_name")
-            session["mobile_number"] = request.form.get("mobile_number")
-            session["date_of_birth"] = request.form.get("date_of_birth")
-            session["gender"] = request.form.get("gender")
             return render_template("login.html")
         except Exception as e:
             db.session.rollback()
@@ -190,12 +175,12 @@ def logout():
 @login_required
 def dashboard():
     form = LoginForm()
-    user = User.query.filter_by(username=form.username.data).first()
+    user = current_user
     # username = request.form["username"]
     session["username"] = session["username"]
     return render_template(
         "dashboard.html",
-        # username=session["username"],
+        user=user,
         # first_name=user.first_name,
         # last_name=user.last_name,
         # mobile_number=user.mobile_number,

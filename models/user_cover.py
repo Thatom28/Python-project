@@ -11,7 +11,7 @@ class User_Cover(db.Model):
     vehicle_current_worth = db.Column(db.Float)
     location = db.Column(db.String(50))
     date = db.Column(db.Date)
-    driving_experience = db.Column(db.String())
+    driving_experience = db.Column(db.Float)
     premium_amount = db.Column(db.Float)
     # amount =
 

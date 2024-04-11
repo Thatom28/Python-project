@@ -64,6 +64,8 @@ try:
         # Use text() to explicitly declare your SQL command
         result = db.session.execute(text("SELECT 1")).fetchall()
         print("Connection successful:", result)
+        # db.drop_all()
+        # db.create_all()
         print("creation done")
 except Exception as e:
     print("Error connecting to the database:", e)

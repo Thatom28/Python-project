@@ -1,62 +1,38 @@
-{% extends 'base.html' %}
+{% extends 'base_loggedIn.html' %}
 {% block body %}
-<div class="container-fluid">
-  <div class="row">
-      <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
-          <div class="sidebar-sticky">
-              <ul class="nav flex-column">
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{url_for('user_bp.dashboard')}}">Profile</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="user_covers">Policies</a>
-                </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{url_for('claim_bp.claim')}}">Claims</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{url_for('claim_bp.rewards')}}">Rewards</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="/logout">Log out</a>
-                  </li>
-              </ul>
-          </div>
-      </nav>
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="container-fluid">
-        <h2>Welcome, {{username}}</h2>
+        <h2>Welcome, {{user.username}}</h2>
         <div class="user-info flex">
           <div>
             <div class="form-group">
               <label>UserName:</label>
-              <input name="username" type="text" class="form-control" placeholder="{{username}}" disabled />
+              <input name="username" type="text" class="form-control" placeholder="{{user.username}}" disabled />
             </div>
             <div class="form-group">
               <label>First Name:</label>
-              <input name="first_name" type="text" class="form-control" placeholder="{{first_name}}" disabled />
+              <input name="first_name" type="text" class="form-control" placeholder="{{user.first_name}}" disabled />
             </div>
             <div class="form-group">
               <label>Last Name:</label>
-              <input name="last_name" type="text" class="form-control" placeholder="{{last_name}}" disabled />
+              <input name="last_name" type="text" class="form-control" placeholder="{{user.last_name}}" disabled />
             </div>
           </div>
           <div>
             <div class="form-group">
               <label>Mobile Number:</label>
-              <input name="mobile_number" type="text" class="form-control" placeholder="{{mobile_number}}" disabled />
+              <input name="mobile_number" type="text" class="form-control" placeholder="{{user.mobile_number}}" disabled />
             </div>
             <div class="form-group">
               <label>Email:</label>
-              <input name="email" type="text" class="form-control" placeholder="{{email}}" disabled />
+              <input name="email" type="text" class="form-control" placeholder="{{user.email}}" disabled />
             </div>
             <div class="form-group">
               <label>Gender:</label>
-              <input name="gender" type="text" class="form-control" placeholder="{{gender}}" disabled />
+              <input name="gender" type="text" class="form-control" placeholder="{{user.gender}}" disabled />
             </div>
             <div class="form-group">
               <label>Date Of Birth:</label>
-              <input name="date_of_birth" type="text" class="form-control" placeholder="{{date_of_birth}}" disabled />
+              <input name="date_of_birth" type="text" class="form-control" placeholder="{{user.date_of_birth}}" disabled />
             </div>
           </div>
       </div> 
