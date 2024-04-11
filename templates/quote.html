@@ -1,7 +1,7 @@
 
 {% extends 'base.html' %}
 {% block body %}
-<style>
+<!-- <style>
     .outer-container{
         display: flex;
         justify-content: center;
@@ -16,16 +16,15 @@
         border-radius: 12px;
         margin: 12px;
     }
-</style>
+</style> -->
 <div class="outer-container">
-    <div class=" container">
+    <div class=" inner-container">
         <h2>{{type_of_insurance}} Quotation</h2>
         <p>Location: {{location}}</p>
         <p>Age: {{age}}</p>
         <p>Vehicle type: {{vehicle_model}}</p>
         <p>Cover name: {{cover_name}}</p>
-        <p>cover_id: {{cover_id}}</p>
-        <h4>Monthly payment: R{{amount}}</h4>
+        <h4>Monthly payment: R{{premium_amount}}</h4>
     </div>
 </div>
 <div class="outer-container">

@@ -11,133 +11,12 @@
       integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
       crossorigin="anonymous"
     />
-   
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    .navigation{
-        background-color: #1f6b8a;
-        padding: 10px 20px;  
-        color: #fff;
-        width: 100%;
-    }
-    .navigation-links{
-        margin:0;
-    }
-    .navbar-content{
-        display: inline;
-    }
-    .logo{
-        height: 50px;
-    }
-    .login{
-        text-align: right;
-        display: inline;
-        /* margin-right: 20px; */
-    }
-    .button{
-        display: inline-block;
-        background-color: #042949;
-        cursor: pointer;
-        border-radius: 5px;
-        border: none;
-        margin-bottom: 45px;
-        color: white;
-        font-size: 12px;
-        padding: 10px 60px; 
-        text-align: center;
-    }
-    ul {
-        margin: 0;
-        padding: 0;
-    }
-
-    li {
-        display: inline;
-        margin-right: 20px;
-        margin-top: 10px;
-    }
-
-    a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-    color: #c0aaaa; /* Change color on hover */
-    cursor: pointer;
-    }
-    a:active{
-        color: pink;
-    }
-    footer{
-        width: 100%;
-    }
-    .footer-title{
-        font-size: 20px;
-        font-weight:lighter;
-        border-bottom: 1px solid white;
-    }
-    .footer-links{
-        font-size: 15px;
-        font-weight: lighter;
-    }
-    .link-div{
-        margin-top: 15px;
-    }
-    .social{
-        margin-left: 15px;
-    }
-    i{
-        font-size:24px;
-    }
-    .submit-button{
-      margin-bottom: 15px;
-    }
-    .submit-button:hover{
-        box-shadow:0 4px 8px #17a2b8; 
-    }
-    .policy-image{
-      width : 250px;
-      height:250px;
-      object-fit: contain;
-    }
-    .policy-name{ 
-        font-size: 25px;
-        border-bottom: 1px solid black;
-    }
-    .policy-slogan{
-        font-size:20px;
-        margin-top: 10px;
-        margin-bottom: 20px;
-    }
-    .learn-more, .policy-premium, .policy-description, .policy-name{
-        margin-top: 15px;
-    }
-    .insurance-container{
-      display: flex;
-    gap: 24px;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    }
-    @media (min-width:500px){
-        footer{
-        display: flex;
-        justify-content: space-around;
-        padding:16px;
-        /* margin: 16px; */
-    }
-    }
-    </style>
+    <link rel="stylesheet" href={{url_for('static', filename='styles.css')}} />
+    <link rel="stylesheet" href={{url_for('static', filename='login-styles.css')}} />
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar navbar-dark" style="background-color: #1f6b8a;">
-        <a class="navbar-brand" href=""><img class="logo" src="https://www.svgheart.com/wp-content/uploads/2021/11/cute-owl-silhouette-free-svg-file-SvgHeart.Com.png" alt="Logo"></a>
+        <a class="navbar-brand" href=""><img class="logo" style="height: 50px;" src="https://www.svgheart.com/wp-content/uploads/2021/11/cute-owl-silhouette-free-svg-file-SvgHeart.Com.png" alt="Logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -147,7 +26,7 @@
               <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/policies">about</a>
+              <a class="nav-link" href="/about">about</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/car_insurance">Our Policies</a>

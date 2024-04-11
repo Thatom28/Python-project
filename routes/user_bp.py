@@ -48,12 +48,19 @@ def login():
     # if post(when submit is clicked)
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        # session["username"] = request.form["username"]
-        # session["logged_in"] = True
         username = request.form["username"]
         session["username"] = username
         login_user(user)
-        return render_template("dashboard.html", username=session["username"])
+        return render_template(
+            "dashboard.html",
+            username=session["username"],
+            first_name=user.first_name,
+            last_name=user.last_name,
+            mobile_number=user.mobile_number,
+            email=user.email,
+            gender=user.gender,
+            date_of_birth=user.date_of_birth,
+        )
     else:
         return render_template("login.html", form=form)
 
@@ -115,15 +122,7 @@ def register():
             session["mobile_number"] = request.form.get("mobile_number")
             session["date_of_birth"] = request.form.get("date_of_birth")
             session["gender"] = request.form.get("gender")
-            return render_template(
-                "login.html",
-                username=session["username"],
-                first_name=session["first_name"],
-                last_name=session["last_name"],
-                mobile_number=session["mobile_number"],
-                date_of_birth=session["date_of_birth"],
-                gender=session["gender"],
-            )
+            return render_template("login.html")
         except Exception as e:
             db.session.rollback()
             return f"<h1>Error happend {str(e)}</h1>", 500
@@ -132,23 +131,22 @@ def register():
 
 
 # -------------------------------------------------------------------------------------
-@user_bp.route("/update_personal_info/<id>", methods=["POST", "GET"])
-def update_personal_info(id):
-    user = User.query.get(id)
+@user_bp.route("/add_personal_info", methods=["POST", "GET"])
+def add_personal_info():
     if request.method == "POST":
-        user.first_name = request.form.get("first_name", user.first_name)
-        user.last_name = request.form.get("last_name", user.last_name)
-        user.gender = request.form.get("gender", user.gender)
-        user.username = request.form.get("username", user.username)
-        user.date_of_birth = request.form.get("date_of_birth", user.date_of_birth)
-        user.mobile_number = request.form.get("mobile_number", user.mobile_number)
-        user.email = session.get("email", user.email)
-        user.password = session.get("password", user.password)
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        gender = request.form.get("gender")
+        username = request.form.get("username")
+        date_of_birth = request.form.get("date_of_birth")
+        mobile_number = request.form.get("mobile_number")
+        email = session.get("email")
+        password = session.get("password")
         new_user = User(
-            first_name=user.first_name,
-            last_name=user.last_name,
-            gender=user.gender,
-            mobile_number=user.mobile_number,
+            first_name=first_name,
+            last_name=last_name,
+            gender=gender,
+            mobile_number=mobile_number,
         )
         try:
             db.session.add(new_user)
@@ -156,13 +154,13 @@ def update_personal_info(id):
             return render_template(
                 "dashboard.html",
                 username=username,
-                password=user.password,
-                email=user.email,
-                date_of_birth=user.date_of_birth,
-                first_name=user.first_name,
-                last_name=user.last_name,
-                mobile_number=user.mobile_number,
-                gender=user.gender,
+                password=password,
+                email=email,
+                date_of_birth=date_of_birth,
+                first_name=first_name,
+                last_name=last_name,
+                mobile_number=mobile_number,
+                gender=gender,
             )
         except Exception as e:
             return f"{e}"
@@ -171,7 +169,7 @@ def update_personal_info(id):
         print(session.get("username"))
         date_of_birth = session.get("date_of_birth")
         return render_template(
-            "update_personal_info.html", username=username, date_of_birth=date_of_birth
+            "add_personal_info.html", username=username, date_of_birth=date_of_birth
         )
 
 
@@ -186,3 +184,22 @@ def logout():
     # session.pop("logged_in", None)
     session["usersname"] = None
     return redirect(url_for("user_bp.login"))
+
+
+@user_bp.route("/dashboard")
+@login_required
+def dashboard():
+    form = LoginForm()
+    user = User.query.filter_by(username=form.username.data).first()
+    # username = request.form["username"]
+    session["username"] = session["username"]
+    return render_template(
+        "dashboard.html",
+        # username=session["username"],
+        # first_name=user.first_name,
+        # last_name=user.last_name,
+        # mobile_number=user.mobile_number,
+        # email=user.email,
+        # gender=user.gender,
+        # date_of_birth=user.date_of_birth,
+    )

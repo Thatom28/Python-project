@@ -12,7 +12,7 @@
                         <a class="nav-link" href="{{url_for('claim_bp.claim')}}">Claims</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">Rewards</a>
+                        <a class="nav-link" href="{{url_for('claim_bp.rewards')}}">Rewards</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('user_bp.logout')}}">Log out</a>
@@ -25,7 +25,7 @@
                 {% block content %}
                 {% endblock %}
             </div>
-            <h1>User Covers</h1>
+            <h1>Rewards</h1>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -47,19 +47,10 @@
                             <td>{{ user_cover.location }}</td>
                             <td>{{ user_cover.date }}</td>
                             <td>{{ user_cover.premium_amount }}</td>
-                            <td><a href="/update/{{user_cover.id}}" class="btn btn-primary">Update</a></td>
-                            <td>
-                                <form action="{{url_for('add_bp.delete_cover')}}" method="POST">
-                                     <input name="id" type="text" value="{{user_cover.id}}" hidden />   
-                                     <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
+                            <td><a href="{{url_for('claim_bp.claim')}}" class="btn btn-primary">Claim</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
-                <form action="{{url_for('displays_bp.car_insurance')}}" method="get">
-                    <button type="submit" class="button">Add Policy</button>
-                  </form> 
             </table>
         </main>
     </div>

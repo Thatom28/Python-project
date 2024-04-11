@@ -1,13 +1,13 @@
 
 {% extends 'base.html' %}
 {% block body %}
-<style>
+<!-- <style>
     .outer-container{
         display: flex;
         justify-content: center;
         /* max-width: 5000px; */
     }
-    .container{
+    .inner-container{
         text-align: center;
         justify-content: center;
         border: 1px solid black;
@@ -17,16 +17,16 @@
         border-radius: 12px;
         margin: 12px;
     }
-</style>
+</style> -->
 <div class="outer-container">
-    <div class=" container">
+    <div class=" inner-container">
         <h2>Insurance Estimated Quotation</h2>
         <p>Location: {{location}}</p>
         <p>Gender: {{gender}}</p>
         <p>Age : {{age}}</p>
         <p>Car Type : {{car_type}}</p>
         <p>Driving experience : {{driving_experience}}</p>
-        <p>Total Premium : {{total_premium}}</p>
+        <p>Total Premium : {{premium_amount}}</p>
     </div>
 </div>
 <div  class="outer-container"><a href="{{url_for('calculation_bp.download_file')}}" target="_blank" class="btn btn-info submit-button">Download</a></div>

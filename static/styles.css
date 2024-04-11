@@ -1,0 +1,249 @@
+.bodyhome{
+    background: radial-gradient(circle, rgba(4,41,73,1) 0%, rgba(31,107,138,1) 100%);
+}
+.container{
+    color: white;
+    margin: 30px;
+    /* max-width: 1200px; */
+}
+.get-started-button{
+    border-radius: 30px;
+    font-size: 17px;
+    background-color: #042949;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+.poster{
+    border-radius: 25px;
+    max-width: 407px;
+    padding-right: 25px;
+    /* mix-blend-mode: luminosity; */
+}
+@media (min-width:945px){
+    .container{
+        display: flex;
+        justify-content: space-around;
+  }
+}body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation{
+    background-color: #1f6b8a;
+    padding: 10px 20px;  
+    color: #fff;
+    width: 100%;
+}
+.navigation-links{
+    margin:0;
+}
+.navbar-content{
+    display: inline;
+}
+.logo{
+    height: 50px;
+}
+.login{
+    text-align: right;
+    display: inline;
+    /* margin-right: 20px; */
+}
+.button{
+    display: inline-block;
+    background-color: #042949;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 45px;
+    color: white;
+    font-size: 12px;
+    padding: 10px 60px; 
+    text-align: center;
+}
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+color: #c0aaaa; /* Change color on hover */
+cursor: pointer;
+}
+a:active{
+    color: pink;
+}
+footer{
+    width: 100%;
+}
+.footer-title{
+    font-size: 20px;
+    font-weight:lighter;
+    border-bottom: 1px solid white;
+}
+.footer-links{
+    font-size: 15px;
+    font-weight: lighter;
+}
+.link-div{
+    margin-top: 15px;
+}
+.social{
+    margin-left: 15px;
+}
+i{
+    font-size:24px;
+}
+.submit-button{
+  margin-bottom: 15px;
+}
+.submit-button:hover{
+    box-shadow:0 4px 8px #17a2b8; 
+}
+.policy-image{
+  width : 250px;
+  height:250px;
+  object-fit: contain;
+}
+.policy-name{ 
+    font-size: 25px;
+    border-bottom: 1px solid black;
+}
+.policy-slogan{
+    font-size:20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.learn-more, .policy-premium, .policy-description, .policy-name{
+    margin-top: 15px;
+}
+.insurance-container{
+  display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+.flex{
+    display: flex;
+    gap: 180px;
+}
+@media (min-width:500px){
+    footer{
+    display: flex;
+    justify-content: space-around;
+    padding:16px;
+    /* margin: 16px; */
+}
+}
+.block {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: crimson;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 400px;
+}
+
+/* Style for links */
+.block a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Style for hover effect on links */
+.block:hover {
+    color: #555;
+}
+
+.container{
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.input-block{
+    width: 40%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0;
+    border-bottom: 1px solid hsl(0, 0%, 60%);
+    background-color: hsl(0, 0%, 90%);
+    color: black;
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+.input-name{
+    text-align: left;
+    font-weight:bold;
+}
+
+button:hover{
+    box-shadow:0 4px 8px rgba(0, 0, 0, 2); 
+}
+.container{
+    text-align: center;
+    margin: 20px;
+    padding: 0;
+}
+.password-link{
+    text-align: center;
+    width:40% ;
+    /* background-color: #19747E; */
+}
+.dis-flex{
+    display: flex;
+    color: #A9D6E5;
+    font-size: 12px;
+    /* text-align: center; */
+    font-weight:lighter;
+}
+h3{
+    font-weight: lighter;
+}
+.outer-container{
+    display: flex;
+    justify-content: center;
+    /* max-width: 5000px; */
+}
+.inner-container{
+    text-align: center;
+    justify-content: center;
+    border: 1px solid black;
+    max-width: 500px;
+    padding: 12px;
+    background-color:hsl(197, 63%, 95%);
+    border-radius: 12px;
+    margin: 12px;
+}
+.submit-button:hover{
+    box-shadow:0 4px 8px #17a2b8; 
+}
+.check-circle{
+    font-size: 200px;
+    color: #1f6b8a;
+    margin-bottom: 40px;
+}
+.contact-container{
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+/* --------Log in  */
+.login-container{
+    text-align: center;
+    margin: 20px;
+    padding: 0;
+}

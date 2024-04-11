@@ -43,10 +43,14 @@ app.register_blueprint(calculation_bp)
 from routes.displays_bp import displays_bp
 
 app.register_blueprint(displays_bp)
-# ------------------------------------------------------------------------------
+# ----------------------------------------------------------
 from routes.add_bp import add_bp
 
 app.register_blueprint(add_bp)
+# ------------------------------------------------------------
+from routes.claim_bp import claim_bp
+
+app.register_blueprint(claim_bp)
 
 
 # verifys the user with this
