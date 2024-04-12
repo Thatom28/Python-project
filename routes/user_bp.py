@@ -107,7 +107,8 @@ def register():
         try:
             db.session.add(new_user)
             db.session.commit()
-            return render_template("login.html")
+            flash("Successfully registered", "success")
+            return redirect(url_for("user_bp.login"))
         except Exception as e:
             db.session.rollback()
             return f"<h1>Error happend {str(e)}</h1>", 500
@@ -116,32 +117,25 @@ def register():
 
 
 # -------------------------------------------------------------------------------------
-@user_bp.route("/update_personal_info", methods=["POST", "GET"])
-def update_personal_info():
+@user_bp.route("/update_personal_info/<id>", methods=["POST", "GET"])
+def update_personal_info(id):
     if request.method == "POST":
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        gender = request.form.get("gender")
-        username = request.form.get("username")
-        date_of_birth = request.form.get("date_of_birth")
-        mobile_number = request.form.get("mobile_number")
-        email = session.get("email")
-        password = session.get("password")
-        try:
-            db.session.commit()
-            return render_template(
-                "dashboard.html",
-                username=username,
-                password=password,
-                email=email,
-                date_of_birth=date_of_birth,
-                first_name=first_name,
-                last_name=last_name,
-                mobile_number=mobile_number,
-                gender=gender,
-            )
-        except Exception as e:
-            return f"{e}"
+        user = User.query.get(id)
+        if user:
+            user.first_name = request.form.get("first_name", user.first_name)
+            user.last_name = request.form.get("last_name", user.last_name)
+            user.gender = request.form.get("gender", user.gender)
+            user.username = request.form.get("username", user.username)
+            user.date_of_birth = request.form.get("date_of_birth", user.date_of_birth)
+            user.mobile_number = request.form.get("mobile_number", user.mobile_number)
+            user.email = session.get("email", user.email)
+            user.password = session.get("password", user.password)
+            try:
+                db.session.commit()
+                flash("Personal infomation successfully added", "success")
+                return render_template("dashboard.html")
+            except Exception as e:
+                return f"{e}"
     else:
         user = current_user
         return render_template("update_personal_info.html", user=user)

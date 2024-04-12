@@ -1,7 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_loggedIn.html' %}
 {% block body %}
-<form action="{{url_for('user_bp.update_personal_info')}}" method="post">
-        <button >Edit</button>
+<form action="{{url_for('user_bp.update_personal_info', id=user.id)}}" method="post">
         <div class="form-group">
             <label for="first_name">First name</label>
             <input type="text"  name="first_name" value="{{user.first_name}}">
