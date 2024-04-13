@@ -16,6 +16,7 @@ user = current_user
 @add_bp.route("/user_covers", methods=["POST", "GET"])
 def policy_taken():
     if request.method == "POST":
+        # to track
         logger.info("User has posted to /user_covers route")
         print(session["username"])
         user_covers = User_Cover.query.filter(
@@ -104,7 +105,6 @@ def delete_cover():
 @add_bp.route("/update/<id>", methods=["POST", "GET"])
 def update_cover(id):
     cover = User_Cover.query.get(id)
-    print(f"THE COVER ID IS == {User_Cover.query.get(id)}")
     if request.method == "GET":
         if cover:
             return render_template("edit_cover.html", cover=cover)
@@ -130,3 +130,23 @@ def update_cover(id):
                 return f"<h1>Error happened {str(e)}</h1>", 500
         else:
             return f"<h1>Cover not found</h1>", 500
+
+
+@add_bp.route("/claim/<id>", methods=["POST", "GET"])
+def claim_cover(id):
+    cover = User_Cover.query.get(id)
+    amount = cover.amount * 2  # multiply by a certain percentage based on months
+    if cover:
+        try:
+            db.session.add(
+                user_id=cover.user_id,
+                cover_id=cover.cover_id,
+                covername=cover.cove_name,
+                amount=amount,
+                status="Pending",
+            )
+            db.session.commit()
+            flash(message="Claim submitted to the agent!")
+            render_template("claims.html", cover=cover)
+        except Exception as e:
+            return f"<h1>Error happened {str(e)}</h1>", 500

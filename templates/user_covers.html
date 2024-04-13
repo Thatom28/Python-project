@@ -14,6 +14,8 @@
                 <th>Car worth</th>
                 <th>Location</th>
                 <th>Policy date</th>
+                <th>Premium Amount</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -33,13 +35,15 @@
                             <input name="id" type="text" value="{{user_cover.id}}" hidden />   
                             <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
+                    <td><a href="/claim/{{user_cover.id}}" class="btn btn-primary">Claim</a></td>
                 </td>
             </tr>
                 {% endfor %}
             </tbody>
-            <form action="{{url_for('displays_bp.car_insurance')}}" method="get">
+            <form action="{{url_for('displays_bp.car_insurance_loggedin')}}" method="get">
                 <button type="submit" class="button">Add Policy</button>
                 </form> 
+                
         </table>
     </div>
 </div>

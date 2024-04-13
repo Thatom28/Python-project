@@ -10,11 +10,9 @@
                 <thead>
                     <tr>
                         <th>Cover name</th>
-                        <th>Car model</th>
-                        <th>Car worth</th>
-                        <th>Location</th>
-                        <th>Policy date</th>
-                        <th></th>
+                        <th>Payout Amount</th>
+                        <th>Claim Date</th>
+                        <th>Status</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -22,12 +20,10 @@
                     {% for user_cover in user_covers %} 
                         <tr>
                             <td>{{ user_cover.cover_name }}</td>
-                            <td>{{ user_cover.vehicle_model }}</td>
                             <td>{{ user_cover.vehicle_current_worth }}</td>
-                            <td>{{ user_cover.location }}</td>
                             <td>{{ user_cover.date }}</td>
                             <td>{{ user_cover.premium_amount }}</td>
-                            <td><a href="{{url_for('claim_bp.claim')}}" class="btn btn-primary">Claim</a></td>
+                            <!-- <td><a href="{{url_for('claim_bp.claim')}}" class="btn btn-primary">Claim</a></td> -->
                         </tr>
                     {% endfor %}
                 </tbody>

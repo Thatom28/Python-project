@@ -1,39 +1,15 @@
 {% extends 'base_loggedIn.html' %}
 {% block body %}
 <div class="container-fluid">
-            <div class="container-fluid">
-                {% block content %}
-                {% endblock %}
-            </div>
-            <h1>Rewards</h1>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Cover name</th>
-                        <th>Car model</th>
-                        <th>Car worth</th>
-                        <th>Location</th>
-                        <th>Policy date</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user_cover in user_covers %} 
-                        <tr>
-                            <td>{{ user_cover.cover_name }}</td>
-                            <td>{{ user_cover.vehicle_model }}</td>
-                            <td>{{ user_cover.vehicle_current_worth }}</td>
-                            <td>{{ user_cover.location }}</td>
-                            <td>{{ user_cover.date }}</td>
-                            <td>{{ user_cover.premium_amount }}</td>
-                            <td><a href="{{url_for('claim_bp.claim')}}" class="btn btn-primary">Claim</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </main>
+    <h1>Rewards</h1>
+    {% for reward in rewards %}
+    <div class="banner">
+        <div><img class="reward-image" src = "{{reward.rewards_image}}" /></div>
+        <div>
+            <div class="reward-name">{{reward.rewards_name}}</div>
+            <div calss="reward-description">{{reward.rewards_description}}</div>
+        </div>
     </div>
+    {% endfor %}
 </div>
-
-    {% endblock body %}
+{% endblock body %}

@@ -78,7 +78,7 @@ def quote():
         total_premium = round(total, 2)
         new_cover = User_Cover(
             username=username,
-            # user_id=user.user_id,
+            user_id=user.id,
             cover_name=cover_name,
             cover_id=cover_id,
             vehicle_model=vehicle_model,

@@ -1,13 +1,4 @@
-from flask import (
-    Blueprint,
-    render_template,
-    request,
-    flash,
-    redirect,
-    session,
-    url_for,
-    Flask,
-)
+from flask import Blueprint, render_template, request, flash, redirect, session, url_for
 from models.users import User
 from extensions import db
 from flask_wtf import FlaskForm
@@ -16,7 +7,7 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from flask_login import login_user, login_required, logout_user, current_user
 from models.users import User
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_session import Session
+
 
 user_bp = Blueprint("user_bp", __name__)
 
@@ -132,8 +123,8 @@ def update_personal_info(id):
             user.password = session.get("password", user.password)
             try:
                 db.session.commit()
-                flash("Personal infomation successfully added", "success")
-                return render_template("dashboard.html")
+                # flash("Personal infomation successfully added", "success")
+                return render_template("dashboard.html", user=user)
             except Exception as e:
                 return f"{e}"
     else:
@@ -141,15 +132,10 @@ def update_personal_info(id):
         return render_template("update_personal_info.html", user=user)
 
 
-# def is_logged_in():
-#     return "id" in session
-
-
 @user_bp.route("/logout")
 @login_required
 def logout():
     logout_user()
-    # session.pop("logged_in", None)
     session["usersname"] = None
     return redirect(url_for("user_bp.login"))
 
@@ -164,10 +150,4 @@ def dashboard():
     return render_template(
         "dashboard.html",
         user=user,
-        # first_name=user.first_name,
-        # last_name=user.last_name,
-        # mobile_number=user.mobile_number,
-        # email=user.email,
-        # gender=user.gender,
-        # date_of_birth=user.date_of_birth,
     )
