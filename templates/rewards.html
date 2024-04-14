@@ -2,14 +2,19 @@
 {% block body %}
 <div class="container-fluid">
     <h1>Rewards</h1>
-    {% for reward in rewards %}
-    <div class="banner">
-        <div><img class="reward-image" src = "{{reward.rewards_image}}" /></div>
-        <div>
-            <div class="reward-name">{{reward.rewards_name}}</div>
-            <div calss="reward-description">{{reward.rewards_description}}</div>
-        </div>
+    <div>
+        <a href="/add_reward/{{reward.id}}" class="button learn-more">Add reward</a>
     </div>
-    {% endfor %}
+
+    <div class="banner">
+        {% for reward in rewards %}
+                <div><img class="policy-image" src = "{{reward.rewards_image}}" /></div>
+        <div>
+            <div class="policy-name">{{reward.rewards_name}}</div>
+            <div class="policy-slogan">{{reward.rewards_description}}</div>
+        </div>
+        {% endfor %}
+    </div>
+
 </div>
 {% endblock body %}

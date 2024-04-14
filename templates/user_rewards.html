@@ -1,0 +1,16 @@
+{% extends 'base_loggedIn.html' %}
+{% block body %}
+<div class="container-fluid">
+    <div class="outer-container">
+        <div class=" inner-container">
+            <div><img class="policy-image" src = "{{reward.rewards_image}}" /></div>
+            <p>Reward: {{reward.reward_name}}</p>
+            <p>Benefit: {reward.rewards_description}</p>
+        </div>
+    </div>
+
+    <form action="{{url_for('displays_bp.user_rewards')}}" method="get">
+        <button type="submit" class="button">Add Reward</button>
+    </form> 
+</div>
+{% endblock body%}

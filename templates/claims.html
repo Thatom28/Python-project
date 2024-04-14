@@ -20,7 +20,7 @@
                     {% for user_cover in user_covers %} 
                         <tr>
                             <td>{{ user_cover.cover_name }}</td>
-                            <td>{{ user_cover.vehicle_current_worth }}</td>
+                            <td>{{user_cover.payout_amount }}</td>
                             <td>{{ user_cover.date }}</td>
                             <td>{{ user_cover.premium_amount }}</td>
                             <!-- <td><a href="{{url_for('claim_bp.claim')}}" class="btn btn-primary">Claim</a></td> -->

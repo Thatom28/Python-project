@@ -49,6 +49,13 @@ def car_insurance_details(id):
 
 @displays_bp.route("/rewards")
 def rewards():
+    reward = Rewards.query.all()
+    # data = [reward.to_dict() for reward in rewards]
+    return render_template("user_rewards.html", reward=reward)
+
+
+@displays_bp.route("/user_rewards")
+def user_rewards():
     rewards = Rewards.query.all()
     data = [reward.to_dict() for reward in rewards]
     return render_template("rewards.html", rewards=data)

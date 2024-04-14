@@ -119,11 +119,11 @@ def update_personal_info(id):
             user.username = request.form.get("username", user.username)
             user.date_of_birth = request.form.get("date_of_birth", user.date_of_birth)
             user.mobile_number = request.form.get("mobile_number", user.mobile_number)
-            user.email = session.get("email", user.email)
+            user.email = request.form.get("email", user.email)
             user.password = session.get("password", user.password)
             try:
                 db.session.commit()
-                # flash("Personal infomation successfully added", "success")
+                flash("Personal infomation successfully added", "success")
                 return render_template("dashboard.html", user=user)
             except Exception as e:
                 return f"{e}"

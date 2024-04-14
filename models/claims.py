@@ -6,14 +6,13 @@ class Claims(db.Model):
     __tablename__ = "Claims"
 
     id = db.Column(
-        db.String(50),
+        db.String(255),
         primary_key=True,
         nullable=False,
         default=lambda: str(uuid.uuid4()),
     )
-    username = db.Column(db.String(255))
+    user_id = db.Column(db.String(255))
     cover_id = db.Column(db.String(255))
-    cover = db.Column(db.String(255))
     premium = db.Column(db.Float)
     Amount = db.Column(db.Float)
     date = db.Column(db.Date)

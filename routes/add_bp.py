@@ -1,9 +1,12 @@
+from datetime import date
 from flask import Blueprint, render_template, request, flash, send_file, session
 from flask_login import current_user
 from extensions import db
 from models.users import User
 from models.user_cover import User_Cover
 from models.policies import Car_insurance
+from models.rewards import Rewards
+from models.claims import Claims
 from loguru import logger
 from flask_wtf import FlaskForm
 
@@ -135,18 +138,42 @@ def update_cover(id):
 @add_bp.route("/claim/<id>", methods=["POST", "GET"])
 def claim_cover(id):
     cover = User_Cover.query.get(id)
-    amount = cover.amount * 2  # multiply by a certain percentage based on months
+    # payout_amount = cover.amount * 2  # multiply by a certain percentage based on months
     if cover:
+        # payout_amount = float(date.today() - cover.date).days * cover.amount - 0.2
+        difference_in_days = (date.today() - cover.date).days
+
+        # Convert the difference in days to a float before performing arithmetic
+        difference_in_days_float = float(difference_in_days)
+
+        # Calculate the amount
+        payout_amount = difference_in_days_float * cover.premium_amount - 0.2
+        print(f"thsi is the payout amount{payout_amount}")
         try:
-            db.session.add(
+            new_entry = Claims(
                 user_id=cover.user_id,
                 cover_id=cover.cover_id,
-                covername=cover.cove_name,
-                amount=amount,
+                premium=cover.premium_amount,
+                Amount=payout_amount,
+                date=date.today(),
                 status="Pending",
             )
+            db.session.add(new_entry)
             db.session.commit()
             flash(message="Claim submitted to the agent!")
             render_template("claims.html", cover=cover)
         except Exception as e:
             return f"<h1>Error happened {str(e)}</h1>", 500
+
+
+# ------------------------------------------------------------------------------
+@add_bp.route("/add_reward/<id>", methods=["GET", "POST"])
+def add_reward(id):
+    reward = Rewards.query.get(id)
+    if request.method == "GET":
+        if reward:
+            return render_template("user_rewards.html", reward=reward)
+        else:
+            return "<h1>Policy not found</h1>", 404
+    else:
+        return render_template("rewads.html")
