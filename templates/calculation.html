@@ -1,36 +1,44 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1>Secure your car</h1>
-    <form action="{{url_for('calculation_bp.calculator')}}" method="post">
-        <div class="form-group">
-            <label for="location">Location</label>
-            <input type="text"  name="location" required>
-        </div>
-        <div class="form-group">
-            <label for="age">Age</label>
-            <input type="integer" name="age" required>
-        </div>
-        <div class="form-group">
-            <input type="radio" id="male" name="gender" value="male">
-            <label for="male">Male</label><br>
-            <input type="radio" id="female" name="gender" value="female">
-            <label for="female">Female</label><br>
-
-        </div>
-        <div class="form-group">
-            <label for="car_type">Car type</label>
-            <input type="text"  name="car_type" required>
-        </div>
-        <div class="form-group">
-            <label for="driving_experience">Driving experience (in years) </label> 
-            <input type="integer"  name="driving_experience" required>
-        </div>
-        <div class="form-group">
-            <label for="driving_experience">Driving experience (in years) </label> 
-            <input type="integer"  name="inflation_rate" value="0.056" hidden >
-            <input type="integer"  name="inflation_rate_display" value="5.60%" disabled />
-        </div>
-        <button type="submit">Calculate Premium Estimate</button>
-    </form>
-
+<diV class="about-body">
+    <h1>Secure your car</h1>
+    <p>Get an insurance estimate for your car in minutes.</p>
+    <p>Note that the aout might vary, this is an estimate not the actual quote.</p>
+        <form action="{{url_for('calculation_bp.calculator')}}" method="post" class="customer-reviews calc-text">
+            <div class="about-block space-between">
+                <div class="form-group ">
+                    <label for="location">Location</label>
+                    <input type="text"  name="location" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" name="age" required>
+                </div>
+                <div class="form-group">
+                    <input type="radio" id="male" name="gender" value="male">
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label><br>
+        
+                </div>
+            </div>
+            <div class="about-block">
+                <div class="form-group">
+                    <label for="car_type">Car type</label>
+                    <input type="text"  name="car_type" required>
+                </div>
+                <div class="form-group">
+                    <label for="driving_experience">Driving experience (in years) </label> 
+                    <input type="integer"  name="driving_experience" required>
+                </div>
+                <div class="form-group">
+                    <label for="driving_experience">Inflation percentage </label> 
+                    <input type="integer"  name="inflation_rate" value="0.056" hidden >
+                    <input type="integer"  name="inflation_rate_display" value="5.60%" disabled />
+                </div>
+            </div>
+            
+            <button type="submit" class="button learn-more">Calculate Premium Estimate</button>
+        </form>
+</diV>
 {% endblock body %}

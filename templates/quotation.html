@@ -9,7 +9,7 @@
         <p>Age : {{age}}</p>
         <p>Car Type : {{car_type}}</p>
         <p>Driving experience : {{driving_experience}}</p>
-        <p>Total Premium : {{premium_amount}}</p>
+        <p>Total Premium : {{ total_premium|round(2) }}</p>
     </div>
 </div>
 <div  class="outer-container"><a href="{{url_for('calculation_bp.download_file')}}" target="_blank" class="btn btn-info submit-button">Download</a></div>

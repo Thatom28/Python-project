@@ -246,9 +246,12 @@ h3{
 }
 .about-block {
     display: inline-block; 
-    width: 45%;
-    margin-right: 5px; 
+    width: 48%;
+    margin-right: 15px; 
 }
 .line-spacing{
     margin-top: 20px;
+}
+.calc-text{
+    text-align: left;
 }
