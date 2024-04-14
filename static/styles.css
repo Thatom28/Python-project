@@ -140,14 +140,15 @@ i{
     /* margin: 16px; */
 }
 }
-.block {
+.block,.about-block {
     display: block;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: crimson;
+    background-color: #8fb5c5;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 400px;
+
 }
 
 /* Style for links */
@@ -234,4 +235,20 @@ h3{
     text-align: center;
     margin: 20px;
     padding: 0;
+}
+.about-body{
+    margin: 12px;
+    text-align: center;
+    line-height: 35px;
+}
+.customer-reviews{
+    display: inline;
+}
+.about-block {
+    display: inline-block; 
+    width: 45%;
+    margin-right: 5px; 
+}
+.line-spacing{
+    margin-top: 20px;
 }

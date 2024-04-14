@@ -1,30 +1,46 @@
 {% extends 'base.html' %}
 {% block body %}
-<div class="">
-      <h1>About Us</h1>
-      <h2>Welcome to Night Guard car Insurance</h2>
-      <p>Your trusted partner in safeguarding your journey on the road. At Night Guard car Insurance,
-             we understand that owning a car is more than just a mode of transportation; it's a symbol of freedom, independence,
-              and responsibility. With this in mind, we have dedicated ourselves to providing comprehensive and reliable car insurance
-               solutions tailored to meet your individual needs.</p>
-      <h2>Our Mission</h2>
-      <p>to offer peace of mind to every driver. We strive to achieve this by delivering exceptional customer service, 
+<style>
+      body{
+          background: radial-gradient(circle, rgba(4,41,73,1) 0%, rgba(31,107,138,1) 100%);
+          color: white;
+      }
+  </style>
+<div class="about-body">
+      <h1 class="line-spacing">About Us</h1>
+      <img class ='logo line-spacing' src="https://www.svgheart.com/wp-content/uploads/2021/11/cute-owl-silhouette-free-svg-file-SvgHeart.Com.png" />    
+      <div>
+            <h2 class="line-spacing">Welcome to Night Guard car Insurance</h2>
+            <p class="line-spacing">Your trusted partner in safeguarding your journey on the road. At Night Guard car Insurance,
+                  we understand that owning a car is more than just a mode of transportation; it's a symbol of freedom, independence,
+                   and responsibility. With this in mind, we have dedicated ourselves to providing comprehensive and reliable car insurance
+                    solutions tailored to meet your individual needs.</p>
+      </div>
+      <div>
+      <h2 class="line-spacing">Our Mission</h2>
+      <p class="line-spacing">To offer peace of mind to every driver. We strive to achieve this by delivering exceptional customer service, 
             innovative insurance products, and a commitment to transparency and integrity in all our interactions.</p>
-      
-      <h2>Customer Reviews</h2>
-      <p>What Our Customers Are Saying:</p>
-
-      <p>"Peace of Mind on the Road"</p>
-      <p>⭐️⭐️⭐️⭐️⭐️</p>
-      <p>"NightGuard Car Insurance has been my go-to choice for years now. Their comprehensive coverage and 
-      excellent customer service give me the peace of mind I need every time I hit the road. Highly recommended!"</p>
-      <p>— Sarah T., Hatfied, PTA</p>
-
-      <p>"Tailored Coverage Options"</p>
-      <p>⭐️⭐️⭐️⭐️⭐️</p>
-      <p>"What I love about NightGuard is their flexibility. They worked with me to create a custom insurance plan 
-            that fit my specific needs and budget. It's refreshing to find an insurance company that truly cares about its customers."</p>
-      <p>— John D., bellville, CT</p>
+      </div>
+      <h2 class="line-spacing">Customer Reviews</h2>
+      <p class="line-spacing">What Our Customers Are Saying:</p>
+      <div class="customer-reviews">
+            <div  class="about-block">
+                  <p>"Peace of Mind on the Road"</p>
+                  <p>⭐️⭐️⭐️⭐️⭐️</p>
+                  <p>"NightGuard Car Insurance has been my go-to choice for years now. Their comprehensive coverage and 
+                  excellent customer service give me the peace of mind I need every time I hit the road. Highly recommended!"</p>
+                  <p>— Sarah T., Hatfied, PTA</p>
+            </div>
+           
+            <div  class="about-block">
+                  <p>"Tailored Coverage Options"</p>
+                  <p>⭐️⭐️⭐️⭐️⭐️</p>
+                  <p>"What I love about NightGuard is their flexibility. They worked with me to create a custom insurance plan 
+                        that fit my specific needs and budget. It's refreshing to find an insurance company that truly cares about its customers."</p>
+                  <p>— John D., Bellville, CT</p>
+            </div>
+      </div>
+     
 </div>
   
 {% endblock body %}
