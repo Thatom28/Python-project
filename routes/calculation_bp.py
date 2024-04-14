@@ -92,12 +92,12 @@ def quote():
             db.session.add(new_cover)
             db.session.commit()
             # user_covers = User_Cover.query.all()
-            flash("Cover added successfully")
+            flash("Cover added successfully", "success")
             # return render_template("user_covers.html", user_covers=users_covers)
         except Exception as e:
             logger.error(f"Failed to add cover to database: {e}")
             db.session.rollback()  # Undo the change
-            flash("Cover not added")
+            flash("Cover not added", "error")
         return render_template(
             "quote.html",
             type_of_insurance=type_of_insurance,
@@ -131,11 +131,11 @@ def calculator():
             location_amount = 1.0
 
         if age < 25:
-            age_amount = 1.5  # Increase premium by 50% for age under 25
+            age_amount = 1.5
         elif age < 40:
-            age_amount = 1.2  # Increase premium by 20% for age 25-39
+            age_amount = 1.2
         else:
-            age_amount = 1.0  # No adjustment for age 40 and above
+            age_amount = 1.0
 
         if gender == "male":
             gender_amount = 1.5
@@ -152,9 +152,7 @@ def calculator():
         elif driving_experience < 5:
             experience_amount = 1.2
         else:
-            experience_amount = (
-                0.9  # decrease premium if you have more than 5 years experience
-            )
+            experience_amount = 0.9
 
         total_adjustment = (
             location_amount

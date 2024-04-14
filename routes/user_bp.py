@@ -95,10 +95,10 @@ def register():
             mobile_number=form.mobile_number.data,
             gender=form.gender.data,
         )
+        flash("Successfully registered", "success")
         try:
             db.session.add(new_user)
             db.session.commit()
-            flash("Successfully registered", "success")
             return redirect(url_for("user_bp.login"))
         except Exception as e:
             db.session.rollback()

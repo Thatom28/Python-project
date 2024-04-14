@@ -1,84 +1,70 @@
-{% extends 'base.html' %}
+{% extends 'base_loggedIn.html' %}
+{% block title %}Add insurance{% endblock %}
 {% block body %}
+<div class="inner-container container-fluid">
 <div>
     <form action="{{url_for('calculation_bp.quote')}}" method="POST">
-        <label for="type">Insurance Type : </label>
+        <label for="type">Insurance Type </label>
         <select name="type" required>
             <option value="Car Insurance">Car insurance</option>
             <option value="Life Insurance">Life insurance</option>
         </select>
-    </div>
-    <div>
-        <input type="checkbox" name="Accidents_cover" value="Accidents cover">
-        <label for="Accidents cover">Accidents cover</label><br>
-
-        <input type="checkbox" name="Theft and hijacking cover" value="Theft and hijacking cover">
-        <label for="Theft and hijacking cover">Theft and hijacking cover</label><br>
-
-        <input type="checkbox" name="Weather damage cover" value="Weather damage cover">
-        <label for="Weather damage cover">Weather damage cover</label><br>
-
-        <input type="checkbox" name="Damage to others property cover" value="Damage to others property cover">
-        <label for="Damage to others property cover">Damage to others property cover</label><br>
-
-        <input type="checkbox" name="Vandalism cover" value="Vandalism cover">
-        <label for="Vandalism cover">Vandalism</label><br>
-
-        <input type="checkbox" name="Fire and explosion" value="Fire and explosion">
-        <label for="Fire and explosion">Fire and explosion</label><br>
-
-    </div>
+    </div class="form-group">
     <input type="hidden" for="cover_name" name="cover_name" value="{{car_insurance.cover_name }}"/>
     <input type="hidden" for="cover_id" name="cover_id" value="{{car_insurance.cover_id }}"/>
-    <div>
+    <div class="form-group">
         <label for="cover_name" >Cover name</label>
         <input for="cover_name" name="cover_name" value="{{car_insurance.cover_name }}" disabled />
     </div>
-    <div>
+    <div class="form-group">
         <label for="cover_description" >Cover Description</label>
         <input for="cover_description" name="cover_description" value="{{car_insurance.cover_description }}" disabled />
     </div>
-    <div>
+    <div class="form-group">
         <label for="base_price" >Base Price</label>
         <input for="base_price" name="base_price" value="{{car_insurance.base_price }}" disabled />
     </div>
-    <div>
+    <div class="form-group">
         <label for="location" >Location</label>
         <input for="location" name="location" placeholder="Location" required />
     </div>
-    <div>
+    <div class="form-group">
         <label for="age" >Age</label>
         <input for="age" name="age" placeholder="Age" required />
     </div>
-    <div>
+    <div class="form-group">
         <label for="Year_bought" >Year bought</label>
         <input type="CalendarYear" for="Year_bought" name="Year_bought" placeholder="2019" required />
     </div>
 
-    <div>
+    <div class="form-group">
         <label for="vehicle_current_worth" >Current car worth</label>
         <input for="vehicle_current_worth" name="vehicle_current_worth" placeholder="R120 0000" required />
     </div>
-    <div>
+    <div class="form-group">
         <label for="vehicle_model">vehicle model</label>
         <input for="vehicle_model" name="vehicle_model" placeholder="vehicle_model" required/>
     </div>
-    <div>
+    <div class="form-group">
         <label for="driving_experience" >Driving Experience</label>
         <input type="integer" for="driving_experience" name="driving_experience" placeholder="4" required />
     </div>
-    <div>
+    <div class="form-group">
         <label for="ownerhip_docs">Ownership documents</label>
         <input type="file" name="file" accept=".pdf, .doc, .docx">
     </div>
-    <div>
+    <div class="form-group">
         <label for="ownerhip_docs">Proof Of Address</label>
         <input type="file" name="POA" accept=".pdf, .doc, .docx">
+    </div>
+    <div class="form-group">
+        <label>Inflation rate</label>
         <input type="integer"  name="inflation_rate" value="0.056" hidden >
         <input type="integer"  name="inflation_rate_display" value="5.60%" disabled />
     </div>
 
-        <button type="submit">View Quote</button>
+        <button type="submit" class="button">View Quote</button>
     </form>
+</div>
     <script src="script.js"></script>
 {% endblock body %}

@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% block title %}Car Insurance{% endblock %}
 {% block body %}
-<div class="insurance-container about-body">
+<div class="about-body">
     <h2>What we offer</h2>
-    <h3>Hit the road with confidence knowing that your journey is protected by our comprehensive car insurance. From daily commutes to cross-country adventures, our coverage keeps you and your vehicle secure against life's unexpected twists and turns.</h3>
+    <p>Hit the road with confidence knowing that your journey is protected by our comprehensive car insurance. From daily commutes to cross-country adventures, our coverage keeps you and your vehicle secure against life's unexpected twists and turns.</p>
     {% for policy in car_insurances %}
         <div class="block">
             <div>

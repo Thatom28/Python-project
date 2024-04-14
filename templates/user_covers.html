@@ -1,4 +1,5 @@
 {% extends 'base_loggedIn.html' %}
+{% block title %}Users cover{% endblock %}
 {% block body %}
 <div class="container-fluid">
     <div class="container-fluid">
@@ -35,7 +36,7 @@
                             <input name="id" type="text" value="{{user_cover.id}}" hidden />   
                             <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
-                    <td><a href="/claim/{{user_cover.id}}" class="btn btn-primary">Claim</a></td>
+                    <td><a href="/claim/{{user_cover.id}}" class="btn btn-primary disabled">Claim</a></td>
                 </td>
             </tr>
                 {% endfor %}

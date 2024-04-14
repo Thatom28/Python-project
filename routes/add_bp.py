@@ -56,11 +56,11 @@ def create_user_policy():
     try:
         db.session.add(new_cover)
         db.session.commit()
-        flash("Cover added successfully")
+        flash("Cover added successfully", "success")
         return render_template("user_covers.html")
     except Exception as e:
         db.session.rollback()  # Undo the change
-        flash("Cover not added")
+        flash("Cover not added", "error")
         return render_template("user_covers.html")
 
 
@@ -91,7 +91,7 @@ def delete_cover():
         try:
             db.session.delete(filter_cover)
             db.session.commit()
-            flash("cover deleted")
+            flash("cover deleted", "success")
             user_covers = User_Cover.query.filter(
                 User_Cover.username == session["username"]
             ).all()
@@ -100,7 +100,7 @@ def delete_cover():
             db.session.rollback()
             return str(e)
     else:
-        flash("cover not found")
+        flash("cover not found", "error")
         return render_template("user_covers.html")
 
 
@@ -138,15 +138,12 @@ def update_cover(id):
 @add_bp.route("/claim/<id>", methods=["POST", "GET"])
 def claim_cover(id):
     cover = User_Cover.query.get(id)
-    # payout_amount = cover.amount * 2  # multiply by a certain percentage based on months
+
     if cover:
-        # payout_amount = float(date.today() - cover.date).days * cover.amount - 0.2
         difference_in_days = (date.today() - cover.date).days
 
-        # Convert the difference in days to a float before performing arithmetic
         difference_in_days_float = float(difference_in_days)
 
-        # Calculate the amount
         payout_amount = difference_in_days_float * cover.premium_amount - 0.2
         print(f"thsi is the payout amount{payout_amount}")
         try:
@@ -160,7 +157,7 @@ def claim_cover(id):
             )
             db.session.add(new_entry)
             db.session.commit()
-            flash(message="Claim submitted to the agent!")
+            flash("Claim submitted to the agent!", "success")
             render_template("claims.html", cover=cover)
         except Exception as e:
             return f"<h1>Error happened {str(e)}</h1>", 500
@@ -174,6 +171,6 @@ def add_reward(id):
         if reward:
             return render_template("user_rewards.html", reward=reward)
         else:
-            return "<h1>Policy not found</h1>", 404
+            return "<h1>Rewards not found</h1>", 404
     else:
         return render_template("rewads.html")

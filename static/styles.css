@@ -21,7 +21,9 @@
     margin: 0;
     padding: 0;
 }
-
+p{
+    font-size: 20px;
+}
 .navigation{
     background-color: #1f6b8a;
     padding: 10px 20px;  
@@ -114,6 +116,9 @@ i{
     font-size: 25px;
     border-bottom: 1px solid black;
 }
+.policy-block{
+    width:150px;
+}
 .policy-slogan{
     font-size:20px;
     margin-top: 10px;
@@ -141,13 +146,15 @@ i{
 }
 }
 .block,.about-block {
-    display: block;
+    display: inline-block;
     padding: 10px;
     margin-bottom: 10px;
     background-color: #8fb5c5;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 400px;
+    height: 350px;
+    text-align: center;
 
 }
 
@@ -249,9 +256,23 @@ h3{
     width: 48%;
     margin-right: 15px; 
 }
+.calc-block{
+    width: 100%;
+}
 .line-spacing{
     margin-top: 20px;
 }
 .calc-text{
     text-align: left;
+}
+.button-spacing{
+    margin-top: 60px;
+}
+.banner{
+    width: 45%;
+}
+.disabled {
+    pointer-events: none; 
+    opacity: 0.5; 
+    cursor: not-allowed;
 }
