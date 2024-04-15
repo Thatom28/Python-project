@@ -42,25 +42,26 @@ make sure your myenv is activated
 ```
 flask run ---debug
 ```
+## Python project documentation
+### Summary
+Our project aims to make getting car insurance quotes quicker and easier. We want to reduce the number of people leaving the website due to long and complicated processes. Our goal is to provide users with a straightforward and hassle-free way to find out how much their car insurance might cost.
+### Problem 
+The problem I am trying to solve is to reduce the time it takes for a customer to get a quick quote for their insurance. Getting an insurance requires many documentations and authorisations. Therefore, wanted to save the client the time by auto implementing the calculation informally to give the customer an idea of how much their insurance might be without giving much information away.
+Pages
+•	Home page.
+•	About page.
+•	Calculator page (for car insurance estimation).
+•	Contact us page.
+•	Sign up page.
+•	Log in page.
+After logging in
+•	Profile page.
+•	Update personal info page.
+•	Policies page (active policies).
+•	Claims page.
+•	Rewards page.
+
+ 
 
 
 
-# Why Flask?
-1. improves your DX
-2. micro framework
-3. Ready made tools to implemented the API (CRUD)
-4. lightweight
-5. gives ready made tools to implement REST API
-
-# Django vs Flask
-- django has full operations already in-buit, no freedom to edit the methods
-- Flask allows you to choose libraries and partially implemented
-
-# Rest API
-- uses http request to access and use data
-- you should have 
-    - get (Read)
-    - post (Create)
-    - put (Update)
-    - delete (Delete)
-- it converts the get request to the sql query and s
