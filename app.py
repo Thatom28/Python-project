@@ -5,7 +5,6 @@ import os
 from extensions import db
 from flask_login import LoginManager
 from models.users import User
-from flask_session import Session
 
 load_dotenv()  # load -> os env (enviroment variables)
 # print(os.environ.get("AZURE_DATABASE_URL"), os.environ.get("FORM_SECRET_KEY"))
