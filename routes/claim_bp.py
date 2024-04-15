@@ -5,8 +5,6 @@ from flask_login import current_user
 from extensions import db
 from models.user_cover import User_Cover
 from datetime import datetime, date
-from sqlalchemy import exists
-from loguru import logger
 import os
 
 claim_bp = Blueprint("claim_bp", __name__)

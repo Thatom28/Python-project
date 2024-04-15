@@ -7,7 +7,6 @@ from models.user_cover import User_Cover
 from models.policies import Car_insurance
 from models.rewards import Rewards
 from models.claims import Claims
-from loguru import logger
 from flask_wtf import FlaskForm
 
 add_bp = Blueprint("add_bp", __name__)
@@ -19,8 +18,6 @@ user = current_user
 @add_bp.route("/user_covers", methods=["POST", "GET"])
 def policy_taken():
     if request.method == "POST":
-        # to track
-        logger.info("User has posted to /user_covers route")
         print(session["username"])
         user_covers = User_Cover.query.filter(
             User_Cover.username == user.username
@@ -39,7 +36,6 @@ def policy_taken():
 def upload_file():
     uploaded_file = request.files["file"]
     if uploaded_file.filename != "":
-        logger.success("File uploaded successfully")
         uploaded_file.save(uploaded_file.filename)
         return "File uploaded successfully!"
     else:

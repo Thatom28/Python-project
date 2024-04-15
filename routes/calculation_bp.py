@@ -4,9 +4,7 @@ from flask_login import current_user
 # from models.High_risk_areas import High_risk_areas
 from extensions import db
 from models.user_cover import User_Cover
-from datetime import datetime, date
-from sqlalchemy import exists
-from loguru import logger
+from datetime import date
 import os
 
 calculation_bp = Blueprint("calculation_bp", __name__)
@@ -17,7 +15,6 @@ calculation_bp = Blueprint("calculation_bp", __name__)
 def quote():
     if request.method == "POST":
         user = current_user
-        logger.info(f"Current user: {user}")
         base_price = 500
         # user_id = user.user_id
         type_of_insurance = request.form.get("type")
@@ -42,11 +39,11 @@ def quote():
             location_amount = 1.0
 
         if age < 25:
-            age_amount = 1.5  # Increase premium by 50% for age under 25
+            age_amount = 1.5
         elif age < 40:
-            age_amount = 1.2  # Increase premium by 20% for age 25-39
+            age_amount = 1.2
         else:
-            age_amount = 1.0  # No adjustment for age 40 and above
+            age_amount = 1.0
 
         if gender == "male":
             gender_amount = 1.5
@@ -63,9 +60,7 @@ def quote():
         elif driving_experience < 5:
             experience_amount = 1.2
         else:
-            experience_amount = (
-                0.9  # decrease premium if you have more than 5 years experience
-            )
+            experience_amount = 0.9
 
         total_adjustment = (
             location_amount
@@ -95,7 +90,6 @@ def quote():
             flash("Cover added successfully", "success")
             # return render_template("user_covers.html", user_covers=users_covers)
         except Exception as e:
-            logger.error(f"Failed to add cover to database: {e}")
             db.session.rollback()  # Undo the change
             flash("Cover not added", "error")
         return render_template(
@@ -236,37 +230,4 @@ luxury_cars = [
     "Karma Revero GT",
     "Acura RLX",
     "Infiniti Q70",
-    # Add more luxury car models as needed
 ]
-
-# Base premium rate
-# base_premium_rate = 0.02  # 2% of car worth
-
-# # Location-based adjustment
-# if location in high_risk_areas:
-#     location_adjustment = 1.5  # Increase premium by 50% if in high risk areas
-# else:
-#     location_adjustment = 1.0  # No adjustment for rural areas
-
-# # Duration-based adjustment
-# if duration_owned < 1:
-#     duration_adjustment = 1.2  # Increase premium by 20% for less than 1 year ownership
-# elif duration_owned < 5:
-#     duration_adjustment = 1.0  # No adjustment for 1-4 years ownership
-# else:
-#     duration_adjustment = 0.8  # Decrease premium by 20% for 5 or more years ownership
-
-# # Age-based adjustment
-# if age < 25:
-#     age_adjustment = 1.5  # Increase premium by 50% for age under 25
-# elif age < 40:
-#     age_adjustment = 1.2  # Increase premium by 20% for age 25-39
-# elif age < 60:
-#     age_adjustment = 1.0  # No adjustment for age 40-59
-# else:
-#     age_adjustment = 1.3  # Increase premium by 30% for age 60 and above
-
-# # Calculate total premium
-# total_premium = base_premium_rate * car_worth * location_adjustment * duration_adjustment * age_adjustment
-
-# return total_premium
