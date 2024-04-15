@@ -276,3 +276,9 @@ h3{
     opacity: 0.5; 
     cursor: not-allowed;
 }
+.contact-container{
+    text-align: center;
+    margin-top:35px;
+    padding: 0;
+    display: block;
+}

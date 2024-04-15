@@ -6,7 +6,6 @@
     <p>Get an insurance estimate for your car in minutes.</p>
     <p>Note that the amount might vary, this is an estimate not the actual quote.</p>
         <form action="{{url_for('calculation_bp.calculator')}}" method="post" class="customer-reviews calc-text about-block">
-            <div class="">
                 <div class="form-group ">
                     <label for="location">Location</label>
                     <input type="text"  name="location" required>
@@ -22,8 +21,6 @@
                     <label for="female">Female</label><br>
         
                 </div>
-            </div>
-            <div class="">
                 <div class="form-group">
                     <label for="car_type">Car type</label>
                     <input type="text"  name="car_type" required>
@@ -36,10 +33,9 @@
                     <label for="driving_experience">Inflation percentage </label> 
                     <input type="integer"  name="inflation_rate" value="0.056" hidden >
                     <input type="integer"  name="inflation_rate_display" value="5.60%" disabled />
-                </div>
-            </div>
-            
-            <button type="submit" class="button learn-more button-spacing">Calculate Premium Estimate</button>
+                    <button type="submit" class="button learn-more ">Calculate Premium Estimate</button>
+                </div>            
+           
         </form>
 </diV>
 {% endblock body %}
