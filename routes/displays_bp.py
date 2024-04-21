@@ -21,8 +21,6 @@ def policies():
 
 # -----------------------------------------------------------------------------------------------
 # car insurance covers
-
-
 @displays_bp.route("/car_insurance")
 def car_insurance():
     car_insurances = Car_insurance.query.all()

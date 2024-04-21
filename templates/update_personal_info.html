@@ -4,34 +4,34 @@
 <form action="{{url_for('user_bp.update_personal_info', id=user.id)}}" method="post">
         <div class="form-group">
             <label for="first_name">First name</label>
-            <input type="text"  name="first_name" value="{{user.first_name}}">
+            <input class="form-control"  type="text"  name="first_name" value="{{user.first_name}}">
         </div>
         <div class="form-group">
             <label for="last_name">Last name</label>
-            <input type="text" name="last_name" value="{{user.last_name}}">
+            <input class="form-control"  type="text" name="last_name" value="{{user.last_name}}">
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="text"  name="email" value="{{user.email}}">
+            <input class="form-control"  type="text"  name="email" value="{{user.email}}">
         </div>
     </div>
         <div class="form-group">
             <label for="mobile_number">Mobile number</label>
-            <input type="text" name="mobile_number" value="{{user.mobile_number}}">
+            <input class="form-control"  type="text" name="mobile_number" value="{{user.mobile_number}}">
         </div>
         <div class="form-group">
             <label for="date_of_birth">Date of Birth</label>
-            <input type="date" name="date_of_birth" value="{{user.date_of_birth}}">
+            <input class="form-control"  type="date" name="date_of_birth" value="{{user.date_of_birth}}">
         </div>
         <div class="form-group">
             <label for="gender">Gender</label>
-            <input type="text"  name="gender" value="{{user.gender}}">
+            <input class="form-control"  type="text"  name="gender" value="{{user.gender}}">
         </div>
         <div class="form-group">
-            <label for="username">Username</label> 
-            <input type="text"  name="username" value="{{user.username}}">
+            <label for="username">Username:</label> 
+            <input class="form-control" type="text"  name="username" value="{{user.username}}">
         </div>
-        <button type="submit">Save</button>
+        <button type="submit" class="button">Save</button>
     </form>
 
 {% endblock body %}

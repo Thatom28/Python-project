@@ -114,7 +114,6 @@ i{
 }
 .policy-name{ 
     font-size: 25px;
-    border-bottom: 1px solid black;
 }
 .policy-block{
     width:150px;
@@ -132,6 +131,9 @@ i{
   gap: 24px;
  flex-wrap: wrap;
  margin:5px 5px;
+}
+.cover-detail-container{
+        width: 250px;
 }
 .flex{
     display: flex;
@@ -156,6 +158,9 @@ i{
     height: 350px;
     text-align: center;
 
+}
+.cover-block{
+    height: 50px;
 }
 
 /* Style for links */
@@ -275,10 +280,4 @@ h3{
     pointer-events: none; 
     opacity: 0.5; 
     cursor: not-allowed;
-}
-.contact-container{
-    text-align: center;
-    margin-top:35px;
-    padding: 0;
-    display: block;
 }
