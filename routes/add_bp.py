@@ -7,7 +7,6 @@ from models.user_cover import User_Cover
 from models.policies import Car_insurance
 from models.rewards import Rewards
 from models.claims import Claims
-from flask_wtf import FlaskForm
 
 add_bp = Blueprint("add_bp", __name__)
 
@@ -134,29 +133,33 @@ def update_cover(id):
 @add_bp.route("/claim/<id>", methods=["POST", "GET"])
 def claim_cover(id):
     cover = User_Cover.query.get(id)
+    if request.method == "POST":
+        if cover:
+            difference_in_days = (date.today() - cover.date).days
 
-    if cover:
-        difference_in_days = (date.today() - cover.date).days
+            difference_in_days_float = float(difference_in_days)
 
-        difference_in_days_float = float(difference_in_days)
+            payout_amount = difference_in_days_float * cover.premium_amount - 0.2
+            print(f"this is the payout amount {payout_amount}")
+            print(f"{cover.cover_id}covername{cover.cover_name}")
+            try:
+                new_entry = Claims(
+                    user_id=cover.user_id,
+                    user_cover_id=cover.cover_id,
+                    premium=cover.premium_amount,
+                    Amount=payout_amount,
+                    date=date.today(),
+                    status="Pending",
+                )
+                print(f"{cover.cover_id}covername{cover.cover_name}")
+                db.session.add(new_entry)
+                db.session.commit()
+                flash("Claim submitted to the agent!", "success")
+                return render_template("claims.html", covers=cover)
+            except Exception as e:
+                return f"<h1>Error happened {str(e)}</h1>", 500
 
-        payout_amount = difference_in_days_float * cover.premium_amount - 0.2
-        print(f"thsi is the payout amount{payout_amount}")
-        try:
-            new_entry = Claims(
-                user_id=cover.user_id,
-                cover_id=cover.cover_id,
-                premium=cover.premium_amount,
-                Amount=payout_amount,
-                date=date.today(),
-                status="Pending",
-            )
-            db.session.add(new_entry)
-            db.session.commit()
-            flash("Claim submitted to the agent!", "success")
-            render_template("claims.html", cover=cover)
-        except Exception as e:
-            return f"<h1>Error happened {str(e)}</h1>", 500
+        return render_template("claims.html", covers=cover)
 
 
 # ------------------------------------------------------------------------------
@@ -165,8 +168,8 @@ def add_reward(id):
     reward = Rewards.query.get(id)
     if request.method == "GET":
         if reward:
-            return render_template("user_rewards.html", reward=reward)
+            return render_template("user_rewards.html", rewards=reward)
         else:
             return "<h1>Rewards not found</h1>", 404
     else:
-        return render_template("rewads.html")
+        return render_template("rewards.html", rewards=reward)

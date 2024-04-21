@@ -12,7 +12,7 @@ claim_bp = Blueprint("claim_bp", __name__)
 user = current_user
 
 
-@claim_bp.route("/claim", methods=["POST", "GET"])
+@claim_bp.route("/", methods=["POST", "GET"])
 def claim():
     if request.method == "GET":
         # user_covers = User_Cover.query.filter(User_Cover.user_id == user.id).all()

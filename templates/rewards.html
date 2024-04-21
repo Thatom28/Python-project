@@ -1,21 +1,20 @@
 {% extends 'base_loggedIn.html' %}
+
 {% block title %}Rewards{% endblock %}
+
 {% block body %}
 <div class="container-fluid">
     <h1>Rewards</h1>
-    <div>
-        <a href="/add_reward/{{reward.id}}" class="button learn-more">Add reward</a>
-    </div>
-
     <div class="banner">
         {% for reward in rewards %}
-                <div><img class="policy-image" src = "{{reward.rewards_image}}" /></div>
-        <div>
-            <div class="policy-name">{{reward.rewards_name}}</div>
-            <div class="policy-slogan">{{reward.rewards_description}}</div>
+        <div class="reward-item">
+            <img class="reward-image" src="{{ reward.rewards_image }}" />
+            <div class="reward-details">
+                <div class="reward-name">{{ reward.rewards_name }}</div>
+                <div class="reward-description">{{ reward.rewards_description }}</div>
+            </div>
         </div>
         {% endfor %}
     </div>
-
 </div>
-{% endblock body %}
+{% endblock %}

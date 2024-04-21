@@ -18,12 +18,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for user_cover in user_covers %} 
+                    {% for cover in covers %} 
                         <tr>
-                            <td>{{ user_cover.cover_name }}</td>
-                            <td>{{user_cover.payout_amount }}</td>
-                            <td>{{ user_cover.date }}</td>
-                            <td>{{ user_cover.premium_amount }}</td>
+                            <td>{{cover.cover_name }}</td>
+                            <td>{{cover.payout_amount }}</td>
+                            <td>{{cover.date }}</td>
+                            <td>{{cover.premium_amount }}</td>
                             <!-- <td><a href="{{url_for('claim_bp.claim')}}" class="btn btn-primary">Claim</a></td> -->
                         </tr>
                     {% endfor %}

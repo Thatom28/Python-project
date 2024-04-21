@@ -34,9 +34,14 @@
                 <td>
                     <form action="{{url_for('add_bp.delete_cover')}}" method="POST">
                             <input name="id" type="text" value="{{user_cover.id}}" hidden />   
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                    <td><a href="/claim/{{user_cover.id}}" class="btn btn-primary disabled">Claim</a></td>
+                            <button type="submit" class="btn btn-danger">Delete</button> 
+                        </form>                 
+                </td>
+                <td>
+                
+                <form action="{{url_for('add_bp.claim_cover', id = user_cover.id)}}" method="POST">
+                    <button type="submit" class="btn btn-primary">Claim</button>
+                </form>
                 </td>
             </tr>
                 {% endfor %}
