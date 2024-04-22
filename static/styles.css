@@ -223,7 +223,7 @@ h3{
     text-align: center;
     justify-content: center;
     border: 1px solid black;
-    max-width: 500px;
+    /* max-width: 500px; */
     padding: 12px;
     background-color:hsl(197, 63%, 95%);
     border-radius: 12px;
@@ -282,4 +282,7 @@ h3{
 } */
 .red{
 color: red;
+}
+.center-block{
+    align-items: center;
 }

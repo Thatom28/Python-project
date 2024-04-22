@@ -4,9 +4,9 @@
 
 <div class="contact-container">
     <h1>Update Cover</h1>
-    
-        <div  class="contact-container">
-            <form action="{{url_for('add_bp.update_cover', id = cover.id)}}" method="POST"></form>
+    <div class="contact-container">
+        <form class="inner-container" action="{{url_for('add_bp.update_cover', id = cover.id)}}" method="POST">
+            <div></div>
             <label for="cover_name">cover_name:</label>
             <input type="text" name="cover_name" value="{{ cover.cover_name }}"><br>
             
@@ -24,8 +24,8 @@
             
             <button type="submit" class="btn btn-info submit-button">Update Cover</button>
         </form>
-        </div>
-       
+    </div>
+    
 </div>
    
 {% endblock body %}
