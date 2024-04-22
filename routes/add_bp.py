@@ -15,7 +15,6 @@ from models.users import User
 from models.user_cover import User_Cover
 from models.policies import Car_insurance
 from models.rewards import Rewards
-from models.claims import Claims
 
 add_bp = Blueprint("add_bp", __name__)
 
@@ -137,46 +136,6 @@ def update_cover(id):
                 return f"<h1>Error happened {str(e)}</h1>", 500
         else:
             return f"<h1>Cover not found</h1>", 500
-
-
-@add_bp.route("/claim/<id>", methods=["POST"])
-def claim_cover(id):
-    cover = User_Cover.query.get(id)
-    if request.method == "POST":
-        if cover:
-            difference_in_days = (date.today() - cover.date).days
-
-            difference_in_days_float = float(difference_in_days)
-
-            payout_amount = difference_in_days_float * cover.premium_amount - 0.2
-            print(f"this is the payout amount {payout_amount}")
-            print(f"{cover.cover_id}covername{cover.cover_name}")
-            try:
-                new_entry = Claims(
-                    user_id=cover.user_id,
-                    user_cover_id=cover.id,
-                    premium=cover.premium_amount,
-                    Amount=payout_amount,
-                    date=date.today(),
-                    status="Pending",
-                )
-                print(f"{cover.cover_id}covername{cover.cover_name}")
-                db.session.add(new_entry)
-                db.session.commit()
-                flash("Claim submitted to the agent!", "success")
-                return render_template(
-                    "claims.html",
-                    covers=[cover],
-                    payout_amount=payout_amount,
-                    status="Pending",
-                )
-            except Exception as e:
-                return f"<h1>Error happened {str(e)}</h1>", 500
-
-        flash("Cover not found!", "error")
-        return redirect(url_for("add_bp.rewards"))
-
-    return render_template("claims.html", covers=cover)
 
 
 # ------------------------------------------------------------------------------

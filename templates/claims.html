@@ -10,19 +10,19 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Cover name</th>
+                        <th>Cover ID</th>
                         <th>Payout Amount</th>
                         <th>Claim Date</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for cover in covers %} 
+                    {% for claim in claims %} 
                         <tr>
-                            <td>{{cover.cover_name }}</td>
-                            <td>R {{payout_amount }}</td>
-                            <td>{{cover.date }}</td>
-                            <td>{{status }}</td>
+                            <td>{{claim.user_cover_id }}</td>
+                            <td>R {{claim.Amount }}</td>
+                            <td>{{claim.date }}</td>
+                            <td>{{claim.status }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

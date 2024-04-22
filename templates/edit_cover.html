@@ -4,24 +4,28 @@
 
 <div class="contact-container">
     <h1>Update Cover</h1>
-    <form action="{{url_for('add_bp.update_cover', id = cover.id)}}" method="POST">
-        <label for="cover_name">cover_name:</label>
-        <input type="text" name="cover_name" value="{{ cover.cover_name }}"><br>
-        
-        <label for="vehicle_model">vehicle_model:</label>
-        <input type="text" name="vehicle_model" value="{{ cover.vehicle_model }}"><br>
-        
-        <label for="vehicle_current_worth">vehicle_current_worth:</label>
-        <input type="text" name="vehicle_current_worth" value="{{ cover.vehicle_current_worth }}"><br>
-        
-        <label for="location">location:</label>
-        <input t type="text" name="location" value="{{ cover.location }}"><br>
-        
-        <label for="date">date:</label>
-        <input type="text" name="date" value="{{cover.date}}" disabled><br>
-        
-        <button type="submit" class="btn btn-info submit-button">Update Cover</button>
-    </form>
+    
+        <div  class="contact-container">
+            <form action="{{url_for('add_bp.update_cover', id = cover.id)}}" method="POST"></form>
+            <label for="cover_name">cover_name:</label>
+            <input type="text" name="cover_name" value="{{ cover.cover_name }}"><br>
+            
+            <label for="vehicle_model">vehicle_model:</label>
+            <input type="text" name="vehicle_model" value="{{ cover.vehicle_model }}"><br>
+            
+            <label for="vehicle_current_worth">vehicle_current_worth:</label>
+            <input type="text" name="vehicle_current_worth" value="{{ cover.vehicle_current_worth }}"><br>
+            
+            <label for="location">location:</label>
+            <input t type="text" name="location" value="{{ cover.location }}"><br>
+            
+            <label for="date">date:</label>
+            <input type="text" name="date" value="{{cover.date}}" disabled><br>
+            
+            <button type="submit" class="btn btn-info submit-button">Update Cover</button>
+        </form>
+        </div>
+       
 </div>
    
 {% endblock body %}

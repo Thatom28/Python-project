@@ -1,6 +1,13 @@
 {% extends 'base_loggedIn.html' %}
 {% block title %}Dashboard{% endblock %}
+
 {% block body %}
+<style>
+  body{
+      background: radial-gradient(circle, rgba(4,41,73,1) 0%, rgba(31,107,138,1) 100%);
+      color: white;
+  }
+</style>
       <div class="container-fluid">
         <h2>Welcome, {{user.username}}</h2>
         <div class="user-info flex">
