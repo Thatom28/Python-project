@@ -13,6 +13,7 @@ class Rewards(db.Model):
     rewards_image = db.Column(db.String(255))
     rewards_name = db.Column(db.String(50))
     rewards_description = db.Column(db.String(255))
+    rewards_code = db.Column(db.String(50))
 
     def to_dict(self):
         return {
@@ -20,4 +21,5 @@ class Rewards(db.Model):
             "rewards_image": self.rewards_image,
             "rewards_name": self.rewards_name,
             "rewards_description": self.rewards_description,
+            "rewards_code": self.rewards_code,
         }

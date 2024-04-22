@@ -1,5 +1,14 @@
 from datetime import date
-from flask import Blueprint, render_template, request, flash, send_file, session
+from flask import (
+    Blueprint,
+    redirect,
+    render_template,
+    request,
+    flash,
+    send_file,
+    session,
+    url_for,
+)
 from flask_login import current_user
 from extensions import db
 from models.users import User
@@ -130,7 +139,7 @@ def update_cover(id):
             return f"<h1>Cover not found</h1>", 500
 
 
-@add_bp.route("/claim/<id>", methods=["POST", "GET"])
+@add_bp.route("/claim/<id>", methods=["POST"])
 def claim_cover(id):
     cover = User_Cover.query.get(id)
     if request.method == "POST":
@@ -145,7 +154,7 @@ def claim_cover(id):
             try:
                 new_entry = Claims(
                     user_id=cover.user_id,
-                    user_cover_id=cover.cover_id,
+                    user_cover_id=cover.id,
                     premium=cover.premium_amount,
                     Amount=payout_amount,
                     date=date.today(),
@@ -155,11 +164,19 @@ def claim_cover(id):
                 db.session.add(new_entry)
                 db.session.commit()
                 flash("Claim submitted to the agent!", "success")
-                return render_template("claims.html", covers=cover)
+                return render_template(
+                    "claims.html",
+                    covers=[cover],
+                    payout_amount=payout_amount,
+                    status="Pending",
+                )
             except Exception as e:
                 return f"<h1>Error happened {str(e)}</h1>", 500
 
-        return render_template("claims.html", covers=cover)
+        flash("Cover not found!", "error")
+        return redirect(url_for("add_bp.rewards"))
+
+    return render_template("claims.html", covers=cover)
 
 
 # ------------------------------------------------------------------------------

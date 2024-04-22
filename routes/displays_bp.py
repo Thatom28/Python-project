@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template
 from models.policies import Policies, Car_insurance
 from models.rewards import Rewards
+from models.user_cover import User_Cover
+from extensions import db
 
 displays_bp = Blueprint("displays_bp", __name__)
 
@@ -47,13 +49,9 @@ def car_insurance_details(id):
 
 @displays_bp.route("/rewards")
 def rewards():
-    reward = Rewards.query.all()
-    # data = [reward.to_dict() for reward in rewards]
-    return render_template("rewards.html", rewards=reward)
-
-
-@displays_bp.route("/user_rewards")
-def user_rewards():
-    rewards = Rewards.query.all()
-    data = [reward.to_dict() for reward in rewards]
-    return render_template("rewards.html", rewards=data)
+    has_covers = db.session.query(User_Cover).count()
+    if has_covers > 0:
+        reward = Rewards.query.all()
+        return render_template("rewards.html", rewards=reward)
+    else:
+        return "<h1>No rewards, nor a premiun holder yet.</h1>"

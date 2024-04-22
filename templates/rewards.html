@@ -3,15 +3,16 @@
 {% block title %}Rewards{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
+<div class="contact-container">
     <h1>Rewards</h1>
-    <div class="banner">
+    <div class="contact-container">
         {% for reward in rewards %}
         <div class="reward-item">
-            <img class="reward-image" src="{{ reward.rewards_image }}" />
+            <img class="policy-image" src="{{ reward.rewards_image }}" />
             <div class="reward-details">
-                <div class="reward-name">{{ reward.rewards_name }}</div>
-                <div class="reward-description">{{ reward.rewards_description }}</div>
+                <div class="policy-name">{{ reward.rewards_name }}</div>
+                <div class="policy-slogan">{{ reward.rewards_description }}</div>
+                <div class="policy-premium">Use code: <span class="red">{{ reward.rewards_code }}</span></div>
             </div>
         </div>
         {% endfor %}

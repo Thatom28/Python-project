@@ -14,17 +14,15 @@
                         <th>Payout Amount</th>
                         <th>Claim Date</th>
                         <th>Status</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for cover in covers %} 
                         <tr>
                             <td>{{cover.cover_name }}</td>
-                            <td>{{cover.payout_amount }}</td>
+                            <td>R {{payout_amount }}</td>
                             <td>{{cover.date }}</td>
-                            <td>{{cover.premium_amount }}</td>
-                            <!-- <td><a href="{{url_for('claim_bp.claim')}}" class="btn btn-primary">Claim</a></td> -->
+                            <td>{{status }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

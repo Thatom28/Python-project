@@ -12,7 +12,7 @@ class Claims(db.Model):
         default=lambda: str(uuid.uuid4()),
     )
     user_id = db.Column(db.String(50))
-    user_cover_id = db.Column(db.String(50))
+    user_cover_id = db.Column(db.String(255))
     premium = db.Column(db.Float)
     Amount = db.Column(db.Float)
     date = db.Column(db.Date)
